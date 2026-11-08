@@ -1,6 +1,23 @@
 # Standalone repository transfer
 
-The target `themightydanik/trackium-core-android` could not be resolved with the available GitHub integration on 2026-11-08. It may not exist or may be inaccessible. No repository was created; no source from PR #12 was deleted or merged. The stage-2 project is self-contained at the local `/workspace/trackium-core-android` and mirrored for review/Actions in the original Trackium repository's separate stage-2 branch.
+The owner provided the empty target `themightydanik/trackium-core-android`. Migration uses the already prepared standalone Git history, without force push or rewriting the project. Original Trackium PR #12/#13 and their source branches are left unchanged.
+
+## Migration mapping
+
+| Source | Standalone history | Verified root tree |
+| --- | --- | --- |
+| Trackium PR #12 commit `13406d23f5ce5bcc1dcd662e0bd622f286ce974e`, subtree prototypes/trackium-core-android | `main` extraction commit `cfa4f046a5e03b81cdd82cf87bdbb9079fc17cea` | `9186657ce49ca0476119f1c5c7836c33e37e0fca` |
+| Trackium PR #13 commit `c44e71ee9f3c510d47fb0098e708223dfb3b7c36`, same subtree | Prepared stage-2 commit `43f6637d4e4c2c00a91fac10d82f82f99f80506c` | `1bd4ea8499afb19fc3c3efa843009257cbd05c2d` |
+
+Those trees were compared before migration, including executable modes, binary engine/wrapper, tests, scripts and legal evidence. The stage-2 branch keeps the three prepared commits on top of extraction main. Subsequent migration changes update only README and documentation to use the canonical repository and describe this verification; the prepared Android code, dependencies, checksums, tests and workflow are unchanged.
+
+New-repository CI is required, including an actual artifact download, package/version/signature/SHA256 verification, 327 JVM/Robolectric tests, 33 Python tests, lint and the release-blocker gate. Prior parent CI is not used as proof of the new repository’s build. Results and links are attached to the new phone-readiness PR; artefact provenance identifies its actual source commit and repository.
+
+After these checks pass, the parent PRs can be closed **without merging**, by a separate owner decision. Do not delete their branches or prototype directory automatically. Public release blockers and physical-phone acceptance remain independent of source migration.
+
+## Historical preparation and recovery procedure
+
+The sections below preserve the tested procedure from the stage when the target was unavailable. The new target now exists; do not reinitialise or overwrite it. Commands that assume an empty destination are for recovery into a new empty directory/repository only.
 
 ## Verified extraction already performed
 
@@ -50,7 +67,7 @@ gh repo view themightydanik/trackium-core-android
 git ls-remote origin  # inspect; target must be empty for this initial main push
 git push -u origin main
 git push -u origin feat/stage2-phone-readiness
-gh pr create --repo themightydanik/trackium-core-android --base main --head feat/stage2-phone-readiness --title 'feat: prepare Trackium Core for phone acceptance' --body-file docs/STAGE2_PR.md
+gh pr create --repo themightydanik/trackium-core-android --base main --head feat/stage2-phone-readiness --title 'feat: Trackium Core Android phone readiness' --body-file docs/STAGE2_PR.md
 ```
 
 No auto-merge command is part of this procedure. Do not use --force. A nonempty target requires inspecting its existing history and preparing a normal branch/PR; stop before pushing main over it.

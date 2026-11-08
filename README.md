@@ -1,8 +1,14 @@
-# Trackium Core Android
+# Trackium Core
 
-Standalone technical prototype: one APK with the preserved BlackBear-derived Minima node and native Trackium, integrated through Pandamonium's internal Android library API. Current debug version **0.2.0 / code 2**, application ID **tech.trackium.core.prototype**. No second APK, WebView, MDS substitution or automatic wallet migration.
+**Trackium Core** is an independent custom Android build of Minima Core with the native Trackium logistics platform integrated into the same APK. It builds on Eurobuddha’s BlackBear node host and Pandamonium’s internal Android application integration architecture. The Eurobuddha-derived `1.1.2.31-euro4` engine, original security/lifecycle features, source pins and notices are retained; the node is not a newly written Trackium consensus engine.
 
-The intended GitHub repository `themightydanik/trackium-core-android` is not yet accessible. The complete root project is prepared locally and mirrored temporarily in the main Trackium repository's separate `feat/trackium-core-android-stage2` branch under `prototypes/trackium-core-android`. [Exact transfer commands](docs/REPOSITORY_TRANSFER.md) preserve the verified PR #12 tree and keep PR #12/source intact. No new repository, public Release, backend copy, Gateway deployment or automatic merge is created.
+This project is developed independently and is **not an official Eurobuddha or Minima release, endorsement or partnership**. Original authorship, licences and provenance are documented in [NOTICE](NOTICE), [source pins](sources.lock.json) and the [reuse/engine review](docs/REUSE_AND_ENGINE_REVIEW.md).
+
+Canonical repository: [themightydanik/trackium-core-android](https://github.com/themightydanik/trackium-core-android). Current technical debug version **0.2.0 / code 2**, application ID **tech.trackium.core.prototype**. One APK contains the full Minima node and the native Trackium UI; no companion APK, WebView, MDS substitution or automatic wallet migration is needed.
+
+The project was extracted into this repository’s root from Trackium [PR #12](https://github.com/themightydanik/trackium/pull/12) (baseline `main`) and [PR #13](https://github.com/themightydanik/trackium/pull/13) (`feat/stage2-phone-readiness`). Their source branches remain intact. [Migration provenance and verification](docs/REPOSITORY_TRANSFER.md) record the exact matching trees. This repository contains no Gateway/Railway/PostgreSQL backend; its HTTPS Gateway client talks to the existing separate service.
+
+Physical smartphones, Mainnet interoperability/financial functions, real AOVX trackers and a production Gateway have **not** passed acceptance testing. The build is prepared for controlled testing with fresh empty keys and a dedicated test tenant, not production funds or real tracker claims.
 
 ## Build and verify
 
