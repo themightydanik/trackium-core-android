@@ -32,7 +32,8 @@ object TrackiumTokens {
  def css(scheme):return ''.join(f'  --tc-{snake(k).replace("_","-")}: {v};\n' for k,v in j['schemes'][scheme].items())
  # Consumers explicitly use tc roles; legacy v2 aliases are migrated in the later web UI stage.
  text='/* GENERATED DS1 1.0.0 — canonical source: trackium-core-android/design-system/tokens.json */\n:root {\n'+css('light')
- for k,v in j['typeSpRem'].items():text+=f'  --tc-type-{k}: {v[1]}rem;\n'
+ for k,v in j['typeSpRem'].items():
+  text+=f'  --tc-type-{k}: {v[1]}rem;\n  --tc-leading-{k}: {j["typeLineHeightSp"][k]/v[0]:.4f};\n  --tc-weight-{k}: {j["typeWeight"][k]};\n'
  for v in j['spaceDpPx']:text+=f'  --tc-space-{v}: {v}px;\n'
  for k,v in j['radiusDpPx'].items():text+=f'  --tc-radius-{k}: {v}px;\n'
  for k,v in j['elevationDp'].items():text+=f'  --tc-elevation-{k}: {v};\n'
