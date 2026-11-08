@@ -4,7 +4,7 @@ from pathlib import Path
 import json,re,xml.etree.ElementTree as E
 R=Path(__file__).resolve().parents[3]; N='{http://schemas.android.com/apk/res/android}'
 roots=['app/src/main','app/src/block','app/src/pandaShell','integrated/history/src/main','integrated/trackium/src/main']
-result={'scope':roots,'activities':[],'screen_classes':[],'layouts':[],'values':[],'graphics':[],'brand_references':[],'debug_harnesses':[]}
+result={'scope':roots,'activities':[],'screen_classes':[],'layouts':[],'values':[],'graphics':[],'brand_references':[],'debug_harnesses':[],'ui_support_classes':[]}
 for base in roots:
  for p in sorted((R/base).rglob('*')):
   if not p.is_file():continue
@@ -14,8 +14,10 @@ for base in roots:
     result['activities'].append({'manifest':name,'name':a.get(N+'name'),'exported':a.get(N+'exported','false (no intent filter)'),'theme':a.get(N+'theme','inherited')})
   if p.suffix in ['.java','.kt']:
    s=p.read_text()
-   if re.search(r'class\s+\w+\s*(?:extends|:)\s*(?:\w*Activity|\w*Fragment|BaseView)',s):
+   if re.search(r'class\s+\w+\s*(?:extends|:)\s*(?:[A-Za-z_][\w]*\.)*(?:\w*Activity|\w*Fragment|\w*View|\w*Layout)\b',s) or p.name=='HistoryScreen.java':
     result['screen_classes'].append({'file':name,'layouts':sorted(set(re.findall(r'R.layout.(\w+)',s))),'dialogs':len(re.findall(r'AlertDialog|LanguageDialog|\.setTitle\(',s))})
+   if p.name=='BaseView.java' or re.search(r'class\s+\w+\s+extends\s+(?:[A-Za-z_][\w]*\.)*(?:BaseAdapter|ArrayAdapter|Adapter|ViewHolder)\b',s):
+    result['ui_support_classes'].append(name)
   if 'res' in p.parts:
    folder=p.parent.name
    if folder.startswith('layout'):result['layouts'].append(name)

@@ -201,6 +201,16 @@
       "dialogs": 23
     },
     {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/WaveformView.java",
+      "layouts": [],
+      "dialogs": 0
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ZoomImageView.java",
+      "layouts": [],
+      "dialogs": 0
+    },
+    {
       "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/LauncherActivity.java",
       "layouts": [
         "launcher_activity"
@@ -327,6 +337,13 @@
       "dialogs": 0
     },
     {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/balance/WalletReorderAdapter.java",
+      "layouts": [
+        "view_balance_row"
+      ],
+      "dialogs": 0
+    },
+    {
       "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/home/HomeView.java",
       "layouts": [
         "view_home"
@@ -404,6 +421,23 @@
         "chat_msg_row"
       ],
       "dialogs": 14
+    },
+    {
+      "file": "app/src/pandaShell/java/com/eurobuddha/minimacore/integrated/HistoryTabView.java",
+      "layouts": [],
+      "dialogs": 0
+    },
+    {
+      "file": "integrated/history/src/main/java/com/eurobuddha/history/HistoryScreen.java",
+      "layouts": [
+        "pm_history_activity_main"
+      ],
+      "dialogs": 4
+    },
+    {
+      "file": "integrated/history/src/main/java/com/eurobuddha/history/MainActivity.java",
+      "layouts": [],
+      "dialogs": 0
     },
     {
       "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
@@ -1330,5 +1364,18 @@
     "app/src/debug/java/com/eurobuddha/minimacore/testing/LogsHarnessActivity.java",
     "app/src/debug/java/com/eurobuddha/minimacore/testing/StartupHarnessActivity.java",
     "app/src/debug/java/com/eurobuddha/minimacore/testing/TerminalHarnessActivity.java"
+  ],
+  "ui_support_classes": [
+    "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+    "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+    "app/src/main/java/com/eurobuddha/minimacore/main/BaseView.java",
+    "app/src/main/java/com/eurobuddha/minimacore/main/views/apps/AppsAdapter.java",
+    "app/src/main/java/com/eurobuddha/minimacore/main/views/apps/IntegratedAppsAdapter.java",
+    "app/src/main/java/com/eurobuddha/minimacore/main/views/balance/BalanceAdapter.java",
+    "app/src/main/java/com/eurobuddha/minimacore/main/views/balance/WalletReorderAdapter.java",
+    "app/src/main/java/com/eurobuddha/minimacore/main/views/balance/coins/CoinsAdapter.java",
+    "app/src/main/java/com/eurobuddha/minimacore/main/views/send/TokenSpinnerAdapter.java",
+    "app/src/main/java/com/eurobuddha/minimacore/maxchat/MaxThreadActivity.java",
+    "integrated/history/src/main/java/com/eurobuddha/history/HistoryScreen.java"
   ]
 }
