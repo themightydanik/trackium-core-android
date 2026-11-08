@@ -31,14 +31,21 @@ public class MinimaApplication extends Application {
 
     private void applyScreenshotPolicy(Activity activity) {
         // These screens already deliberately protect secrets independently of the general toggle.
-        boolean sensitive = activity instanceof com.eurobuddha.minimacore.main.backup.VaultActivity
+        boolean sensitive = requiresPrivateWindow(activity);
+        boolean allowed = screenshotsAllowed(this);
+        if (sensitive || !allowed) activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+        else activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+    }
+
+    static boolean requiresPrivateWindow(Activity activity) {
+        return activity instanceof com.eurobuddha.minimacore.launcher.newwallet.NewWalletActivity
+                || activity instanceof com.eurobuddha.minimacore.launcher.newwallet.NewWalletRestoreActivity
+                || activity instanceof com.eurobuddha.minimacore.launcher.restore.RestoreWalletSyncActivity
+                || activity instanceof com.eurobuddha.minimacore.main.backup.VaultActivity
                 || activity instanceof com.eurobuddha.minimacore.main.backup.BackupCreateActivity
                 || activity instanceof com.eurobuddha.minimacore.main.backup.RestoreFileActivity
                 || activity instanceof com.eurobuddha.minimacore.main.backup.ChatBackupActivity
                 || com.eurobuddha.minimacore.integrated.PandamoniumHooks.requiresSecureScreen(activity);
-        boolean allowed = screenshotsAllowed(this);
-        if (sensitive || !allowed) activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
-        else activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
     }
 
     /** Persisted screenshot policy: release builds default off; debug builds default on. */

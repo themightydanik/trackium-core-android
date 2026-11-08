@@ -22,6 +22,8 @@ public class NewWalletActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.newwallet_activity);
+        getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE);
+        findViewById(R.id.newwallet_seed).setSaveEnabled(false);
 
 
         Toolbar tb = findViewById(R.id.toolbar);
