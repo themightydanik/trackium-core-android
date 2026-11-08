@@ -19,6 +19,7 @@ on:
       - 'sources.lock.json'
       - 'UPSTREAM_NOTICES/**'
       - 'docs/**'
+      - 'design-system/**'
       - 'LICENSE'
       - 'NOTICE'
   pull_request:
@@ -59,6 +60,12 @@ jobs:
       - name: Install checksum-pinned Android SDK tools and packages
         working-directory: ${{ steps.project.outputs.directory }}
         run: scripts/setup-ci-android.sh
+      - name: Install checksum-locked design asset tooling
+        working-directory: ${{ steps.project.outputs.directory }}
+        run: |
+          python3 -m venv "$RUNNER_TEMP/trackium-design-tools"
+          "$RUNNER_TEMP/trackium-design-tools/bin/pip" install --require-hashes -r design-system/requirements.txt
+          echo "$RUNNER_TEMP/trackium-design-tools/bin" >> "$GITHUB_PATH"
       - name: Fresh ephemeral debug identity
         working-directory: ${{ steps.project.outputs.directory }}
         run: |

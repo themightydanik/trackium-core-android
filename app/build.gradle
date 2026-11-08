@@ -163,8 +163,8 @@ android {
         // 2.2.14: SECURITY - Pandamonium's built-in AtomiX and PandaPools get the 7 Nov review fixes: 32-byte hashlocks,
         // the reveal window + secret-out marker, two ETH endpoints must agree, the MEXC peg guards, HTLC v1.3 for USDT-paid
         // takes (both addresses scanned; asks as bal.m13); PandaPools collection/recovery/backup/interrupted-write fixes.
-        versionCode 2
-        versionName "0.2.0"
+        versionCode 3
+        versionName "0.2.1"
 
         buildConfigField "boolean", "PANDAMONIUM", "false"
         // PANDA_SHELL: Pandamonium-style tabs (Wallet/History/Apps/Chat/Node) + the embedded
@@ -288,6 +288,7 @@ def verifyKeetsArtifacts = tasks.register('verifyKeetsArtifacts', Exec) {
 tasks.named('preBuild').configure { dependsOn verifyKeetsArtifacts }
 
 dependencies {
+    implementation project(':design-system')
 
     //H2 database
     implementation 'com.h2database:h2:2.1.214'

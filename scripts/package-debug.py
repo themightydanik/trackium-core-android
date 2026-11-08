@@ -30,7 +30,7 @@ def main():
     (destination/'apk-signature.txt').write_text(signature)
     commit = subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     summary = {}
-    for module, task in [('app','testBlockDebugUnitTest'),('integrated/trackium','testDebugUnitTest'),('minimaapi','testDebugUnitTest'),('localization','testDebugUnitTest'),('integrated/history','testDebugUnitTest'),('core-regression','test')]:
+    for module, task in [('app','testBlockDebugUnitTest'),('integrated/trackium','testDebugUnitTest'),('minimaapi','testDebugUnitTest'),('localization','testDebugUnitTest'),('integrated/history','testDebugUnitTest'),('core-regression','test'),('design-system','testDebugUnitTest')]:
         roots = [ET.parse(p).getroot() for p in (ROOT/module/'build/test-results'/task).glob('TEST-*.xml')]
         if not roots: raise ValueError('Missing test evidence: '+module)
         counts = {k:sum(int(x.get(k,0)) for x in roots) for k in ['tests','failures','errors','skipped']}

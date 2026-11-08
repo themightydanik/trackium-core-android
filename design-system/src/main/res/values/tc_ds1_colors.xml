@@ -1,0 +1,18 @@
+<resources>
+    <color name="tc_ds1_canvas">#F5F8FC</color>
+    <color name="tc_ds1_surface">#FFFFFF</color>
+    <color name="tc_ds1_surface_raised">#EAF0F7</color>
+    <color name="tc_ds1_outline">#63788F</color>
+    <color name="tc_ds1_text">#122238</color>
+    <color name="tc_ds1_text_secondary">#4C6077</color>
+    <color name="tc_ds1_accent">#007667</color>
+    <color name="tc_ds1_on_accent">#FFFFFF</color>
+    <color name="tc_ds1_warning">#805500</color>
+    <color name="tc_ds1_danger">#AE2437</color>
+    <color name="tc_ds1_info">#285AB7</color>
+    <color name="tc_ds1_outline_subtle">#D5DFEB</color>
+    <color name="tc_ds1_gold">#866000</color>
+    <color name="tc_ds1_disabled_container">#E1E7EF</color>
+    <color name="tc_ds1_disabled_text">#52667D</color>
+    <color name="tc_ds1_focus">#285AB7</color>
+</resources>
