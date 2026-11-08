@@ -1,0 +1,15 @@
+/* DRAFT — not imported by the product */
+:root {
+  --tc-canvas: #0B1220;
+  --tc-surface: #132238;
+  --tc-surface-raised: #1C3048;
+  --tc-outline: #607894;
+  --tc-outline-subtle: #405771;
+  --tc-text: #E8EEF6;
+  --tc-text-secondary: #A7B8CA;
+  --tc-accent: #4FE0C1;
+  --tc-on-accent: #071B18;
+  --tc-warning: #F6C56E;
+  --tc-danger: #FF8B8B;
+  --tc-info: #94B8FF;
+}

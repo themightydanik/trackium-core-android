@@ -1,0 +1,32 @@
+package tech.trackium.core;
+import android.app.*;import android.content.*;import android.os.*;import android.view.*;import android.widget.*;
+import androidx.test.ext.junit.runners.AndroidJUnit4;import androidx.test.platform.app.InstrumentationRegistry;import androidx.test.runner.lifecycle.*;
+import org.junit.Test;import org.junit.runner.RunWith;import org.json.*;import org.minima.utils.BIP39;
+import java.io.*;import java.util.concurrent.atomic.AtomicReference;
+import static org.junit.Assert.*;
+@RunWith(AndroidJUnit4.class) public class UiAuditCaptureTest {
+ android.app.Instrumentation inst=InstrumentationRegistry.getInstrumentation(); Context ctx=inst.getTargetContext(); JSONArray records=new JSONArray();
+ void ui(Runnable r){inst.runOnMainSync(r);} Activity current(){AtomicReference<Activity> out=new AtomicReference<>();ui(()->{for(Activity a:ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(Stage.RESUMED))out.set(a);});return out.get();}
+ Activity open(String name)throws Exception{ctx.startActivity(new Intent().setClassName(ctx.getPackageName(),name).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));long end=SystemClock.elapsedRealtime()+180000;while(SystemClock.elapsedRealtime()<end){Activity a=current();if(a!=null&&a.getClass().getName().equals(name))return a;SystemClock.sleep(250);}throw new AssertionError("Screen unavailable: "+name);}
+ void capture(String name,Activity a)throws Exception{SystemClock.sleep(2500);JSONObject row=new JSONObject().put("screen",name).put("activity",a.getClass().getName());boolean secure=(a.getWindow().getAttributes().flags&WindowManager.LayoutParams.FLAG_SECURE)!=0;row.put("secure",secure);if(!secure){android.graphics.Bitmap b=inst.getUiAutomation().takeScreenshot();if(b!=null)try(FileOutputStream f=new FileOutputStream(new File(ctx.getExternalFilesDir(null),name+".png"))){b.compress(android.graphics.Bitmap.CompressFormat.PNG,100,f);}}else row.put("capture","not attempted: FLAG_SECURE retained");records.put(row);}
+ void finish(Activity a){ui(a::finish);SystemClock.sleep(200);}
+ @Test public void capture()throws Exception{
+ assertEquals("true",InstrumentationRegistry.getArguments().getString("auditDisposable"));assertTrue(Build.HARDWARE.contains("ranchu"));assertEquals("tech.trackium.core.prototype",ctx.getPackageName());
+ ui(()->com.eurobuddha.minimacore.i18n.Language.select(ctx,"en"));
+ String prefix=InstrumentationRegistry.getArguments().getString("auditConfig","standard");
+ var p=ctx.getSharedPreferences("main_prefs",0);boolean fresh=!p.getBoolean("SEED_SET",false);if(!fresh)assertTrue(p.getBoolean("ui_audit_disposable",false));
+ if(fresh){Activity a=open("com.eurobuddha.minimacore.launcher.LauncherActivity");capture(prefix+"-onboarding",a);finish(a);a=open("com.eurobuddha.minimacore.launcher.restore.RestoreWalletSyncActivity");capture(prefix+"-restore-blank",a);finish(a);
+ p.edit().putBoolean("SEED_SET",true).putBoolean("ui_audit_disposable",true).putString("SEED",BIP39.convertWordListToString(BIP39.getNewWordList())).putBoolean("keets_enabled",false).putString("minima_extra_params","-nop2p -noconnect -host 127.0.0.1 -hashtest 0").commit();}
+ for(String cmd:new String[]{"svc power stayon true","settings put system screen_off_timeout 1800000","input keyevent 224","wm dismiss-keyguard","dumpsys deviceidle whitelist +"+ctx.getPackageName()})try(var fd=inst.getUiAutomation().executeShellCommand(cmd);var in=new android.os.ParcelFileDescriptor.AutoCloseInputStream(fd)){while(in.read()!=-1){}}
+ for(String perm:new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE})inst.getUiAutomation().grantRuntimePermission(ctx.getPackageName(),perm);
+ ctx.startActivity(new Intent().setClassName(ctx.getPackageName(),"com.eurobuddha.minimacore.StartActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));long deadline=SystemClock.elapsedRealtime()+300000;Activity main=null;
+ while(SystemClock.elapsedRealtime()<deadline){main=current();if(main!=null&&main.getClass().getName().equals("com.eurobuddha.minimacore.main.MainActivity"))break;SystemClock.sleep(500);}assertNotNull(main);assertEquals("com.eurobuddha.minimacore.main.MainActivity",main.getClass().getName());
+ capture(prefix+"-node",main);final Activity host=main;
+ for(String label:new String[]{"Wallet","History","Apps","Node"}){ui(()->{View found=findText(host.getWindow().getDecorView(),label);if(found!=null)click(found);});capture(prefix+"-tab-"+label.toLowerCase(),host);}
+ for(String cls:new String[]{"main.ParamsActivity","lock.LockSettingsActivity","main.views.terminal.TerminalActivity","main.views.logs.LogsActivity"}){Activity a=open("com.eurobuddha.minimacore."+cls);capture(prefix+"-"+cls.replace('.','-'),a);finish(a);}
+ Activity nativeUi=open("tech.trackium.cargo.MainActivity");capture(prefix+"-native-dashboard",nativeUi);for(String tab:new String[]{"Shipments","Devices","Proofs","Settings"}){ui(()->{View v=findText(nativeUi.getWindow().getDecorView(),tab);if(v!=null)v.performClick();});capture(prefix+"-native-"+tab.toLowerCase(),nativeUi);}finish(nativeUi);
+ try(FileOutputStream f=new FileOutputStream(new File(ctx.getExternalFilesDir(null),prefix+"-metadata.json"))){f.write(records.toString(2).getBytes(java.nio.charset.StandardCharsets.UTF_8));}
+ }
+ void click(View v){while(v!=null&&!v.isClickable()&&v.getParent() instanceof View)v=(View)v.getParent();if(v!=null)v.performClick();}
+ View findText(View v,String text){if(v instanceof TextView&&text.contentEquals(((TextView)v).getText()))return v;if(v instanceof ViewGroup)for(int i=0;i<((ViewGroup)v).getChildCount();i++){View out=findText(((ViewGroup)v).getChildAt(i),text);if(out!=null)return out;}return null;}
+}
