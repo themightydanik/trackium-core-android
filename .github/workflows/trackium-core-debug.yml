@@ -1,0 +1,86 @@
+name: Trackium Core debug APK
+on:
+  workflow_dispatch:
+  push:
+    paths: &project_paths
+      - 'prototypes/trackium-core-android/**'
+      - '.github/workflows/trackium-core-debug.yml'
+      - 'app/**'
+      - 'minimaapi/**'
+      - 'localization/**'
+      - 'maxima-core/**'
+      - 'integrated/**'
+      - 'core-regression/**'
+      - 'scripts/**'
+      - 'gradle/**'
+      - '*.gradle'
+      - 'gradle.properties'
+      - 'gradlew*'
+      - 'sources.lock.json'
+      - 'UPSTREAM_NOTICES/**'
+      - 'docs/**'
+      - 'LICENSE'
+      - 'NOTICE'
+  pull_request:
+    paths: *project_paths
+permissions:
+  contents: read
+concurrency:
+  group: trackium-core-debug-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  debug:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout source without persisted credentials
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Locate standalone or temporary PR 12 project
+        id: project
+        run: |
+          if test -f settings.gradle && test -f sources.lock.json; then
+            echo 'directory=.' >> "$GITHUB_OUTPUT"
+          elif test -f prototypes/trackium-core-android/settings.gradle; then
+            echo 'directory=prototypes/trackium-core-android' >> "$GITHUB_OUTPUT"
+          else
+            echo 'Trackium Core project missing' >&2
+            exit 1
+          fi
+      - name: Install pinned JDK
+        uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
+        with:
+          distribution: temurin
+          java-version: '21.0.13+9'
+      - name: Install checksum-pinned Android SDK tools and packages
+        working-directory: ${{ steps.project.outputs.directory }}
+        run: scripts/setup-ci-android.sh
+      - name: Fresh ephemeral debug identity
+        working-directory: ${{ steps.project.outputs.directory }}
+        run: |
+          test ! -e .local/debug.keystore
+          echo "KEETS_CACHE_DIR=$RUNNER_TEMP/trackium-keets-cache" >> "$GITHUB_ENV"
+      - name: Verify pins, legal evidence, tests, lint, APK and signature
+        working-directory: ${{ steps.project.outputs.directory }}
+        run: scripts/ci-debug.sh
+      - name: Publish debug review artifact only
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: trackium-core-debug-${{ github.run_id }}
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+          path: |
+            ${{ steps.project.outputs.directory }}/dist/trackium-core-debug.apk
+            ${{ steps.project.outputs.directory }}/dist/SHA256SUMS
+            ${{ steps.project.outputs.directory }}/dist/apk-signature.txt
+            ${{ steps.project.outputs.directory }}/dist/build-evidence.json
+            ${{ steps.project.outputs.directory }}/dist/license-audit.json
+      - name: Remove ephemeral debug identity
+        if: ${{ always() && steps.project.outputs.directory != '' }}
+        working-directory: ${{ steps.project.outputs.directory }}
+        run: rm -f .local/debug.keystore

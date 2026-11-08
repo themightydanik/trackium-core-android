@@ -1,0 +1,84 @@
+# Standalone repository transfer
+
+The owner provided the empty target `themightydanik/trackium-core-android`. Migration uses the already prepared standalone Git history, without force push or rewriting the project. Original Trackium PR #12/#13 and their source branches are left unchanged.
+
+## Migration mapping
+
+| Source | Standalone history | Verified root tree |
+| --- | --- | --- |
+| Trackium PR #12 commit `13406d23f5ce5bcc1dcd662e0bd622f286ce974e`, subtree prototypes/trackium-core-android | `main` extraction commit `cfa4f046a5e03b81cdd82cf87bdbb9079fc17cea` | `9186657ce49ca0476119f1c5c7836c33e37e0fca` |
+| Trackium PR #13 commit `c44e71ee9f3c510d47fb0098e708223dfb3b7c36`, same subtree | Prepared stage-2 commit `43f6637d4e4c2c00a91fac10d82f82f99f80506c` | `1bd4ea8499afb19fc3c3efa843009257cbd05c2d` |
+
+Those trees were compared before migration, including executable modes, binary engine/wrapper, tests, scripts and legal evidence. The stage-2 branch keeps the three prepared commits on top of extraction main. Subsequent migration changes update only README and documentation to use the canonical repository and describe this verification; the prepared Android code, dependencies, checksums, tests and workflow are unchanged.
+
+New-repository CI is required, including an actual artifact download, package/version/signature/SHA256 verification, 327 JVM/Robolectric tests, 33 Python tests, lint and the release-blocker gate. Prior parent CI is not used as proof of the new repository’s build. Results and links are attached to the new phone-readiness PR; artefact provenance identifies its actual source commit and repository.
+
+After these checks pass, the parent PRs can be closed **without merging**, by a separate owner decision. Do not delete their branches or prototype directory automatically. Public release blockers and physical-phone acceptance remain independent of source migration.
+
+## Historical preparation and recovery procedure
+
+The sections below preserve the tested procedure from the stage when the target was unavailable. The new target now exists; do not reinitialise or overwrite it. Commands that assume an empty destination are for recovery into a new empty directory/repository only.
+
+## Verified extraction already performed
+
+The initial local standalone `main` commit was made from the **tracked** PR #12 tree, without caches, keys, wallet data or build output:
+
+```sh
+# Run in a clean checkout of themightydanik/trackium with PR #12 available.
+SOURCE_COMMIT=13406d23f5ce5bcc1dcd662e0bd622f286ce974e
+PROJECT_PATH=prototypes/trackium-core-android
+DESTINATION=/absolute/path/to/new/trackium-core-android
+mkdir "$DESTINATION"  # must be new; do not overwrite an existing checkout
+git archive "$SOURCE_COMMIT:$PROJECT_PATH" | tar -x -C "$DESTINATION"
+git -C "$DESTINATION" init -b main
+git -C "$DESTINATION" add .
+git -C "$DESTINATION" commit -m "chore: extract Trackium Core from trackium PR 12 at $SOURCE_COMMIT"
+test "$(git rev-parse "$SOURCE_COMMIT:$PROJECT_PATH")" = "$(git -C "$DESTINATION" rev-parse 'HEAD^{tree}')"
+```
+
+The exact extracted tree was `9186657ce49ca0476119f1c5c7836c33e37e0fca`. This equality includes executable bits, binary JAR/wrapper/icons, LICENSE, NOTICE, original source pins, all tests and architecture docs. Git subtree is not installed in this environment; `git archive`/tree verification provides the tested portable alternative. The source reference remains in extraction commit message and source pins, rather than claiming that the entire unrelated backend history was imported.
+
+## Offline handoff bundle
+
+`/workspace/trackium-core-android-stage2.bundle` contains the complete standalone Git history and both prepared branches, without keys/caches/APKs/wallet data. It can be verified and cloned on another machine:
+
+```sh
+git bundle verify trackium-core-android-stage2.bundle
+git clone --branch feat/stage2-phone-readiness trackium-core-android-stage2.bundle trackium-core-android
+cd trackium-core-android
+git branch main origin/main
+git remote rename origin prepared-bundle
+git remote add origin https://github.com/themightydanik/trackium-core-android.git
+```
+
+A fresh clone of the bundle was built with the full common script: 327 JVM/Robolectric and 33 Python tests passed, host lint had 0 errors, and uncompressed APK entries matched the first local build despite different temporary signing identities. An online target must still be provided/verified before any push.
+
+## Move the completed stage-2 tree after the owner provides an accessible empty repository
+
+These commands do **not** create a repository. The owner must first create/provide the intended repository and grant appropriate access. Do not force-push an existing nonempty repository.
+
+Option A, in the prepared standalone checkout (preserves extraction main and separate stage-2 review branch):
+
+```sh
+cd /workspace/trackium-core-android
+git status --short  # must be clean
+git remote -v     # origin is the intended target, not the parent Trackium repo
+gh repo view themightydanik/trackium-core-android
+git ls-remote origin  # inspect; target must be empty for this initial main push
+git push -u origin main
+git push -u origin feat/stage2-phone-readiness
+gh pr create --repo themightydanik/trackium-core-android --base main --head feat/stage2-phone-readiness --title 'feat: Trackium Core Android phone readiness' --body-file docs/STAGE2_PR.md
+```
+
+No auto-merge command is part of this procedure. Do not use --force. A nonempty target requires inspecting its existing history and preparing a normal branch/PR; stop before pushing main over it.
+
+Option B, if only the temporary parent stage-2 branch is available: use its reviewed final commit instead of SOURCE_COMMIT above and archive the same PROJECT_PATH into a **new** local repository. This exports the complete stage-2 source directly at root; keep that parent commit hash in the initial commit message. Add the target remote only after checking its identity/access. Push a review branch according to the target's existing main/branch policy.
+
+## Verification before retiring the temporary copy
+
+1. Compare the target root tree against the exact staged project subtree (or diff tracked archives), including `.github/workflows/trackium-core-debug.yml` and notices. Do not copy the parent root's Gateway/Android workflows/backend.
+2. Clone target into a fresh directory; run scripts/ci-debug.sh with the documented SDK/JDK. Confirm engine/source/legal pins, 327 JVM/Robolectric and 33 Python tests, host lint 0 errors, APK package/signature and the complete artifact bundle.
+3. Run target GitHub Actions and download/verify its APK. Update canonical docs/run links to the target repository.
+4. Keep parent PR #12, its branch and source directory intact until migration and target CI are verified. Any later removal/merge is a separate reviewed change; this stage does not perform it.
+
+No Gateway code or services are duplicated. Actual owner-approved Gateway provisioning/pairing tooling continues to live in the main Trackium repository.
