@@ -27,7 +27,7 @@ palette.neutral / mint / amber / red / blue
 | danger | #FF8B8B | #AE2437 | Ошибка/опасное действие |
 | info | #94B8FF | #285AB7 | Нейтральная информация |
 | outline | #607894 | #63788F | Meaningful input/control edge, минимум 3:1 |
-| outlineSubtle | #405771 | роль зависит от поверхности | Только decorative dividers; не единственный input/focus indicator |
+| outlineSubtle | #405771 | #D5DFEB | Только decorative dividers; не единственный input/focus indicator |
 
 Контраст рассчитан стандартной WCAG relative luminance формулой, opaque sRGB. Dark text/canvas 16.04:1, secondary/surface 7.88:1, onAccent/accent 10.83:1; light onAccent/accent 4.99:1. Все draft functional pairs в JSON проходят пороги 4.5 для обычного текста и 3 для границы control. Это не аттестация целого UI: реальные pressed/disabled/translucent/icon/focus states требуют отдельного измерения. Изначальная draft decorative border не достигала3:1; поэтому выделены функциональная outline и outlineSubtle, а не занижен порог.
 
