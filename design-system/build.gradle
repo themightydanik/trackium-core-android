@@ -1,0 +1,13 @@
+plugins { alias(libs.plugins.android.library); id 'org.jetbrains.kotlin.android' }
+android {
+    namespace 'tech.trackium.designsystem'
+    compileSdk 36
+    defaultConfig { minSdk 28 }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+    kotlinOptions { jvmTarget = '17' }
+    testOptions { unitTests.includeAndroidResources = true }
+}
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.14.1'
+}

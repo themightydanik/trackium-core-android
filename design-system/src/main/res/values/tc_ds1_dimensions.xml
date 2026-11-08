@@ -1,0 +1,28 @@
+<resources>
+    <dimen name="tc_ds1_type_caption">12sp</dimen>
+    <dimen name="tc_ds1_type_label">14sp</dimen>
+    <dimen name="tc_ds1_type_body">16sp</dimen>
+    <dimen name="tc_ds1_type_title">20sp</dimen>
+    <dimen name="tc_ds1_type_headline">28sp</dimen>
+    <dimen name="tc_ds1_type_display">36sp</dimen>
+    <dimen name="tc_ds1_space_4">4dp</dimen>
+    <dimen name="tc_ds1_space_8">8dp</dimen>
+    <dimen name="tc_ds1_space_12">12dp</dimen>
+    <dimen name="tc_ds1_space_16">16dp</dimen>
+    <dimen name="tc_ds1_space_24">24dp</dimen>
+    <dimen name="tc_ds1_space_32">32dp</dimen>
+    <dimen name="tc_ds1_space_48">48dp</dimen>
+    <dimen name="tc_ds1_space_64">64dp</dimen>
+    <dimen name="tc_ds1_radius_control">12dp</dimen>
+    <dimen name="tc_ds1_radius_card">16dp</dimen>
+    <dimen name="tc_ds1_radius_sheet">24dp</dimen>
+    <dimen name="tc_ds1_icon_small">16dp</dimen>
+    <dimen name="tc_ds1_icon_standard">24dp</dimen>
+    <dimen name="tc_ds1_icon_large">32dp</dimen>
+    <dimen name="tc_ds1_icon_brand">48dp</dimen>
+    <dimen name="tc_ds1_elevation_base">0dp</dimen>
+    <dimen name="tc_ds1_elevation_card">1dp</dimen>
+    <dimen name="tc_ds1_elevation_overlay">4dp</dimen>
+    <dimen name="tc_ds1_elevation_modal">8dp</dimen>
+    <dimen name="tc_ds1_touch_target">48dp</dimen>
+</resources>

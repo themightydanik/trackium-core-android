@@ -1,0 +1,34 @@
+{
+  "source_repository": "themightydanik/trackium",
+  "source_commit": "ee384431f6e1d8c21240ee6cbcc1f9473b73555e",
+  "source_wordmark": "assets/img/logo.png",
+  "source_app_icon": "icon.png",
+  "wordmark_sha256": "45e5273963ab4e7eb5d8318ad616616af344b388111365f9d84bdd40959409df",
+  "app_icon_sha256": "1e2e7f9913fc0a6f5aaee98ba710fb6e874e7e0029400b9f2fd3e93349dc3e10",
+  "crop_bbox": [
+    6,
+    18,
+    362,
+    313
+  ],
+  "method": "exact RGBA crop; alpha retained; Lanczos resizing; no inaccurate vector reconstruction",
+  "outputs": {
+    "app/src/main/res/drawable-hdpi/tc_ds1_notification_small.png": "f30c6b43c4a210d1caabbb8316389efbd39594d5ed1bfaac7a702d88be40f5c5",
+    "app/src/main/res/drawable-mdpi/tc_ds1_notification_small.png": "f948f430692e8320d05f53178c15acb03fca8d522dd18b5b2dd9ab7dc30a7cc1",
+    "app/src/main/res/drawable-nodpi/tc_ds1_brand_mark.png": "d5642e0b797fef9118ff63999d97dcca03fbff8f3c6b129216eee670cbac9a8e",
+    "app/src/main/res/drawable-nodpi/tc_ds1_launcher_foreground.png": "79c4675fb7177ca4382bfb4c265269c8b10cc9a80d4b8944db156d3b343b3171",
+    "app/src/main/res/drawable-nodpi/tc_ds1_launcher_monochrome.png": "60988350ea938471d44b2ec9e51918e299f26fcd84ee8f569467f23d101a8444",
+    "app/src/main/res/drawable-xhdpi/tc_ds1_notification_small.png": "dbc3507961db5e0a14c6fb3c952fc9f03680a7e1e3fa9abcf56ab92a36cee65e",
+    "app/src/main/res/drawable-xxhdpi/tc_ds1_notification_small.png": "9983cba63551dba6cd88805f5c919769fbf49348021587289ca41d9801b16a7e",
+    "app/src/main/res/drawable-xxxhdpi/tc_ds1_notification_small.png": "123a06c6c118c92933cc35920a8fbbf58c741d8f81243259f006d8aa998d4634",
+    "design-system/brand/generated/app-180.png": "3c76f798b01fe6b45af843487c3cf5fe30e97539b672c1fc72f63445091abb50",
+    "design-system/brand/generated/app-192.png": "67999a1c1fe0ee90b259517c29e11bda969426541650129f8a59e4cb9979fa67",
+    "design-system/brand/generated/app-32.png": "3e874a92a4d1c91c75e4dfc85ccb35f0f6c3bc5dfd37e6fca97822c6155fd56a",
+    "design-system/brand/generated/app-48.png": "16696c8c3d366103f03a3ba23bb12650f4e25a057f26529e0248542aed1eefbc",
+    "design-system/brand/generated/app-512.png": "6541df4c45efd289b3b36309ad42f0fd75ad86d1ded12f3d42463ea4dbfab734",
+    "design-system/brand/generated/launcher-foreground.png": "79c4675fb7177ca4382bfb4c265269c8b10cc9a80d4b8944db156d3b343b3171",
+    "design-system/brand/generated/launcher-monochrome.png": "60988350ea938471d44b2ec9e51918e299f26fcd84ee8f569467f23d101a8444",
+    "design-system/brand/generated/mark.png": "d5642e0b797fef9118ff63999d97dcca03fbff8f3c6b129216eee670cbac9a8e",
+    "docs/design-system-1/brand-comparison.png": "160db78854fec12361087f288f5220b44ba8d25fd4d94e25a3e2c44feee43a06"
+  }
+}
