@@ -1,0 +1,15 @@
+<resources>
+<!-- DRAFT: not in an Android res source set -->
+<color name="tc_canvas">#0B1220</color>
+<color name="tc_surface">#132238</color>
+<color name="tc_surface_raised">#1C3048</color>
+<color name="tc_outline">#607894</color>
+<color name="tc_outline_subtle">#405771</color>
+<color name="tc_text">#E8EEF6</color>
+<color name="tc_text_secondary">#A7B8CA</color>
+<color name="tc_accent">#4FE0C1</color>
+<color name="tc_on_accent">#071B18</color>
+<color name="tc_warning">#F6C56E</color>
+<color name="tc_danger">#FF8B8B</color>
+<color name="tc_info">#94B8FF</color>
+</resources>

@@ -1,0 +1,370 @@
+{
+  "sourceCommit": "196b3dd5848e35844acfeffccf8f984030d7bee3",
+  "runtime": "Chromium headless, browser emulated viewports; not physical devices",
+  "records": [
+    {
+      "path": "web-desktop-dashboard-preview.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "A clear view of your cargo.",
+      "preview": "PREVIEW · STATIC DEMOSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 13,
+      "errors": []
+    },
+    {
+      "path": "web-desktop-shipments-preview.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "Every journey, in one place.",
+      "preview": "PREVIEW · STATIC DEMOSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 10,
+      "errors": []
+    },
+    {
+      "path": "web-desktop-devices-preview.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "Know what your cargo knows.",
+      "preview": "PREVIEW · STATIC DEMOSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 19,
+      "errors": []
+    },
+    {
+      "path": "web-desktop-map-preview.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "The bigger picture.",
+      "preview": "PREVIEW · STATIC DEMOSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 9,
+      "errors": []
+    },
+    {
+      "path": "web-desktop-events-preview.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "The detail behind every move.",
+      "preview": "PREVIEW · STATIC DEMOSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 46,
+      "errors": []
+    },
+    {
+      "path": "web-desktop-proofs-preview.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "Visibility is not yet proof.",
+      "preview": "PREVIEW · STATIC DEMOSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 10,
+      "errors": []
+    },
+    {
+      "path": "web-desktop-settings-preview.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "Your Gateway. Your deployment.",
+      "preview": "PREVIEW · STATIC DEMOSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 15,
+      "errors": []
+    },
+    {
+      "path": "web-compact-dashboard-preview.png",
+      "viewport": {
+        "width": 320,
+        "height": 640
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "A clear view of your cargo.",
+      "preview": "PREVIEW · STATIC DEMO\nSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 15,
+      "errors": []
+    },
+    {
+      "path": "web-compact-shipments-preview.png",
+      "viewport": {
+        "width": 320,
+        "height": 640
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "Every journey, in one place.",
+      "preview": "PREVIEW · STATIC DEMO\nSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 12,
+      "errors": []
+    },
+    {
+      "path": "web-compact-devices-preview.png",
+      "viewport": {
+        "width": 320,
+        "height": 640
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "Know what your cargo knows.",
+      "preview": "PREVIEW · STATIC DEMO\nSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 21,
+      "errors": []
+    },
+    {
+      "path": "web-compact-map-preview.png",
+      "viewport": {
+        "width": 320,
+        "height": 640
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "The bigger picture.",
+      "preview": "PREVIEW · STATIC DEMO\nSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 11,
+      "errors": []
+    },
+    {
+      "path": "web-compact-events-preview.png",
+      "viewport": {
+        "width": 320,
+        "height": 640
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "The detail behind every move.",
+      "preview": "PREVIEW · STATIC DEMO\nSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 48,
+      "errors": []
+    },
+    {
+      "path": "web-compact-proofs-preview.png",
+      "viewport": {
+        "width": 320,
+        "height": 640
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "Visibility is not yet proof.",
+      "preview": "PREVIEW · STATIC DEMO\nSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 12,
+      "errors": []
+    },
+    {
+      "path": "web-compact-settings-preview.png",
+      "viewport": {
+        "width": 320,
+        "height": 640
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "Your Gateway. Your deployment.",
+      "preview": "PREVIEW · STATIC DEMO\nSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 17,
+      "errors": []
+    },
+    {
+      "path": "web-phone-dashboard-preview.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "A clear view of your cargo.",
+      "preview": "PREVIEW · STATIC DEMO\nSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 15,
+      "errors": []
+    },
+    {
+      "path": "web-phone-shipments-preview.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "Every journey, in one place.",
+      "preview": "PREVIEW · STATIC DEMO\nSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 12,
+      "errors": []
+    },
+    {
+      "path": "web-phone-devices-preview.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "Know what your cargo knows.",
+      "preview": "PREVIEW · STATIC DEMO\nSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 21,
+      "errors": []
+    },
+    {
+      "path": "web-phone-map-preview.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "The bigger picture.",
+      "preview": "PREVIEW · STATIC DEMO\nSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 11,
+      "errors": []
+    },
+    {
+      "path": "web-phone-events-preview.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "The detail behind every move.",
+      "preview": "PREVIEW · STATIC DEMO\nSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 48,
+      "errors": []
+    },
+    {
+      "path": "web-phone-proofs-preview.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "Visibility is not yet proof.",
+      "preview": "PREVIEW · STATIC DEMO\nSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 12,
+      "errors": []
+    },
+    {
+      "path": "web-phone-settings-preview.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "Your Gateway. Your deployment.",
+      "preview": "PREVIEW · STATIC DEMO\nSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 17,
+      "errors": []
+    },
+    {
+      "path": "web-tablet-dashboard-preview.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "A clear view of your cargo.",
+      "preview": "PREVIEW · STATIC DEMOSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 13,
+      "errors": []
+    },
+    {
+      "path": "web-tablet-shipments-preview.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "Every journey, in one place.",
+      "preview": "PREVIEW · STATIC DEMOSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 10,
+      "errors": []
+    },
+    {
+      "path": "web-tablet-devices-preview.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "Know what your cargo knows.",
+      "preview": "PREVIEW · STATIC DEMOSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 19,
+      "errors": []
+    },
+    {
+      "path": "web-tablet-map-preview.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "The bigger picture.",
+      "preview": "PREVIEW · STATIC DEMOSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 9,
+      "errors": []
+    },
+    {
+      "path": "web-tablet-events-preview.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "The detail behind every move.",
+      "preview": "PREVIEW · STATIC DEMOSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 46,
+      "errors": []
+    },
+    {
+      "path": "web-tablet-proofs-preview.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "Visibility is not yet proof.",
+      "preview": "PREVIEW · STATIC DEMOSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 10,
+      "errors": []
+    },
+    {
+      "path": "web-tablet-settings-preview.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "mode": "explicit static preview; unpaired; no backend",
+      "horizontalOverflow": 0,
+      "heading": "Your Gateway. Your deployment.",
+      "preview": "PREVIEW · STATIC DEMOSynthetic data · fixed snapshot, 07 Nov 2026 · no Gateway writes\nExit demo ×",
+      "smallTargets": 15,
+      "errors": []
+    }
+  ]
+}

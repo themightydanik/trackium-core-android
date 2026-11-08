@@ -1,0 +1,1334 @@
+{
+  "scope": [
+    "app/src/main",
+    "app/src/block",
+    "app/src/pandaShell",
+    "integrated/history/src/main",
+    "integrated/trackium/src/main"
+  ],
+  "activities": [
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".StartActivity",
+      "exported": "true",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".launcher.LauncherActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".launcher.newwallet.NewWalletActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".launcher.newwallet.NewWalletRestoreActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".launcher.restore.RestoreWalletSyncActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".launcher.restore.SeedSyncServiceActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".main.SeedSyncActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".main.views.terminal.TerminalActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".main.views.logs.LogsActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".chat.ChatThreadActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".maxchat.MaxThreadActivity",
+      "exported": "false",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".chat.ChatImageActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".main.ParamsActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".lock.LockActivity",
+      "exported": "false",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".lock.LockSettingsActivity",
+      "exported": "false",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".main.backup.BackupActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".main.backup.BackupCreateActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".main.backup.RestoreFileActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".main.backup.VaultActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".main.backup.ChatBackupActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".main.views.send.SendActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".main.views.receive.ReceiveActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".launcher.StartServiceActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "app/src/main/AndroidManifest.xml",
+      "name": ".main.MainActivity",
+      "exported": "false (no intent filter)",
+      "theme": "inherited"
+    },
+    {
+      "manifest": "integrated/history/src/main/AndroidManifest.xml",
+      "name": "com.eurobuddha.history.MainActivity",
+      "exported": "false",
+      "theme": "@style/pm_history_Theme.Utxo"
+    },
+    {
+      "manifest": "integrated/trackium/src/main/AndroidManifest.xml",
+      "name": "tech.trackium.cargo.MainActivity",
+      "exported": "false",
+      "theme": "@style/TrackiumTheme"
+    }
+  ],
+  "screen_classes": [
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/StartActivity.java",
+      "layouts": [],
+      "dialogs": 0
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatImageActivity.java",
+      "layouts": [
+        "activity_chat_image"
+      ],
+      "dialogs": 5
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "layouts": [
+        "activity_chat_thread",
+        "chat_date_row",
+        "chat_msg_row",
+        "dialog_chat_identity",
+        "dialog_chat_pay"
+      ],
+      "dialogs": 19
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "layouts": [
+        "chat_contact_row",
+        "chat_thread_row",
+        "dialog_chat_identity",
+        "dialog_chat_new",
+        "dialog_contact_pick",
+        "view_chat"
+      ],
+      "dialogs": 23
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/LauncherActivity.java",
+      "layouts": [
+        "launcher_activity"
+      ],
+      "dialogs": 1
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/StartServiceActivity.java",
+      "layouts": [],
+      "dialogs": 12
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/newwallet/NewWalletActivity.java",
+      "layouts": [
+        "newwallet_activity"
+      ],
+      "dialogs": 0
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/newwallet/NewWalletRestoreActivity.java",
+      "layouts": [
+        "restorenewwallet_activity"
+      ],
+      "dialogs": 1
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/restore/RestoreWalletSyncActivity.java",
+      "layouts": [
+        "restorewallet_activity"
+      ],
+      "dialogs": 0
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/restore/SeedSyncServiceActivity.java",
+      "layouts": [],
+      "dialogs": 5
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/lock/LockActivity.java",
+      "layouts": [
+        "activity_lock"
+      ],
+      "dialogs": 0
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/lock/LockSettingsActivity.java",
+      "layouts": [
+        "activity_lock_settings"
+      ],
+      "dialogs": 14
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "layouts": [
+        "activity_main"
+      ],
+      "dialogs": 28
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/ParamsActivity.java",
+      "layouts": [
+        "params_activity"
+      ],
+      "dialogs": 5
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/SeedSyncActivity.java",
+      "layouts": [
+        "seed_sync"
+      ],
+      "dialogs": 3
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/BackupActivity.java",
+      "layouts": [
+        "backup_hub",
+        "view_backup_row"
+      ],
+      "dialogs": 1
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/BackupCreateActivity.java",
+      "layouts": [
+        "backup_create"
+      ],
+      "dialogs": 3
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/ChatBackupActivity.java",
+      "layouts": [
+        "backup_chat"
+      ],
+      "dialogs": 4
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/RestoreFileActivity.java",
+      "layouts": [
+        "backup_restore",
+        "view_backup_row"
+      ],
+      "dialogs": 5
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/VaultActivity.java",
+      "layouts": [
+        "vault_keys",
+        "view_backup_row"
+      ],
+      "dialogs": 11
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/apps/AppsView.java",
+      "layouts": [
+        "dialog_apps_info",
+        "view_apps"
+      ],
+      "dialogs": 13
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/balance/BalanceView.java",
+      "layouts": [
+        "view_wallet_balance"
+      ],
+      "dialogs": 0
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/home/HomeView.java",
+      "layouts": [
+        "view_home"
+      ],
+      "dialogs": 0
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/logs/LogsActivity.java",
+      "layouts": [
+        "activity_logs"
+      ],
+      "dialogs": 0
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/logs/LogsView.java",
+      "layouts": [
+        "view_logs"
+      ],
+      "dialogs": 0
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/pending/PendingView.java",
+      "layouts": [
+        "view_pending"
+      ],
+      "dialogs": 0
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/receive/ReceiveActivity.java",
+      "layouts": [
+        "activity_receive"
+      ],
+      "dialogs": 0
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/receive/ReceiveView.java",
+      "layouts": [
+        "view_wallet_receive"
+      ],
+      "dialogs": 0
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/send/SendActivity.java",
+      "layouts": [
+        "activity_send"
+      ],
+      "dialogs": 0
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/send/SendView.java",
+      "layouts": [
+        "view_wallet_send"
+      ],
+      "dialogs": 5
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/terminal/TerminalActivity.java",
+      "layouts": [
+        "activity_terminal"
+      ],
+      "dialogs": 0
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/terminal/TerminalView.java",
+      "layouts": [
+        "view_terminal"
+      ],
+      "dialogs": 0
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/maxchat/MaxThreadActivity.java",
+      "layouts": [
+        "activity_chat_thread",
+        "chat_date_row",
+        "chat_msg_row"
+      ],
+      "dialogs": 14
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "layouts": [],
+      "dialogs": 9
+    }
+  ],
+  "layouts": [
+    "app/src/main/res/layout/activity_chat_image.xml",
+    "app/src/main/res/layout/activity_chat_thread.xml",
+    "app/src/main/res/layout/activity_lock.xml",
+    "app/src/main/res/layout/activity_lock_settings.xml",
+    "app/src/main/res/layout/activity_logs.xml",
+    "app/src/main/res/layout/activity_main.xml",
+    "app/src/main/res/layout/activity_receive.xml",
+    "app/src/main/res/layout/activity_send.xml",
+    "app/src/main/res/layout/activity_terminal.xml",
+    "app/src/main/res/layout/backup_chat.xml",
+    "app/src/main/res/layout/backup_create.xml",
+    "app/src/main/res/layout/backup_hub.xml",
+    "app/src/main/res/layout/backup_restore.xml",
+    "app/src/main/res/layout/chat_contact_row.xml",
+    "app/src/main/res/layout/chat_date_row.xml",
+    "app/src/main/res/layout/chat_msg_row.xml",
+    "app/src/main/res/layout/chat_thread_row.xml",
+    "app/src/main/res/layout/dialog_apps_info.xml",
+    "app/src/main/res/layout/dialog_chat_identity.xml",
+    "app/src/main/res/layout/dialog_chat_new.xml",
+    "app/src/main/res/layout/dialog_chat_pay.xml",
+    "app/src/main/res/layout/dialog_coin_detail.xml",
+    "app/src/main/res/layout/dialog_contact_pick.xml",
+    "app/src/main/res/layout/dialog_wallet_coins.xml",
+    "app/src/main/res/layout/keyboard_dismiss.xml",
+    "app/src/main/res/layout/launcher_activity.xml",
+    "app/src/main/res/layout/layout_progress.xml",
+    "app/src/main/res/layout/newwallet_activity.xml",
+    "app/src/main/res/layout/params_activity.xml",
+    "app/src/main/res/layout/restorenewwallet_activity.xml",
+    "app/src/main/res/layout/restorewallet_activity.xml",
+    "app/src/main/res/layout/seed_sync.xml",
+    "app/src/main/res/layout/send_spinner_item.xml",
+    "app/src/main/res/layout/vault_keys.xml",
+    "app/src/main/res/layout/view_apps.xml",
+    "app/src/main/res/layout/view_apps_internal_row.xml",
+    "app/src/main/res/layout/view_apps_row.xml",
+    "app/src/main/res/layout/view_backup_row.xml",
+    "app/src/main/res/layout/view_balance_row.xml",
+    "app/src/main/res/layout/view_chat.xml",
+    "app/src/main/res/layout/view_coin_detail_row.xml",
+    "app/src/main/res/layout/view_coin_row.xml",
+    "app/src/main/res/layout/view_home.xml",
+    "app/src/main/res/layout/view_logs.xml",
+    "app/src/main/res/layout/view_password_field.xml",
+    "app/src/main/res/layout/view_pending.xml",
+    "app/src/main/res/layout/view_terminal.xml",
+    "app/src/main/res/layout/view_wallet.xml",
+    "app/src/main/res/layout/view_wallet_balance.xml",
+    "app/src/main/res/layout/view_wallet_connecting.xml",
+    "app/src/main/res/layout/view_wallet_receive.xml",
+    "app/src/main/res/layout/view_wallet_send.xml",
+    "integrated/history/src/main/res/layout/pm_history_activity_main.xml"
+  ],
+  "values": [
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "minima_orange",
+      "parent": null,
+      "value": "#FF4A2B"
+    },
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "minima_orange_pressed",
+      "parent": null,
+      "value": "#E43C20"
+    },
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "minima_blue",
+      "parent": null,
+      "value": "#2F6BF6"
+    },
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "minima_grey",
+      "parent": null,
+      "value": "#9A9DA3"
+    },
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "core_bg",
+      "parent": null,
+      "value": "#F4F5F7"
+    },
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "core_surface",
+      "parent": null,
+      "value": "#FFFFFF"
+    },
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "core_surface_variant",
+      "parent": null,
+      "value": "#F0F2F4"
+    },
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "core_outline",
+      "parent": null,
+      "value": "#E4E7EB"
+    },
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "core_text",
+      "parent": null,
+      "value": "#14171B"
+    },
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "core_text_mid",
+      "parent": null,
+      "value": "#5B616B"
+    },
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "core_text_faint",
+      "parent": null,
+      "value": "#9CA2AB"
+    },
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "on_primary",
+      "parent": null,
+      "value": "#FFFFFF"
+    },
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "status_good",
+      "parent": null,
+      "value": "#1F9D48"
+    },
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "status_warn",
+      "parent": null,
+      "value": "#B8791A"
+    },
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "status_bad",
+      "parent": null,
+      "value": "#D33B22"
+    },
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "black",
+      "parent": null,
+      "value": "#FF000000"
+    },
+    {
+      "file": "app/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "white",
+      "parent": null,
+      "value": "#FFFFFFFF"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "space_0",
+      "parent": null,
+      "value": "2dp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "space_1",
+      "parent": null,
+      "value": "4dp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "space_2",
+      "parent": null,
+      "value": "8dp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "space_3",
+      "parent": null,
+      "value": "12dp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "space_4",
+      "parent": null,
+      "value": "16dp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "space_5",
+      "parent": null,
+      "value": "24dp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "space_6",
+      "parent": null,
+      "value": "32dp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "space_7",
+      "parent": null,
+      "value": "40dp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "space_8",
+      "parent": null,
+      "value": "48dp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "radius_card",
+      "parent": null,
+      "value": "16dp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "radius_control",
+      "parent": null,
+      "value": "12dp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "radius_pill",
+      "parent": null,
+      "value": "999dp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "screen_gutter",
+      "parent": null,
+      "value": "16dp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "home_info_size_left",
+      "parent": null,
+      "value": "14sp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "home_info_size_right",
+      "parent": null,
+      "value": "15sp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "home_info_size_keyuses",
+      "parent": null,
+      "value": "30sp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "home_info_size_gap",
+      "parent": null,
+      "value": "16dp"
+    },
+    {
+      "file": "app/src/main/res/values/dimens.xml",
+      "kind": "dimen",
+      "name": "wallet_send_header_size",
+      "parent": null,
+      "value": "22sp"
+    },
+    {
+      "file": "app/src/main/res/values/styles.xml",
+      "kind": "style",
+      "name": "HomeRow",
+      "parent": null,
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/styles.xml",
+      "kind": "style",
+      "name": "HomeRow.Label",
+      "parent": null,
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/styles.xml",
+      "kind": "style",
+      "name": "HomeRow.Value",
+      "parent": null,
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/styles.xml",
+      "kind": "style",
+      "name": "HomeDivider",
+      "parent": null,
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/styles.xml",
+      "kind": "style",
+      "name": "FormLabel",
+      "parent": null,
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/styles.xml",
+      "kind": "style",
+      "name": "FormField",
+      "parent": null,
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/styles.xml",
+      "kind": "style",
+      "name": "MonoBlock",
+      "parent": null,
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/themes.xml",
+      "kind": "style",
+      "name": "Base.Theme.MinimaCore",
+      "parent": "Theme.Material3.DayNight.NoActionBar",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/themes.xml",
+      "kind": "style",
+      "name": "Theme.MinimaCore",
+      "parent": "Base.Theme.MinimaCore",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/themes.xml",
+      "kind": "style",
+      "name": "MyToolbarStyle",
+      "parent": "ThemeOverlay.AppCompat.ActionBar",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/themes.xml",
+      "kind": "style",
+      "name": "ShapeAppearance.MinimaCore.Small",
+      "parent": "ShapeAppearance.Material3.SmallComponent",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/themes.xml",
+      "kind": "style",
+      "name": "ShapeAppearance.MinimaCore.Medium",
+      "parent": "ShapeAppearance.Material3.MediumComponent",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/themes.xml",
+      "kind": "style",
+      "name": "ShapeAppearance.MinimaCore.Large",
+      "parent": "ShapeAppearance.Material3.LargeComponent",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/themes.xml",
+      "kind": "style",
+      "name": "Widget.MinimaCore.Tabs",
+      "parent": "Widget.Material3.TabLayout",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/themes.xml",
+      "kind": "style",
+      "name": "Widget.MinimaCore.Button",
+      "parent": "Widget.Material3.Button",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/themes.xml",
+      "kind": "style",
+      "name": "Widget.MinimaCore.Button.Outlined",
+      "parent": "Widget.Material3.Button.OutlinedButton",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/themes.xml",
+      "kind": "style",
+      "name": "Widget.MinimaCore.Button.Text",
+      "parent": "Widget.Material3.Button.TextButton",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/themes.xml",
+      "kind": "style",
+      "name": "Widget.MinimaCore.Card",
+      "parent": "Widget.Material3.CardView.Elevated",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/themes.xml",
+      "kind": "style",
+      "name": "Widget.MinimaCore.Toolbar",
+      "parent": "Widget.Material3.Toolbar",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/themes.xml",
+      "kind": "style",
+      "name": "Widget.MinimaCore.EditText",
+      "parent": "Widget.AppCompat.EditText",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/type.xml",
+      "kind": "style",
+      "name": "TextAppearance.MinimaCore.Display",
+      "parent": "TextAppearance.Material3.HeadlineMedium",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/type.xml",
+      "kind": "style",
+      "name": "TextAppearance.MinimaCore.Title",
+      "parent": "TextAppearance.Material3.TitleLarge",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/type.xml",
+      "kind": "style",
+      "name": "TextAppearance.MinimaCore.Body",
+      "parent": "TextAppearance.Material3.BodyLarge",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/type.xml",
+      "kind": "style",
+      "name": "TextAppearance.MinimaCore.BodyStrong",
+      "parent": "TextAppearance.Material3.BodyLarge",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/type.xml",
+      "kind": "style",
+      "name": "TextAppearance.MinimaCore.Label",
+      "parent": "TextAppearance.Material3.LabelLarge",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/type.xml",
+      "kind": "style",
+      "name": "TextAppearance.MinimaCore.Tab",
+      "parent": "TextAppearance.Material3.LabelMedium",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/type.xml",
+      "kind": "style",
+      "name": "TextAppearance.MinimaCore.Caption",
+      "parent": "TextAppearance.Material3.BodyMedium",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/type.xml",
+      "kind": "style",
+      "name": "TextAppearance.MinimaCore.Eyebrow",
+      "parent": "TextAppearance.Material3.LabelSmall",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values/type.xml",
+      "kind": "style",
+      "name": "TextAppearance.MinimaCore.Numeral",
+      "parent": "TextAppearance.Material3.HeadlineLarge",
+      "value": null
+    },
+    {
+      "file": "app/src/main/res/values-night/colors.xml",
+      "kind": "color",
+      "name": "core_bg",
+      "parent": null,
+      "value": "#0F1114"
+    },
+    {
+      "file": "app/src/main/res/values-night/colors.xml",
+      "kind": "color",
+      "name": "core_surface",
+      "parent": null,
+      "value": "#16181C"
+    },
+    {
+      "file": "app/src/main/res/values-night/colors.xml",
+      "kind": "color",
+      "name": "core_surface_variant",
+      "parent": null,
+      "value": "#1C2026"
+    },
+    {
+      "file": "app/src/main/res/values-night/colors.xml",
+      "kind": "color",
+      "name": "core_outline",
+      "parent": null,
+      "value": "#262A31"
+    },
+    {
+      "file": "app/src/main/res/values-night/colors.xml",
+      "kind": "color",
+      "name": "core_text",
+      "parent": null,
+      "value": "#F4F6F8"
+    },
+    {
+      "file": "app/src/main/res/values-night/colors.xml",
+      "kind": "color",
+      "name": "core_text_mid",
+      "parent": null,
+      "value": "#9AA0A8"
+    },
+    {
+      "file": "app/src/main/res/values-night/colors.xml",
+      "kind": "color",
+      "name": "core_text_faint",
+      "parent": null,
+      "value": "#5E646D"
+    },
+    {
+      "file": "app/src/main/res/values-night/colors.xml",
+      "kind": "color",
+      "name": "on_primary",
+      "parent": null,
+      "value": "#FFFFFF"
+    },
+    {
+      "file": "app/src/main/res/values-night/colors.xml",
+      "kind": "color",
+      "name": "status_good",
+      "parent": null,
+      "value": "#34C759"
+    },
+    {
+      "file": "app/src/main/res/values-night/colors.xml",
+      "kind": "color",
+      "name": "status_warn",
+      "parent": null,
+      "value": "#FFB020"
+    },
+    {
+      "file": "app/src/main/res/values-night/colors.xml",
+      "kind": "color",
+      "name": "status_bad",
+      "parent": null,
+      "value": "#FF5A3D"
+    },
+    {
+      "file": "app/src/block/res/values/colors.xml",
+      "kind": "color",
+      "name": "launcher_pupil",
+      "parent": null,
+      "value": "#317AFF"
+    },
+    {
+      "file": "integrated/history/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "pm_history_black",
+      "parent": null,
+      "value": "#FF000000"
+    },
+    {
+      "file": "integrated/history/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "pm_history_white",
+      "parent": null,
+      "value": "#FFFFFFFF"
+    },
+    {
+      "file": "integrated/history/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "pm_history_ux_bg",
+      "parent": null,
+      "value": "#FF0A0A0F"
+    },
+    {
+      "file": "integrated/history/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "pm_history_ux_card",
+      "parent": null,
+      "value": "#FF15151F"
+    },
+    {
+      "file": "integrated/history/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "pm_history_ux_card2",
+      "parent": null,
+      "value": "#FF1F1F2B"
+    },
+    {
+      "file": "integrated/history/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "pm_history_ux_accent",
+      "parent": null,
+      "value": "#FFF7931A"
+    },
+    {
+      "file": "integrated/history/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "pm_history_ux_text",
+      "parent": null,
+      "value": "#FFFFFFFF"
+    },
+    {
+      "file": "integrated/history/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "pm_history_ux_subtext",
+      "parent": null,
+      "value": "#FF9A9AA8"
+    },
+    {
+      "file": "integrated/history/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "pm_history_ux_input",
+      "parent": null,
+      "value": "#FF1F1F2B"
+    },
+    {
+      "file": "integrated/history/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "pm_history_ux_success",
+      "parent": null,
+      "value": "#FF2ECC71"
+    },
+    {
+      "file": "integrated/history/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "pm_history_ux_error",
+      "parent": null,
+      "value": "#FFE74C3C"
+    },
+    {
+      "file": "integrated/history/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "pm_history_ux_pending",
+      "parent": null,
+      "value": "#FFE6A23C"
+    },
+    {
+      "file": "integrated/history/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "pm_history_ux_banner",
+      "parent": null,
+      "value": "#33F7931A"
+    },
+    {
+      "file": "integrated/history/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "pm_history_ux_selected",
+      "parent": null,
+      "value": "#33F7931A"
+    },
+    {
+      "file": "integrated/history/src/main/res/values/colors.xml",
+      "kind": "color",
+      "name": "pm_history_ux_divider",
+      "parent": null,
+      "value": "#FF2A2A38"
+    },
+    {
+      "file": "integrated/history/src/main/res/values/themes.xml",
+      "kind": "style",
+      "name": "pm_history_Base.Theme.Utxo",
+      "parent": "Theme.Material3.DayNight.NoActionBar",
+      "value": null
+    },
+    {
+      "file": "integrated/history/src/main/res/values/themes.xml",
+      "kind": "style",
+      "name": "pm_history_Theme.Utxo",
+      "parent": "pm_history_Base.Theme.Utxo",
+      "value": null
+    },
+    {
+      "file": "integrated/history/src/main/res/values-night/themes.xml",
+      "kind": "style",
+      "name": "pm_history_Base.Theme.Utxo",
+      "parent": "Theme.Material3.DayNight.NoActionBar",
+      "value": null
+    },
+    {
+      "file": "integrated/trackium/src/main/res/values/styles.xml",
+      "kind": "style",
+      "name": "TrackiumTheme",
+      "parent": "android:style/Theme.Material.NoActionBar",
+      "value": null
+    }
+  ],
+  "graphics": [
+    "app/src/main/res/drawable/bg_dot.xml",
+    "app/src/main/res/drawable/bg_pill.xml",
+    "app/src/main/res/drawable/bg_token_tile.xml",
+    "app/src/main/res/drawable/bg_token_tile_white.xml",
+    "app/src/main/res/drawable/chat_badge_bg.xml",
+    "app/src/main/res/drawable/chat_bubble_in.xml",
+    "app/src/main/res/drawable/chat_bubble_out.xml",
+    "app/src/main/res/drawable/chat_date_pill.xml",
+    "app/src/main/res/drawable/chat_input_bg.xml",
+    "app/src/main/res/drawable/divider_hairline.xml",
+    "app/src/main/res/drawable/ic_archive.xml",
+    "app/src/main/res/drawable/ic_arrow_back.xml",
+    "app/src/main/res/drawable/ic_attach.xml",
+    "app/src/main/res/drawable/ic_chat.xml",
+    "app/src/main/res/drawable/ic_chevron_down.xml",
+    "app/src/main/res/drawable/ic_dapps.xml",
+    "app/src/main/res/drawable/ic_drawer_backup_help.xml",
+    "app/src/main/res/drawable/ic_drawer_backup_restore.xml",
+    "app/src/main/res/drawable/ic_drawer_contacts.xml",
+    "app/src/main/res/drawable/ic_drawer_health.xml",
+    "app/src/main/res/drawable/ic_drawer_home.xml",
+    "app/src/main/res/drawable/ic_edit_note.xml",
+    "app/src/main/res/drawable/ic_freedom.xml",
+    "app/src/main/res/drawable/ic_launcher_background.xml",
+    "app/src/main/res/drawable/ic_launcher_foreground.xml",
+    "app/src/main/res/drawable/ic_launcher_monochrome.xml",
+    "app/src/main/res/drawable/ic_minima.xml",
+    "app/src/main/res/drawable/ic_minima_icon.xml",
+    "app/src/main/res/drawable/ic_network.xml",
+    "app/src/main/res/drawable/ic_node.xml",
+    "app/src/main/res/drawable/ic_qr_code.xml",
+    "app/src/main/res/drawable/ic_send.xml",
+    "app/src/main/res/drawable/ic_transfer.xml",
+    "app/src/main/res/drawable/ic_visibility.xml",
+    "app/src/main/res/drawable/ic_visibility_off.xml",
+    "app/src/main/res/font/manrope.xml",
+    "app/src/main/res/font/manrope_bold.ttf",
+    "app/src/main/res/font/manrope_extrabold.ttf",
+    "app/src/main/res/font/manrope_medium.ttf",
+    "app/src/main/res/font/manrope_regular.ttf",
+    "app/src/main/res/font/manrope_semibold.ttf",
+    "app/src/main/res/mipmap-anydpi/ic_launcher.xml",
+    "app/src/main/res/mipmap-anydpi/ic_launcher_round.xml",
+    "integrated/history/src/main/res/drawable/pm_history_ic_coin_placeholder.xml",
+    "integrated/history/src/main/res/drawable/pm_history_ic_launcher_background.xml",
+    "integrated/history/src/main/res/mipmap-anydpi/pm_history_ic_launcher.xml",
+    "integrated/history/src/main/res/mipmap-anydpi/pm_history_ic_launcher_round.xml",
+    "integrated/history/src/main/res/mipmap-hdpi/pm_history_ic_launcher_foreground.png",
+    "integrated/history/src/main/res/mipmap-mdpi/pm_history_ic_launcher_foreground.png",
+    "integrated/history/src/main/res/mipmap-xhdpi/pm_history_ic_launcher_foreground.png",
+    "integrated/history/src/main/res/mipmap-xxhdpi/pm_history_ic_launcher_foreground.png",
+    "integrated/history/src/main/res/mipmap-xxxhdpi/pm_history_ic_launcher_foreground.png"
+  ],
+  "brand_references": [
+    {
+      "file": "app/src/main/AndroidManifest.xml",
+      "line": 57,
+      "reference": "android:icon=\"@mipmap/ic_launcher\""
+    },
+    {
+      "file": "app/src/main/AndroidManifest.xml",
+      "line": 58,
+      "reference": "android:roundIcon=\"@mipmap/ic_launcher_round\""
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatDrainer.java",
+      "line": 376,
+      "reference": ".setSmallIcon(R.drawable.ic_minima)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/StartServiceActivity.java",
+      "line": 89,
+      "reference": ".setIcon(R.drawable.ic_minima)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 174,
+      "reference": "tabs.getTabAt(MainAdapter.WALLET_POSITION).setIcon(R.drawable.ic_minima);"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 687,
+      "reference": ".setIcon(R.drawable.ic_minima)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/ParamsActivity.java",
+      "line": 140,
+      "reference": ".setIcon(R.drawable.ic_minima)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/ParamsActivity.java",
+      "line": 227,
+      "reference": ".setIcon(R.drawable.ic_minima)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/balance/BalanceAdapter.java",
+      "line": 171,
+      "reference": "icon.setImageResource(R.drawable.ic_minima);"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/send/SendView.java",
+      "line": 154,
+      "reference": ".setIcon(R.drawable.ic_minima)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/maxchat/MaxChatNotifier.java",
+      "line": 54,
+      "reference": ".setSmallIcon(R.drawable.ic_minima)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/service/MinimaService.java",
+      "line": 560,
+      "reference": ".setSmallIcon(R.drawable.ic_minima)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/service/NodeHealthMonitor.java",
+      "line": 378,
+      "reference": ".setSmallIcon(R.drawable.ic_minima)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/utils/logger.java",
+      "line": 28,
+      "reference": ".setIcon(R.drawable.ic_minima)"
+    },
+    {
+      "file": "app/src/main/res/drawable/ic_launcher_foreground.xml",
+      "line": 3,
+      "reference": "adaptive-icon safe circle. The pupil colour is @color/launcher_pupil, set per flavour"
+    },
+    {
+      "file": "app/src/main/res/drawable/ic_launcher_foreground.xml",
+      "line": 18,
+      "reference": "<path android:fillColor=\"@color/launcher_pupil\" android:pathData=\"M42.03,49.87 a2.85,2.85 0 1,0 5.70,0 a2.85,2.85 0 1,0 -5.70,0 Z\"/>"
+    },
+    {
+      "file": "app/src/main/res/drawable/ic_launcher_foreground.xml",
+      "line": 20,
+      "reference": "<path android:fillColor=\"@color/launcher_pupil\" android:pathData=\"M60.27,49.87 a2.85,2.85 0 1,0 5.70,0 a2.85,2.85 0 1,0 -5.70,0 Z\"/>"
+    },
+    {
+      "file": "app/src/main/res/layout/activity_lock.xml",
+      "line": 15,
+      "reference": "android:src=\"@drawable/ic_minima\""
+    },
+    {
+      "file": "app/src/main/res/layout/activity_main.xml",
+      "line": 37,
+      "reference": "android:icon=\"@drawable/ic_minima\""
+    },
+    {
+      "file": "app/src/main/res/layout/launcher_activity.xml",
+      "line": 38,
+      "reference": "android:src=\"@drawable/ic_minima\""
+    },
+    {
+      "file": "app/src/main/res/mipmap-anydpi/ic_launcher.xml",
+      "line": 3,
+      "reference": "<background android:drawable=\"@drawable/ic_launcher_background\" />"
+    },
+    {
+      "file": "app/src/main/res/mipmap-anydpi/ic_launcher.xml",
+      "line": 4,
+      "reference": "<foreground android:drawable=\"@drawable/ic_launcher_foreground\" />"
+    },
+    {
+      "file": "app/src/main/res/mipmap-anydpi/ic_launcher.xml",
+      "line": 5,
+      "reference": "<monochrome android:drawable=\"@drawable/ic_launcher_monochrome\" />"
+    },
+    {
+      "file": "app/src/main/res/mipmap-anydpi/ic_launcher_round.xml",
+      "line": 3,
+      "reference": "<background android:drawable=\"@drawable/ic_launcher_background\" />"
+    },
+    {
+      "file": "app/src/main/res/mipmap-anydpi/ic_launcher_round.xml",
+      "line": 4,
+      "reference": "<foreground android:drawable=\"@drawable/ic_launcher_foreground\" />"
+    },
+    {
+      "file": "app/src/main/res/mipmap-anydpi/ic_launcher_round.xml",
+      "line": 5,
+      "reference": "<monochrome android:drawable=\"@drawable/ic_launcher_monochrome\" />"
+    },
+    {
+      "file": "app/src/block/res/values/colors.xml",
+      "line": 3,
+      "reference": "<color name=\"launcher_pupil\">#317AFF</color>"
+    }
+  ],
+  "debug_harnesses": [
+    "app/src/debug/java/com/eurobuddha/minimacore/launcher/restore/SeedSyncHarnessActivity.java",
+    "app/src/debug/java/com/eurobuddha/minimacore/testing/CoreViewsHarnessActivity.java",
+    "app/src/debug/java/com/eurobuddha/minimacore/testing/LogsHarnessActivity.java",
+    "app/src/debug/java/com/eurobuddha/minimacore/testing/StartupHarnessActivity.java",
+    "app/src/debug/java/com/eurobuddha/minimacore/testing/TerminalHarnessActivity.java"
+  ]
+}

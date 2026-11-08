@@ -1,0 +1,82 @@
+[
+  {
+    "screen": "standard-node",
+    "activity": "com.eurobuddha.minimacore.main.MainActivity",
+    "secure": false
+  },
+  {
+    "screen": "standard-tab-wallet",
+    "activity": "com.eurobuddha.minimacore.main.MainActivity",
+    "secure": false
+  },
+  {
+    "screen": "standard-tab-history",
+    "activity": "com.eurobuddha.minimacore.main.MainActivity",
+    "secure": false
+  },
+  {
+    "screen": "standard-tab-apps",
+    "activity": "com.eurobuddha.minimacore.main.MainActivity",
+    "secure": false
+  },
+  {
+    "screen": "standard-tab-node",
+    "activity": "com.eurobuddha.minimacore.main.MainActivity",
+    "secure": false
+  },
+  {
+    "screen": "standard-main-ParamsActivity",
+    "activity": "com.eurobuddha.minimacore.main.ParamsActivity",
+    "secure": false
+  },
+  {
+    "screen": "standard-lock-LockSettingsActivity",
+    "activity": "com.eurobuddha.minimacore.lock.LockSettingsActivity",
+    "secure": false
+  },
+  {
+    "screen": "standard-main-views-terminal-TerminalActivity",
+    "activity": "com.eurobuddha.minimacore.main.views.terminal.TerminalActivity",
+    "secure": false
+  },
+  {
+    "screen": "standard-main-views-logs-LogsActivity",
+    "activity": "com.eurobuddha.minimacore.main.views.logs.LogsActivity",
+    "secure": false
+  },
+  {
+    "screen": "standard-main-backup-BackupActivity",
+    "activity": "com.eurobuddha.minimacore.main.backup.BackupActivity",
+    "secure": false
+  },
+  {
+    "screen": "standard-native-dashboard",
+    "activity": "tech.trackium.cargo.MainActivity",
+    "secure": true,
+    "capture": "not attempted: FLAG_SECURE retained"
+  },
+  {
+    "screen": "standard-native-shipments",
+    "activity": "tech.trackium.cargo.MainActivity",
+    "secure": true,
+    "capture": "not attempted: FLAG_SECURE retained"
+  },
+  {
+    "screen": "standard-native-devices",
+    "activity": "tech.trackium.cargo.MainActivity",
+    "secure": true,
+    "capture": "not attempted: FLAG_SECURE retained"
+  },
+  {
+    "screen": "standard-native-proofs",
+    "activity": "tech.trackium.cargo.MainActivity",
+    "secure": true,
+    "capture": "not attempted: FLAG_SECURE retained"
+  },
+  {
+    "screen": "standard-native-settings",
+    "activity": "tech.trackium.cargo.MainActivity",
+    "secure": true,
+    "capture": "not attempted: FLAG_SECURE retained"
+  }
+]

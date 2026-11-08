@@ -1,0 +1,1989 @@
+{
+  "xml_controls": [
+    {
+      "file": "app/src/main/res/layout/view_wallet_receive.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/wallet_receive_copy",
+      "text": "Copy",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_wallet_receive.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/wallet_receive_changeaddress",
+      "text": "Get Address",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/dialog_apps_info.xml",
+      "type": "CheckBox",
+      "id": "@+id/app_info_enabled",
+      "text": "Enabled",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/dialog_apps_info.xml",
+      "type": "CheckBox",
+      "id": "@+id/app_info_admin",
+      "text": "Admin",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/backup_chat.xml",
+      "type": "EditText",
+      "id": "@+id/chat_backup_password",
+      "text": null,
+      "hint": "at least 8 characters",
+      "inputType": "textPassword"
+    },
+    {
+      "file": "app/src/main/res/layout/backup_chat.xml",
+      "type": "ImageButton",
+      "id": "@+id/chat_backup_password_eye",
+      "text": null,
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/backup_chat.xml",
+      "type": "EditText",
+      "id": "@+id/chat_backup_confirm",
+      "text": null,
+      "hint": "type it again",
+      "inputType": "textPassword"
+    },
+    {
+      "file": "app/src/main/res/layout/backup_chat.xml",
+      "type": "ImageButton",
+      "id": "@+id/chat_backup_confirm_eye",
+      "text": null,
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/backup_chat.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/chat_backup_save",
+      "text": "Save chat backup",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/backup_chat.xml",
+      "type": "EditText",
+      "id": "@+id/chat_backup_restore_password",
+      "text": null,
+      "hint": "at least 8 characters",
+      "inputType": "textPassword"
+    },
+    {
+      "file": "app/src/main/res/layout/backup_chat.xml",
+      "type": "ImageButton",
+      "id": "@+id/chat_backup_restore_password_eye",
+      "text": null,
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/backup_chat.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/chat_backup_restore",
+      "text": "Choose backup file",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_logs.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/logs_pause",
+      "text": "Pause",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_logs.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/logs_clear",
+      "text": "Clear",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_logs.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/logs_share",
+      "text": "Share",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_logs.xml",
+      "type": "EditText",
+      "id": "@+id/logs_filter",
+      "text": null,
+      "hint": "Filter",
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/activity_lock.xml",
+      "type": "EditText",
+      "id": "@+id/lock_pin",
+      "text": null,
+      "hint": "@string/l10n_lock_pin",
+      "inputType": "numberPassword"
+    },
+    {
+      "file": "app/src/main/res/layout/activity_lock.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/lock_unlock",
+      "text": "@string/l10n_lock_unlock",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/activity_lock.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/lock_biometric",
+      "text": "@string/l10n_lock_use_biometric",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/dialog_chat_identity.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/identity_copy",
+      "text": "Copy address",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/dialog_chat_identity.xml",
+      "type": "EditText",
+      "id": "@+id/identity_name",
+      "text": null,
+      "hint": "Your display name",
+      "inputType": "textCapWords"
+    },
+    {
+      "file": "app/src/main/res/layout/seed_sync.xml",
+      "type": "EditText",
+      "id": "@+id/seed_sync_host",
+      "text": null,
+      "hint": "host:port",
+      "inputType": "textUri"
+    },
+    {
+      "file": "app/src/main/res/layout/seed_sync.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/seed_sync_proceed",
+      "text": "Resync Node",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/seed_sync.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/seed_sync_copy",
+      "text": "Copy log",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/seed_sync.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/seed_sync_restart",
+      "text": "Restart node",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/activity_lock_settings.xml",
+      "type": "com.google.android.material.switchmaterial.SwitchMaterial",
+      "id": "@+id/lock_switch_enable",
+      "text": "@string/l10n_lock_require_pin",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/activity_lock_settings.xml",
+      "type": "com.google.android.material.switchmaterial.SwitchMaterial",
+      "id": "@+id/lock_switch_bio",
+      "text": "@string/l10n_lock_use_biometric",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/activity_lock_settings.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/lock_autolock",
+      "text": "@string/l10n_lock_one_minute",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/activity_lock_settings.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/lock_change_pin",
+      "text": "@string/l10n_lock_change_pin",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/backup_create.xml",
+      "type": "EditText",
+      "id": "@+id/backup_create_name",
+      "text": null,
+      "hint": "minima-backup.bak",
+      "inputType": "text"
+    },
+    {
+      "file": "app/src/main/res/layout/backup_create.xml",
+      "type": "EditText",
+      "id": "@+id/backup_create_password",
+      "text": null,
+      "hint": "letters and numbers only",
+      "inputType": "textPassword"
+    },
+    {
+      "file": "app/src/main/res/layout/backup_create.xml",
+      "type": "ImageButton",
+      "id": "@+id/backup_create_password_eye",
+      "text": null,
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/backup_create.xml",
+      "type": "EditText",
+      "id": "@+id/backup_create_confirm",
+      "text": null,
+      "hint": "type it again",
+      "inputType": "textPassword"
+    },
+    {
+      "file": "app/src/main/res/layout/backup_create.xml",
+      "type": "ImageButton",
+      "id": "@+id/backup_create_confirm_eye",
+      "text": null,
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/backup_create.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/backup_create_go",
+      "text": "Create backup",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/backup_create.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/backup_create_copy",
+      "text": "Copy full path",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/backup_create.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/backup_create_export",
+      "text": "Save a copy to this phone",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_wallet_send.xml",
+      "type": "Spinner",
+      "id": "@+id/wallet_send_tokens",
+      "text": null,
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_wallet_send.xml",
+      "type": "EditText",
+      "id": "@+id/wallet_send_amount",
+      "text": null,
+      "hint": "0.0",
+      "inputType": "numberDecimal"
+    },
+    {
+      "file": "app/src/main/res/layout/view_wallet_send.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/wallet_send_max",
+      "text": "Max",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_wallet_send.xml",
+      "type": "EditText",
+      "id": "@+id/wallet_send_address",
+      "text": null,
+      "hint": "Mx… or 0x…",
+      "inputType": "textNoSuggestions|textMultiLine"
+    },
+    {
+      "file": "app/src/main/res/layout/view_wallet_send.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/wallet_send_scan",
+      "text": "Scan",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_wallet_send.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/wallet_send_sendbutton",
+      "text": "Send Funds",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/launcher_activity.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/launcher_language",
+      "text": "@string/l10n_language_title",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/launcher_activity.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/launcher_button_newwallet",
+      "text": "@string/l10n_launcher_new_wallet",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/launcher_activity.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/launcher_button_restore",
+      "text": "@string/l10n_launcher_restore_wallet",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/launcher_activity.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/launcher_button_params",
+      "text": "@string/l10n_menu_params",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/activity_chat_thread.xml",
+      "type": "ImageButton",
+      "id": "@+id/chat_attach",
+      "text": null,
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/activity_chat_thread.xml",
+      "type": "EditText",
+      "id": "@+id/chat_input",
+      "text": null,
+      "hint": "Message",
+      "inputType": "textCapSentences|textMultiLine"
+    },
+    {
+      "file": "app/src/main/res/layout/activity_chat_thread.xml",
+      "type": "com.google.android.material.floatingactionbutton.FloatingActionButton",
+      "id": "@+id/chat_send",
+      "text": null,
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/dialog_chat_new.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/newchat_pick",
+      "text": "Choose a saved contact",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/dialog_chat_new.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/newchat_scan",
+      "text": "Scan their QR code",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/dialog_chat_new.xml",
+      "type": "EditText",
+      "id": "@+id/newchat_address",
+      "text": null,
+      "hint": "keets 0x… or Parlons MAX# / Mx…@host:port",
+      "inputType": "text"
+    },
+    {
+      "file": "app/src/main/res/layout/dialog_chat_new.xml",
+      "type": "EditText",
+      "id": "@+id/newchat_name",
+      "text": null,
+      "hint": "Name (optional)",
+      "inputType": "textCapWords"
+    },
+    {
+      "file": "app/src/main/res/layout/view_chat.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/chat_empty_start",
+      "text": "Start a new chat",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_chat.xml",
+      "type": "com.google.android.material.floatingactionbutton.FloatingActionButton",
+      "id": "@+id/chat_fab",
+      "text": null,
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_apps_internal_row.xml",
+      "type": "com.google.android.material.materialswitch.MaterialSwitch",
+      "id": "@+id/int_app_switch",
+      "text": null,
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_apps_internal_row.xml",
+      "type": "com.google.android.material.materialswitch.MaterialSwitch",
+      "id": "@+id/int_app_freeze",
+      "text": null,
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_coin_detail_row.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/detail_copy",
+      "text": "COPY",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/params_activity.xml",
+      "type": "com.google.android.material.switchmaterial.SwitchMaterial",
+      "id": "@+id/params_switch_classic",
+      "text": "@string/classic_mode_title",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/params_activity.xml",
+      "type": "com.google.android.material.switchmaterial.SwitchMaterial",
+      "id": "@+id/params_switch_server",
+      "text": "Server mode (-server)",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/params_activity.xml",
+      "type": "com.google.android.material.switchmaterial.SwitchMaterial",
+      "id": "@+id/params_switch_megammr",
+      "text": "MegaMMR (-megammr)",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/params_activity.xml",
+      "type": "com.google.android.material.switchmaterial.SwitchMaterial",
+      "id": "@+id/params_switch_rpc",
+      "text": "Enable RPC (-rpcenable)",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/params_activity.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/params_rpc_password_copy",
+      "text": "Copy RPC password",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/params_activity.xml",
+      "type": "com.google.android.material.switchmaterial.SwitchMaterial",
+      "id": "@+id/params_switch_autoresync",
+      "text": "Resync automatically when unhealthy",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/params_activity.xml",
+      "type": "com.google.android.material.switchmaterial.SwitchMaterial",
+      "id": "@+id/params_switch_keets",
+      "text": "Keets transport (-keets)",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/params_activity.xml",
+      "type": "EditText",
+      "id": "@+id/params_extra",
+      "text": null,
+      "hint": "-p2pnodes host:port -txpowdbstore 3 …",
+      "inputType": "textMultiLine|textNoSuggestions"
+    },
+    {
+      "file": "app/src/main/res/layout/params_activity.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/params_button_save",
+      "text": "Save",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/params_activity.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/params_button_save_restart",
+      "text": "Save & Restart Node",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/vault_keys.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/vault_reveal",
+      "text": "Show seed phrase",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/vault_keys.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/vault_copy_phrase",
+      "text": "Copy seed phrase",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/restorewallet_activity.xml",
+      "type": "EditText",
+      "id": "@+id/restorewallet_seed",
+      "text": null,
+      "hint": "word one word two …",
+      "inputType": "textMultiLine"
+    },
+    {
+      "file": "app/src/main/res/layout/restorewallet_activity.xml",
+      "type": "EditText",
+      "id": "@+id/restorewallet_keyuses",
+      "text": null,
+      "hint": "0",
+      "inputType": "number"
+    },
+    {
+      "file": "app/src/main/res/layout/restorewallet_activity.xml",
+      "type": "EditText",
+      "id": "@+id/restorewallet_megammr",
+      "text": "spartacusrex.com:9001",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/restorewallet_activity.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/restorewallet_button_check",
+      "text": "Check Word List",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/restorewallet_activity.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/restorewallet_button_proceed",
+      "text": "Proceed",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_password_field.xml",
+      "type": "EditText",
+      "id": "@+id/password_input",
+      "text": null,
+      "hint": null,
+      "inputType": "textPassword"
+    },
+    {
+      "file": "app/src/main/res/layout/view_password_field.xml",
+      "type": "ImageButton",
+      "id": "@+id/password_toggle",
+      "text": null,
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_terminal.xml",
+      "type": "EditText",
+      "id": "@+id/terminal_input",
+      "text": null,
+      "hint": "Enter command",
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_terminal.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/terminal_send",
+      "text": "Run",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/newwallet_activity.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/newwallet_button_proceed",
+      "text": "I've saved it — Proceed",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/dialog_chat_pay.xml",
+      "type": "RadioGroup",
+      "id": "@+id/pay_currency",
+      "text": null,
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/dialog_chat_pay.xml",
+      "type": "RadioButton",
+      "id": "@+id/pay_minima",
+      "text": "Minima",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/dialog_chat_pay.xml",
+      "type": "RadioButton",
+      "id": "@+id/pay_mxusd",
+      "text": "MxUSD",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/dialog_chat_pay.xml",
+      "type": "EditText",
+      "id": "@+id/pay_amount",
+      "text": null,
+      "hint": "Amount",
+      "inputType": "numberDecimal"
+    },
+    {
+      "file": "app/src/main/res/layout/dialog_contact_pick.xml",
+      "type": "EditText",
+      "id": "@+id/pick_search",
+      "text": null,
+      "hint": "Search contacts",
+      "inputType": "text"
+    },
+    {
+      "file": "app/src/main/res/layout/backup_restore.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/backup_restore_import",
+      "text": "Bring a file in from this phone",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/backup_restore.xml",
+      "type": "EditText",
+      "id": "@+id/backup_restore_password",
+      "text": null,
+      "hint": "the password used when it was made",
+      "inputType": "textPassword"
+    },
+    {
+      "file": "app/src/main/res/layout/backup_restore.xml",
+      "type": "ImageButton",
+      "id": "@+id/backup_restore_password_eye",
+      "text": null,
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/backup_restore.xml",
+      "type": "RadioGroup",
+      "id": "@+id/backup_restore_mode",
+      "text": null,
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/backup_restore.xml",
+      "type": "RadioButton",
+      "id": "@+id/backup_restore_mode_local",
+      "text": "Use the backup as it is (it is recent)",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/backup_restore.xml",
+      "type": "RadioButton",
+      "id": "@+id/backup_restore_mode_resync",
+      "text": "Catch up to the chain tip from a MegaMMR node (it is old)",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/backup_restore.xml",
+      "type": "EditText",
+      "id": "@+id/backup_restore_host",
+      "text": null,
+      "hint": "host:port",
+      "inputType": "textUri"
+    },
+    {
+      "file": "app/src/main/res/layout/backup_restore.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/backup_restore_go",
+      "text": "Restore this node",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_wallet_balance.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/wallet_btn_send",
+      "text": "Send",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_wallet_balance.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/wallet_btn_receive",
+      "text": "Receive",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_home.xml",
+      "type": "Button",
+      "id": "@+id/open_trackium",
+      "text": "Open Trackium",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_home.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/button_tester",
+      "text": "Tester",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/keyboard_dismiss.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/keyboard_dismiss",
+      "text": "@string/hide_keyboard",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/activity_terminal.xml",
+      "type": "EditText",
+      "id": "@+id/terminal_input",
+      "text": null,
+      "hint": "Enter command",
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/activity_terminal.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/terminal_send",
+      "text": "Run",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/restorenewwallet_activity.xml",
+      "type": "EditText",
+      "id": "@+id/restorewallet_seed",
+      "text": null,
+      "hint": "word one word two …",
+      "inputType": "textMultiLine"
+    },
+    {
+      "file": "app/src/main/res/layout/restorenewwallet_activity.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/restorewallet_button_check",
+      "text": "Check Word List",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/restorenewwallet_activity.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/restorewallet_button_proceed",
+      "text": "Proceed",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "app/src/main/res/layout/view_backup_row.xml",
+      "type": "com.google.android.material.button.MaterialButton",
+      "id": "@+id/backup_row_action",
+      "text": null,
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "integrated/history/src/main/res/layout/pm_history_activity_main.xml",
+      "type": "Button",
+      "id": "@+id/pm_history_openNodeBtn",
+      "text": "@string/l10n_history_open_core",
+      "hint": null,
+      "inputType": null
+    },
+    {
+      "file": "integrated/history/src/main/res/layout/pm_history_activity_main.xml",
+      "type": "EditText",
+      "id": "@+id/pm_history_search",
+      "text": null,
+      "hint": "@string/l10n_history_search",
+      "inputType": "text"
+    }
+  ],
+  "dialog_titles": [
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/ParamsActivity.java",
+      "line": 138,
+      "call": ".setTitle(Language.msg(l10n_params_restart_title))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/ParamsActivity.java",
+      "line": 141,
+      "call": ".setPositiveButton(Language.msg(android.R.string.yes), new DialogInterface.OnClickListener(){"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/ParamsActivity.java",
+      "line": 148,
+      "call": ".setNegativeButton(Language.msg(android.R.string.no), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/ParamsActivity.java",
+      "line": 225,
+      "call": ".setTitle(zTitle)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/ParamsActivity.java",
+      "line": 228,
+      "call": ".setPositiveButton(Language.msg(android.R.string.yes), new DialogInterface.OnClickListener(){"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/SeedSyncActivity.java",
+      "line": 117,
+      "call": ".setTitle(Language.msg(l10n_resync_confirm_title))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/SeedSyncActivity.java",
+      "line": 119,
+      "call": ".setPositiveButton(Language.msg(l10n_resync_operation), (d, w) -> startResync())"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/SeedSyncActivity.java",
+      "line": 120,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 127,
+      "call": "tb.setTitle(\"Trackium Core\");"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 242,
+      "call": "getSupportActionBar().setTitle(BuildConfig.PANDAMONIUM ? \"\" : title);"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 370,
+      "call": "menu.findItem(R.id.mainmenu_logs).setTitle(Language.text(this, l10n_menu_logs));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 371,
+      "call": "menu.findItem(R.id.mainmenu_terminal).setTitle(Language.text(this, l10n_tab_terminal));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 372,
+      "call": "menu.findItem(R.id.mainmenu_backup).setTitle(Language.text(this, l10n_menu_backup));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 373,
+      "call": "menu.findItem(R.id.mainmenu_params).setTitle(Language.text(this, l10n_menu_params));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 374,
+      "call": "menu.findItem(R.id.mainmenu_locknow).setTitle(Language.text(this, l10n_menu_lock_now));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 375,
+      "call": "menu.findItem(R.id.mainmenu_applock).setTitle(Language.text(this, l10n_menu_app_lock));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 376,
+      "call": "menu.findItem(R.id.mainmenu_shutdown).setTitle(Language.text(this, l10n_menu_shutdown));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 377,
+      "call": "menu.findItem(R.id.mainmenu_wipeminima).setTitle(Language.text(this, l10n_menu_reset));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 378,
+      "call": "menu.findItem(R.id.mainmenu_screenshots).setTitle(Language.text(this, l10n_menu_screenshots));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 379,
+      "call": "menu.findItem(R.id.mainmenu_language).setTitle(Language.text(this, l10n_language_title));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 380,
+      "call": "menu.findItem(R.id.mainmenu_battery).setTitle(Language.text(this, l10n_menu_battery));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 449,
+      "call": ".setTitle(Language.text(this, l10n_battery_title))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 451,
+      "call": ".setNegativeButton(Language.text(this, l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 452,
+      "call": ".setPositiveButton(android.R.string.ok, (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 587,
+      "call": "builder.setTitle(Language.msg(l10n_core_peer_title));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 593,
+      "call": "builder.setPositiveButton(Language.msg(l10n_core_add_peer), new DialogInterface.OnClickListener() {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 603,
+      "call": "builder.setNegativeButton(Language.msg(l10n_common_cancel), new DialogInterface.OnClickListener() {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 621,
+      "call": "mShutdownDialog.setTitle(Language.text(this, l10n_core_shutting_down));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 685,
+      "call": ".setTitle(Language.msg(l10n_core_reset_title))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 688,
+      "call": ".setPositiveButton(Language.msg(android.R.string.yes), new DialogInterface.OnClickListener(){"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
+      "line": 697,
+      "call": ".setNegativeButton(Language.msg(android.R.string.no), null).show();"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatFiles.java",
+      "line": 61,
+      "call": "private void error(Exception e){post(()->track(new LanguageDialog(activity).setTitle(R.string.chat_files_title)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatFiles.java",
+      "line": 62,
+      "call": ".setMessage(e.getMessage()==null?text(R.string.chat_files_failed):e.getMessage()).setPositiveButton(android.R.string.ok,null).show()));}"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatFiles.java",
+      "line": 122,
+      "call": "track(new LanguageDialog(activity).setTitle(R.string.chat_files_title).setItems(names,(d,w)->show(list.get(w))).setNegativeButton(Language.msg(com.eurobuddha.minimacore.i18n.R.string.l10n_language_close),null).show());});"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatFiles.java",
+      "line": 137,
+      "call": "AlertDialog dialog=track(new LanguageDialog(activity).setTitle(t.file.name).setView(box).setNegativeButton(Language.msg(com.eurobuddha.minimacore.i18n.R.string.l10n_language_close),null).show());"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatImageActivity.java",
+      "line": 50,
+      "call": "getSupportActionBar().setTitle(\"\");"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatImageActivity.java",
+      "line": 90,
+      "call": "if (toolbar.getMenu().findItem(R.id.imgmenu_share) != null) toolbar.getMenu().findItem(R.id.imgmenu_share).setTitle(Language.text(this, l10n_logs_share));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatImageActivity.java",
+      "line": 91,
+      "call": "if (toolbar.getMenu().findItem(R.id.imgmenu_save) != null) toolbar.getMenu().findItem(R.id.imgmenu_save).setTitle(Language.text(this, l10n_chat_save_photos));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/VoiceRecordDialog.java",
+      "line": 77,
+      "call": ".setTitle(Language.msg(l10n_chat_voice_note))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/VoiceRecordDialog.java",
+      "line": 79,
+      "call": ".setPositiveButton(Language.msg(l10n_wallet_send), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/VoiceRecordDialog.java",
+      "line": 80,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 130,
+      "call": ".setTitle(displayName(t))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 139,
+      "call": ".setTitle(displayName(t))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 253,
+      "call": ".setTitle(Language.msg(l10n_chat_my_address))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 255,
+      "call": ".setPositiveButton(Language.msg(l10n_chat_done), (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 270,
+      "call": ".setTitle(Language.msg(l10n_chat_new_chat))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 272,
+      "call": ".setPositiveButton(Language.msg(l10n_chat_start_chat), null)   // set below so bad input doesn't dismiss"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 273,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 341,
+      "call": ".setTitle(Language.msg(l10n_chat_contact_name))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 343,
+      "call": ".setPositiveButton(Language.msg(l10n_common_save), (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 347,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 360,
+      "call": ".setTitle(Language.msg(l10n_chat_delete_chat))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 362,
+      "call": ".setPositiveButton(Language.msg(l10n_chat_delete_chat), (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 366,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 373,
+      "call": ".setTitle(Language.msg(l10n_chat_delete_contact))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 375,
+      "call": ".setPositiveButton(Language.msg(l10n_chat_delete_contact), (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 379,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 386,
+      "call": ".setTitle(Language.msg(l10n_chat_delete_chat))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 388,
+      "call": ".setPositiveButton(Language.msg(l10n_chat_delete_chat), (d, w) -> new Thread(() -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 393,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 400,
+      "call": ".setTitle(Language.msg(l10n_chat_delete_contact))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 402,
+      "call": ".setPositiveButton(Language.msg(l10n_chat_delete_contact), (d, w) -> new Thread(() -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 407,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 442,
+      "call": ".setTitle(Language.msg(l10n_chat_choose_contact))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatView.java",
+      "line": 444,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatFailureDialog.java",
+      "line": 29,
+      "call": "AlertDialog dialog = builder.setTitle(Language.msg(l10n_common_error))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatFailureDialog.java",
+      "line": 31,
+      "call": ".setPositiveButton(Language.msg(l10n_language_close), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 152,
+      "call": "if (menu.findItem(R.id.chatmenu_rename) != null) menu.findItem(R.id.chatmenu_rename).setTitle(Language.text(this, l10n_chat_rename_contact));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 153,
+      "call": "if (menu.findItem(R.id.chatmenu_address) != null) menu.findItem(R.id.chatmenu_address).setTitle(Language.text(this, l10n_chat_view_address));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 154,
+      "call": "if (menu.findItem(R.id.chatmenu_clear) != null) menu.findItem(R.id.chatmenu_clear).setTitle(Language.text(this, l10n_chat_delete_chat));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 155,
+      "call": "if (menu.findItem(R.id.chatmenu_delete) != null) menu.findItem(R.id.chatmenu_delete).setTitle(Language.text(this, l10n_chat_delete_contact));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 161,
+      "call": "getSupportActionBar().setTitle(title);"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 180,
+      "call": ".setTitle(Language.msg(l10n_chat_contact_name))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 182,
+      "call": ".setPositiveButton(Language.msg(l10n_common_save), (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 186,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 204,
+      "call": "dialog().setTitle(Language.msg(l10n_chat_contact_address)).setView(v)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 205,
+      "call": ".setPositiveButton(Language.msg(l10n_chat_done), null).show();"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 210,
+      "call": ".setTitle(Language.msg(l10n_chat_delete_chat))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 212,
+      "call": ".setPositiveButton(Language.msg(l10n_chat_delete_chat), (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 216,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 222,
+      "call": ".setTitle(Language.msg(l10n_chat_delete_contact))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 224,
+      "call": ".setPositiveButton(Language.msg(l10n_chat_delete_contact), (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 228,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 293,
+      "call": ".setTitle(Language.msg(l10n_chat_send_payment))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 295,
+      "call": ".setPositiveButton(Language.msg(l10n_wallet_send), (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 304,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 728,
+      "call": ".setTitle(Language.msg(l10n_chat_txid_title))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 730,
+      "call": ".setPositiveButton(Language.msg(l10n_wallet_copy), (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/chat/ChatThreadActivity.java",
+      "line": 735,
+      "call": ".setNegativeButton(Language.msg(l10n_language_close), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/LauncherActivity.java",
+      "line": 53,
+      "call": "tb.setTitle(\"\");"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/StartServiceActivity.java",
+      "line": 45,
+      "call": ".setTitle(Language.msg(l10n_startup_starting))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/StartServiceActivity.java",
+      "line": 87,
+      "call": "message = new LanguageDialog(this).setTitle(Language.msg(l10n_startup_error))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/StartServiceActivity.java",
+      "line": 90,
+      "call": ".setPositiveButton(Language.msg(l10n_startup_open), (d, w) -> { finished = true; openMain(); })"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/StartServiceActivity.java",
+      "line": 91,
+      "call": ".setNegativeButton(Language.msg(l10n_language_close), (d, w) -> finish())"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/StartServiceActivity.java",
+      "line": 95,
+      "call": "message = new LanguageDialog(this).setTitle(Language.msg(l10n_startup_slow))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/StartServiceActivity.java",
+      "line": 97,
+      "call": ".setPositiveButton(Language.msg(l10n_startup_keep_waiting), (d, w) -> { message = null; waitForMinimaToStartUp(); })"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/StartServiceActivity.java",
+      "line": 98,
+      "call": ".setNegativeButton(Language.msg(l10n_language_close), (d, w) -> finish())"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/StartServiceActivity.java",
+      "line": 124,
+      "call": "message = new LanguageDialog(this).setTitle(Language.msg(l10n_seed_sync_start_failed))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/StartServiceActivity.java",
+      "line": 126,
+      "call": ".setPositiveButton(Language.msg(l10n_startup_retry), (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/StartServiceActivity.java",
+      "line": 130,
+      "call": ".setNegativeButton(Language.msg(l10n_language_close), (d, w) -> finish())"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/lock/LockSettingsActivity.java",
+      "line": 46,
+      "call": "tb.setTitle(Language.text(this, l10n_menu_app_lock));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/lock/LockSettingsActivity.java",
+      "line": 141,
+      "call": ".setTitle(Language.msg(l10n_lock_auto_lock))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/lock/LockSettingsActivity.java",
+      "line": 147,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/lock/LockSettingsActivity.java",
+      "line": 160,
+      "call": "getSupportActionBar().setTitle(Language.text(this, l10n_menu_app_lock));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/lock/LockSettingsActivity.java",
+      "line": 180,
+      "call": ".setTitle(title)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/lock/LockSettingsActivity.java",
+      "line": 182,
+      "call": ".setPositiveButton(positive, null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/lock/LockSettingsActivity.java",
+      "line": 183,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), (dd, w) -> render())"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/lock/LockSettingsActivity.java",
+      "line": 213,
+      "call": ".setTitle(Language.msg(l10n_lock_set_pin))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/lock/LockSettingsActivity.java",
+      "line": 215,
+      "call": ".setPositiveButton(Language.msg(l10n_common_save), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/lock/LockSettingsActivity.java",
+      "line": 216,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), (dd, w) -> onCancel.run())"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/lock/BiometricUnlock.java",
+      "line": 233,
+      "call": ".setTitle(zTitle)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/maxchat/MaxThreadActivity.java",
+      "line": 99,
+      "call": "getSupportActionBar().setTitle(title());"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/maxchat/MaxThreadActivity.java",
+      "line": 154,
+      "call": "getSupportActionBar().setTitle(title());"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/maxchat/MaxThreadActivity.java",
+      "line": 160,
+      "call": "if (menu.findItem(R.id.maxmenu_clear) != null) menu.findItem(R.id.maxmenu_clear).setTitle(Language.text(this, l10n_chat_delete_chat));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/maxchat/MaxThreadActivity.java",
+      "line": 161,
+      "call": "if (menu.findItem(R.id.maxmenu_delete) != null) menu.findItem(R.id.maxmenu_delete).setTitle(Language.text(this, l10n_chat_delete_contact));"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/maxchat/MaxThreadActivity.java",
+      "line": 176,
+      "call": ".setTitle(Language.msg(l10n_chat_delete_chat))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/maxchat/MaxThreadActivity.java",
+      "line": 178,
+      "call": ".setPositiveButton(Language.msg(l10n_chat_delete_chat), (d, w) -> new Thread(() -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/maxchat/MaxThreadActivity.java",
+      "line": 182,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/maxchat/MaxThreadActivity.java",
+      "line": 188,
+      "call": ".setTitle(Language.msg(l10n_chat_delete_contact))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/maxchat/MaxThreadActivity.java",
+      "line": 190,
+      "call": ".setPositiveButton(Language.msg(l10n_chat_delete_contact), (d, w) -> new Thread(() -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/maxchat/MaxThreadActivity.java",
+      "line": 194,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/utils/logger.java",
+      "line": 26,
+      "call": ".setTitle(zTitle)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/utils/logger.java",
+      "line": 29,
+      "call": ".setPositiveButton(Language.msg(com.eurobuddha.minimacore.i18n.R.string.l10n_common_ok), new DialogInterface.OnClickListener(){"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/ChatBackupActivity.java",
+      "line": 187,
+      "call": ".setTitle(Language.msg(l10n_chatbak_confirm_title))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/ChatBackupActivity.java",
+      "line": 189,
+      "call": ".setPositiveButton(Language.msg(l10n_wallet_restore), (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/ChatBackupActivity.java",
+      "line": 196,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/VaultActivity.java",
+      "line": 263,
+      "call": ".setTitle(title)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/VaultActivity.java",
+      "line": 266,
+      "call": ".setPositiveButton(confirmText, (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/VaultActivity.java",
+      "line": 275,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/VaultActivity.java",
+      "line": 293,
+      "call": ".setTitle(title)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/VaultActivity.java",
+      "line": 296,
+      "call": ".setPositiveButton(confirmText, (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/VaultActivity.java",
+      "line": 307,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/VaultActivity.java",
+      "line": 315,
+      "call": ".setTitle(title)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/VaultActivity.java",
+      "line": 318,
+      "call": ".setPositiveButton(confirmText, (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/VaultActivity.java",
+      "line": 326,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/VaultActivity.java",
+      "line": 339,
+      "call": ".setTitle(Language.msg(l10n_vault_wipe_title))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/VaultActivity.java",
+      "line": 342,
+      "call": ".setPositiveButton(Language.msg(l10n_vault_wipe_action), (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/VaultActivity.java",
+      "line": 351,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/VaultActivity.java",
+      "line": 374,
+      "call": ".setTitle(Language.msg(l10n_vault_rebuild_title))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/VaultActivity.java",
+      "line": 377,
+      "call": ".setPositiveButton(Language.msg(l10n_vault_rebuild), (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/VaultActivity.java",
+      "line": 400,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/BackupCreateActivity.java",
+      "line": 203,
+      "call": ".setTitle(Language.msg(l10n_backup_export_title))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/BackupCreateActivity.java",
+      "line": 205,
+      "call": ".setPositiveButton(Language.msg(l10n_backup_choose_location), (d, w) -> exportLauncher.launch(run.filename()))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/BackupCreateActivity.java",
+      "line": 206,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/RestoreFileActivity.java",
+      "line": 159,
+      "call": ".setTitle(Language.msg(l10n_backup_delete_title))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/RestoreFileActivity.java",
+      "line": 161,
+      "call": ".setPositiveButton(Language.msg(l10n_backup_delete), (d, w) -> deleteNow(file.getName()))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/RestoreFileActivity.java",
+      "line": 162,
+      "call": ".setNegativeButton(Language.msg(l10n_backup_keep), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/RestoreFileActivity.java",
+      "line": 249,
+      "call": ".setTitle(Language.msg(l10n_backup_replace_title))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/RestoreFileActivity.java",
+      "line": 252,
+      "call": ".setPositiveButton(Language.msg(l10n_wallet_restore), (d, w) -> {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/backup/RestoreFileActivity.java",
+      "line": 259,
+      "call": ".setNegativeButton(Language.msg(l10n_common_cancel), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/apps/AppsView.java",
+      "line": 127,
+      "call": "new LanguageDialog(getActivity()).setTitle(Language.msg(l10n_apps_unverified_title))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/apps/AppsView.java",
+      "line": 129,
+      "call": ".setPositiveButton(Language.msg(android.R.string.ok), null).show();"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/apps/AppsView.java",
+      "line": 134,
+      "call": "new LanguageDialog(getActivity()).setTitle(Language.msg(l10n_apps_unverified_title))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/apps/AppsView.java",
+      "line": 136,
+      "call": ".setPositiveButton(Language.msg(l10n_apps_enable_anyway), new DialogInterface.OnClickListener() {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/apps/AppsView.java",
+      "line": 141,
+      "call": ".setNegativeButton(Language.msg(android.R.string.cancel), null).show();"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/apps/AppsView.java",
+      "line": 158,
+      "call": "new LanguageDialog(getActivity()).setTitle(Language.msg(l10n_apps_unverified_title))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/apps/AppsView.java",
+      "line": 160,
+      "call": ".setPositiveButton(Language.msg(android.R.string.ok), null).show();"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/apps/AppsView.java",
+      "line": 165,
+      "call": "new LanguageDialog(getActivity()).setTitle(Language.msg(l10n_apps_unverified_title))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/apps/AppsView.java",
+      "line": 167,
+      "call": ".setPositiveButton(Language.msg(l10n_apps_enable_anyway), new DialogInterface.OnClickListener() {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/apps/AppsView.java",
+      "line": 172,
+      "call": ".setNegativeButton(Language.msg(android.R.string.cancel), null).show();"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/apps/AppsView.java",
+      "line": 196,
+      "call": ".setTitle(pname)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/apps/AppsView.java",
+      "line": 199,
+      "call": ".setPositiveButton(Language.msg(android.R.string.ok), new DialogInterface.OnClickListener(){"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/apps/AppsView.java",
+      "line": 203,
+      "call": ".setNegativeButton(Language.msg(l10n_backup_delete), new DialogInterface.OnClickListener() {"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/send/SendView.java",
+      "line": 152,
+      "call": ".setTitle(Language.msg(l10n_send_confirm))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/send/SendView.java",
+      "line": 155,
+      "call": ".setPositiveButton(Language.msg(android.R.string.yes), new DialogInterface.OnClickListener(){"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/send/SendView.java",
+      "line": 159,
+      "call": ".setNegativeButton(Language.msg(android.R.string.no), null).show();"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/balance/coins/CoinDetailDialog.java",
+      "line": 75,
+      "call": ".setTitle(zSendable ? Language.msg(l10n_core_wallet_coin_sendable) : Language.msg(l10n_core_wallet_coin_locked))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/balance/coins/CoinDetailDialog.java",
+      "line": 77,
+      "call": ".setPositiveButton(Language.msg(l10n_language_close), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/balance/coins/CoinsDialog.java",
+      "line": 118,
+      "call": ".setTitle(zTokenName == null ? Language.msg(l10n_wallet_coins) : Language.msg(l10n_core_wallet_token_coins, zTokenName))"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/main/views/balance/coins/CoinsDialog.java",
+      "line": 121,
+      "call": ".setPositiveButton(Language.msg(l10n_language_close), null)"
+    },
+    {
+      "file": "app/src/main/java/com/eurobuddha/minimacore/launcher/restore/SeedSyncServiceActivity.java",
+      "line": 50,
+      "call": ".setTitle(Language.msg(l10n_seed_sync_title))"
+    },
+    {
+      "file": "integrated/history/src/main/java/com/eurobuddha/history/HistoryScreen.java",
+      "line": 337,
+      "call": "new LanguageDialog(this).setTitle(Language.msg(l10n_history_transaction)).setView(sv).setPositiveButton(Language.msg(l10n_language_close), null).show();"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 135,
+      "call": ".setTitle(title)"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 137,
+      "call": ".setPositiveButton(\"Close\", null)"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 168,
+      "call": ".setTitle(title)"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 170,
+      "call": ".setPositiveButton(\"Close\", null)"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 549,
+      "call": ".setTitle(\"Approve this immutable event\")"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 551,
+      "call": ".setNegativeButton(\"Cancel\", null)"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 552,
+      "call": ".setPositiveButton(\"Publish / reconcile\") { _, _ ->"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 636,
+      "call": ".setTitle(\"Verify through the trusted owner channel\")"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 640,
+      "call": ".setNegativeButton(\"Cancel\", null)"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 641,
+      "call": ".setPositiveButton(\"Pin verified issuer\") { _, _ ->"
+    }
+  ],
+  "native_controls": [
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 178,
+      "call": "if (sessionStarted && TrackiumCoreAccess.authorized()) detail(title, r)"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 281,
+      "call": "button(parent, \"Refresh Gateway\", secureReady()) { c.refresh() }"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 287,
+      "call": "val card = box(content, \"Your cargo workspace\")"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 313,
+      "call": "val safety = box(content, \"Built for accountable delivery\")"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 321,
+      "call": "button(safety, \"Observe Core wallet & synchronization\", c.core != null) {"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 332,
+      "call": "button(safety, \"Inspect reported wallet balance\") {"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 333,
+      "call": "dialog(\"Core-reported balance (not reserved funds)\", w.get(\"balance\").toString())"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 336,
+      "call": "button(safety, \"Observe embedded node\") { c.connectCore() }"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 337,
+      "call": "button(safety, \"Return to node\") { finish() }"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 345,
+      "call": "box(content, \"No shipments loaded\")"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 353,
+      "call": "val card = box(content, s.optString(\"name\", \"Shipment\"))"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 358,
+      "call": "button(card, \"Route & checkpoints\") {"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 368,
+      "call": "box(content, \"No devices loaded\")"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 372,
+      "call": "val card = box(content, d.optString(\"label\", \"Device\"))"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 377,
+      "call": "button(card, \"Coordinates, sensors & status\") {"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 396,
+      "call": "val controls = box(content, \"Native Mainnet Publisher\")"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 415,
+      "call": "val waiting = box(content, \"Awaiting Gateway owner approval\")"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 437,
+      "call": "val card = box(content, proof.getJSONObject(\"commitment\").getString(\"event_type\"))"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 463,
+      "call": "button(card, \"Verify with independent Gateway reader\") {"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 466,
+      "call": "button(card, \"Export proof bundle\") {"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 477,
+      "call": "button(card, \"Review approved Native Core job\") {"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 483,
+      "call": "val recovery = box(content, \"Device recovery checkpoints\")"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 489,
+      "call": "button(recovery, \"Review saved job ${id.take(8)}\") {"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 537,
+      "call": "button(parent, \"Check Core wallet & Mainnet readiness\") {"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 538,
+      "call": "c.readiness(packet) { r -> detail(\"Core readiness observation\", r) }"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 547,
+      "call": "val typed = input(parent, \"Type PUBLISH MAINNET ${job.event}\")"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 554,
+      "call": "dialog(\"Approval required\", \"Explicit Mainnet consent is required.\")"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 559,
+      "call": "dialog(\"Job unavailable\", NativePublisher.safeError(e))"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 566,
+      "call": "val core = box(content, \"embedded Core · your built-in wallet\")"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 574,
+      "call": "button(core, \"Observe embedded node\") { c.connectCore() }"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 575,
+      "call": "button(core, \"Return to node settings\") { finish() }"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 577,
+      "call": "val gateway = box(content, \"Gateway · limited native session\")"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 579,
+      "call": "input(gateway, \"HTTPS Gateway origin\", draftGateway ?: config.optString(\"gateway\"))"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 581,
+      "call": "input(gateway, \"Tenant UUID (public)\", draftTenant ?: config.optString(\"tenant\"))"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 584,
+      "call": "button(gateway, \"Save connection\") {"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 601,
+      "call": "button(gateway, \"Create owner approval challenge\") {"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 616,
+      "call": "button(gateway, \"Complete owner pairing\") {"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 622,
+      "call": "button(gateway, \"Refresh authenticated data\", secureReady()) { c.refresh() }"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 623,
+      "call": "button(gateway, \"Disconnect / revoke session\", secureReady()) {"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 634,
+      "call": "button(gateway, \"Verify & pin Gateway issuer\") {"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 649,
+      "call": "val safety = box(content, \"Wallet publication unavailable · prototype #1\")"
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 672,
+      "call": "input("
+    },
+    {
+      "file": "integrated/trackium/src/main/java/tech/trackium/cargo/MainActivity.kt",
+      "line": 678,
+      "call": "button(safety, \"Set explicit local cap\") {"
+    }
+  ]
+}
