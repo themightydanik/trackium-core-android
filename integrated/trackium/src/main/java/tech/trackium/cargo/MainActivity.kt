@@ -38,6 +38,7 @@ class MainActivity : Activity() {
     private lateinit var content: LinearLayout
     private var tab = "Dashboard"
     private var sessionStarted = false
+    private var proofPage = 0
     private var detailTitle: String? = null
     private var detailValue: JSONObject? = null
     private var currentScroll: ScrollView? = null
@@ -58,6 +59,7 @@ class MainActivity : Activity() {
             searches[key] = state?.getString("query.$key") ?: ""
             filters[key] = state?.getString("filter.$key") ?: "All"
         }
+        proofPage = (state?.getInt("proof.page") ?: 0).coerceAtLeast(0)
         draftGateway = state?.getString("draft.origin")
         draftTenant = state?.getString("draft.tenant")
         for (key in listOf("Dashboard", "Shipments", "Devices", "Proofs", "Settings")) scrollPositions[key] = state?.getInt("scroll.$key") ?: 0
@@ -66,6 +68,7 @@ class MainActivity : Activity() {
 
     override fun onSaveInstanceState(out: Bundle) {
         out.putString("tab", tab)
+        out.putInt("proof.page",proofPage)
         if(detailValue==null)currentScroll?.let { scrollPositions[tab]=it.scrollY }
         for(key in listOf("Shipments","Devices")) {out.putString("query.$key",searches[key]);out.putString("filter.$key",filters[key])}
         for((key,y) in scrollPositions)out.putInt("scroll.$key",y)
@@ -187,6 +190,7 @@ class MainActivity : Activity() {
     }
 
     private fun renderDetail(value: JSONObject) {
+        if(value.has("partial_observation"))content.addView(label("Partial observation · ${CargoPresentation.value(value,"partial_observation")}",16f,amber,true))
         button(content,"Back to $tab") { detailTitle=null;detailValue=null;currentScroll=null;render() }
         for(section in CargoPresentation.sections(detailTitle ?: "Details",value)) {
             if(section.rows.isEmpty())continue
@@ -451,7 +455,12 @@ class MainActivity : Activity() {
         }
         val list = c.data?.optJSONArray("proofs") ?: JSONArray()
         if(list.length()==0)box(content,"No proof records").addView(label("Refresh an authorized session. Pending and submitted records are not independently verified.",14f,muted))
-        for (i in 0 until list.length()) {
+        proofPage=proofPage.coerceIn(0,((list.length()-1).coerceAtLeast(0)/20))
+        val pages=box(content,"Loaded proof records · page ${proofPage+1}")
+        pages.addView(label("${list.length()} records in this snapshot; up to 20 on this page.",14f,muted))
+        if(proofPage>0)button(pages,"Previous proofs"){proofPage--;currentScroll=null;scrollPositions["Proofs"]=0;render()}
+        if((proofPage+1)*20<list.length())button(pages,"Next proofs"){proofPage++;currentScroll=null;scrollPositions["Proofs"]=0;render()}
+        for (i in proofPage*20 until minOf(list.length(),(proofPage+1)*20)) {
             val proof = list.getJSONObject(i)
             val card = box(content, proof.getJSONObject("commitment").getString("event_type"))
             card.addView(

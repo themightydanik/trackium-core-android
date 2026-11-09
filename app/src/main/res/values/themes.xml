@@ -92,6 +92,7 @@
 
     <!-- ===================== buttons ===================== -->
     <style name="Widget.MinimaCore.Button" parent="Widget.Material3.Button">
+        <item name="android:maxLines">4</item><item name="android:singleLine">false</item>
         <item name="cornerRadius">@dimen/tc_ds1_radius_control</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:paddingLeft">22dp</item>
@@ -103,6 +104,7 @@
     </style>
 
     <style name="Widget.MinimaCore.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:maxLines">4</item><item name="android:singleLine">false</item>
         <item name="cornerRadius">@dimen/tc_ds1_radius_control</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:textAppearance">@style/TextAppearance.MinimaCore.Label</item>
@@ -112,6 +114,7 @@
     </style>
 
     <style name="Widget.MinimaCore.Button.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="android:maxLines">4</item><item name="android:singleLine">false</item>
         <item name="android:textColor">@color/minima_orange</item>
         <item name="android:textAppearance">@style/TextAppearance.MinimaCore.Label</item>
     </style>
