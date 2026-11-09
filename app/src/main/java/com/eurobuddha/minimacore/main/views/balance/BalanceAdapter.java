@@ -167,7 +167,7 @@ public class BalanceAdapter extends BaseAdapter {
             int pad = 6 * Math.max(1, density);
             icon.setPadding(pad, pad, pad, pad);
             icon.setBackgroundResource(R.drawable.bg_token_tile_white);
-            icon.setColorFilter(0xFF000000);
+            icon.setColorFilter(mActivity.getColor(tech.trackium.designsystem.R.color.tc_ds1_text));
             icon.setImageResource(R.drawable.ic_minima);
             icon.setTag(null);
             badge.setImageBitmap(Identicon.checkBadge(badgePx));

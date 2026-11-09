@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/core_surface"
         app:titleTextColor="@color/core_text"
         app:titleTextAppearance="@style/TextAppearance.MinimaCore.Title"
@@ -30,13 +30,13 @@
             android:orientation="vertical"
             android:paddingHorizontal="24dp"
             android:paddingTop="24dp"
-            android:paddingBottom="40dp">
+            android:paddingBottom="40dp" android:background="@drawable/tc_content_panel" android:layout_margin="16dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Save chat backup"
-                android:textAppearance="@style/TextAppearance.MinimaCore.Display"  android:tag="l10n:text=l10n_chatbak_export" />
+                android:textAppearance="@style/TextAppearance.MinimaCore.Display"  android:tag="l10n:text=l10n_chatbak_export"  android:accessibilityHeading="true"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                     android:id="@+id/chat_backup_password"
                     style="@style/FormField"
                     android:saveEnabled="false"
-                    android:layout_width="0dp"
+                    android:minHeight="48dp" android:layout_width="0dp"
                     android:layout_weight="1"
                     android:inputType="textPassword"
                     android:importantForAutofill="no"
@@ -87,7 +87,7 @@
                     android:id="@+id/chat_backup_confirm"
                     style="@style/FormField"
                     android:saveEnabled="false"
-                    android:layout_width="0dp"
+                    android:minHeight="48dp" android:layout_width="0dp"
                     android:layout_weight="1"
                     android:inputType="textPassword"
                     android:importantForAutofill="no"
@@ -116,7 +116,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/chat_backup_save"
-                android:layout_width="match_parent"
+                android:minHeight="48dp" android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginTop="24dp"
                 android:text="Save chat backup"  android:tag="l10n:text=l10n_chatbak_export" />
@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:text="Restore chat backup"
-                android:textAppearance="@style/TextAppearance.MinimaCore.Display"  android:tag="l10n:text=l10n_chatbak_restore" />
+                android:textAppearance="@style/TextAppearance.MinimaCore.Display"  android:tag="l10n:text=l10n_chatbak_restore"  android:accessibilityHeading="true"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -158,7 +158,7 @@
                     android:id="@+id/chat_backup_restore_password"
                     style="@style/FormField"
                     android:saveEnabled="false"
-                    android:layout_width="0dp"
+                    android:minHeight="48dp" android:layout_width="0dp"
                     android:layout_weight="1"
                     android:inputType="textPassword"
                     android:importantForAutofill="no"
@@ -177,7 +177,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/chat_backup_restore"
                 style="@style/Widget.MinimaCore.Button.Outlined"
-                android:layout_width="match_parent"
+                android:minHeight="48dp" android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginTop="24dp"
                 android:text="Choose backup file"  android:tag="l10n:text=l10n_chatbak_choose" />

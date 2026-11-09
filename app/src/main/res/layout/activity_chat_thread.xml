@@ -9,7 +9,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/chat_thread_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/core_surface" />
 
     <ListView
@@ -34,8 +34,8 @@
         <ImageButton
             android:id="@+id/chat_attach"
             android:tag="l10n:description=l10n_chat_attach"
-        android:layout_width="44dp"
-            android:layout_height="44dp"
+        android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_attach"
             android:contentDescription="Attach"
@@ -45,7 +45,7 @@
         <EditText
             android:id="@+id/chat_input"
             android:tag="l10n:hint=l10n_chat_message"
-        android:layout_width="0dp"
+        android:minHeight="48dp" android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/chat_input_bg"

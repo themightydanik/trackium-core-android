@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/core_surface"
         app:titleTextColor="@color/core_text"
         app:titleTextAppearance="@style/TextAppearance.MinimaCore.Title"
@@ -30,13 +30,13 @@
             android:orientation="vertical"
             android:paddingHorizontal="24dp"
             android:paddingTop="24dp"
-            android:paddingBottom="40dp">
+            android:paddingBottom="40dp" android:background="@drawable/tc_content_panel" android:layout_margin="16dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Restore from file"
-                android:textAppearance="@style/TextAppearance.MinimaCore.Display"  android:tag="l10n:text=l10n_backup_restore" />
+                android:textAppearance="@style/TextAppearance.MinimaCore.Display"  android:tag="l10n:text=l10n_backup_restore"  android:accessibilityHeading="true"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -82,7 +82,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/backup_restore_import"
                 style="@style/Widget.MinimaCore.Button.Outlined"
-                android:layout_width="match_parent"
+                android:minHeight="48dp" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Bring a file in from this phone"  android:tag="l10n:text=l10n_backup_import" />
@@ -99,7 +99,7 @@
                     android:id="@+id/backup_restore_password"
                     style="@style/FormField"
                     android:saveEnabled="false"
-                    android:layout_width="0dp"
+                    android:minHeight="48dp" android:layout_width="0dp"
                     android:layout_weight="1"
                     android:inputType="textPassword"
                     android:importantForAutofill="no"
@@ -125,7 +125,7 @@
 
                 <RadioButton
                     android:id="@+id/backup_restore_mode_local"
-                    android:layout_width="match_parent"
+                    android:minHeight="48dp" android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:textColor="@color/core_text"
@@ -133,7 +133,7 @@
 
                 <RadioButton
                     android:id="@+id/backup_restore_mode_resync"
-                    android:layout_width="match_parent"
+                    android:minHeight="48dp" android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/core_text"
                     android:text="Catch up to the chain tip from a MegaMMR node (it is old)"  android:tag="l10n:text=l10n_backup_resync_mode" />
@@ -158,7 +158,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/backup_restore_go"
-                android:layout_width="match_parent"
+                android:minHeight="48dp" android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginTop="24dp"
                 android:text="Restore this node"  android:tag="l10n:text=l10n_backup_restore_node" />

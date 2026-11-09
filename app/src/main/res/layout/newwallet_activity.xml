@@ -28,13 +28,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="24dp" android:background="@drawable/tc_content_panel" android:layout_margin="16dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Your recovery seed" android:tag="l10n:text=l10n_onboarding_recovery_seed"
-                android:textAppearance="@style/TextAppearance.MinimaCore.Display" />
+                android:textAppearance="@style/TextAppearance.MinimaCore.Display"  android:accessibilityHeading="true"/>
 
             <TextView
                 android:layout_width="match_parent"

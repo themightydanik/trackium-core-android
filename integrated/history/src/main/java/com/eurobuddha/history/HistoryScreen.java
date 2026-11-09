@@ -323,7 +323,7 @@ public final class HistoryScreen extends android.view.ContextThemeWrapper {
         if (own.isLoaded() && !e.involvesWallet(own)) {
             TextView warn = new TextView(this);
             Language.setText(warn, Language.msg(l10n_history_foreign_activity));
-            warn.setTextColor(HistoryDesign.ACCENT);
+            warn.setTextColor(getColor(HistoryDesign.ACCENT));
             warn.setTextSize(12f);
             warn.setPadding(0, dp(6), 0, dp(2));
             box.addView(warn);
@@ -366,8 +366,8 @@ public final class HistoryScreen extends android.view.ContextThemeWrapper {
     private void sectionHeader(LinearLayout p, CharSequence title) {
         TextView h = new TextView(this);
         Language.setText(h, title);
-        h.setTextColor(HistoryDesign.ACCENT);
-        h.setTextSize(12f);
+        h.setTextColor(getColor(HistoryDesign.ACCENT));
+        h.setTextSize(14f);
         h.setTypeface(Typeface.DEFAULT_BOLD);
         h.setPadding(0, dp(8), 0, dp(2));
         p.addView(h);
@@ -390,7 +390,7 @@ public final class HistoryScreen extends android.view.ContextThemeWrapper {
         if (kind == Ownership.Kind.UNKNOWN) return;
         TextView t = new TextView(this);
         Language.setText(t, Language.join(Ownership.label(kind), mine && kind == Ownership.Kind.CONTRACT ? Language.join(" · ", Language.msg(l10n_history_yours)) : ""));
-        t.setTextColor(mine ? HistoryDesign.RECEIVED : Ownership.color(kind));
+        t.setTextColor(mine ? getColor(HistoryDesign.RECEIVED) : getColor(Ownership.color(kind)));
         t.setTextSize(11f);
         t.setTypeface(Typeface.DEFAULT_BOLD);
         t.setPadding(dp(indentDp), dp(4), 0, 0);
@@ -459,12 +459,12 @@ public final class HistoryScreen extends android.view.ContextThemeWrapper {
             mid.setPadding(dp(6), 0, dp(6), 0);
             mid.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
             TextView line1 = new TextView(HistoryScreen.this); line1.setTextSize(15f); line1.setTypeface(Typeface.DEFAULT_BOLD);
-            TextView line2 = new TextView(HistoryScreen.this); line2.setTextSize(12f); line2.setTextColor(HistoryDesign.DIM);
+            TextView line2 = new TextView(HistoryScreen.this); line2.setTextSize(12f); line2.setTextColor(getColor(HistoryDesign.DIM));
             mid.addView(line1); mid.addView(line2);
             row.addView(mid);
 
             TextView right = new TextView(HistoryScreen.this);
-            right.setTextSize(11f); right.setTextColor(HistoryDesign.DIM_2); right.setGravity(Gravity.END);
+            right.setTextSize(12f); right.setTextColor(getColor(HistoryDesign.DIM_2)); right.setGravity(Gravity.END);
             row.addView(right);
 
             return new VH(row, glyph, line1, line2, right);
@@ -472,8 +472,8 @@ public final class HistoryScreen extends android.view.ContextThemeWrapper {
 
         @Override public void onBindViewHolder(@NonNull VH h, int pos) {
             HistoryEntry e = data.get(pos);
-            int color = "received".equals(e.direction) ? HistoryDesign.RECEIVED
-                    : "sent".equals(e.direction) ? HistoryDesign.SENT : HistoryDesign.SELF;
+            int color = "received".equals(e.direction) ? getColor(HistoryDesign.RECEIVED)
+                    : "sent".equals(e.direction) ? getColor(HistoryDesign.SENT) : getColor(HistoryDesign.SELF);
             String g = "received".equals(e.direction) ? "↓" : "sent".equals(e.direction) ? "↑" : "⟲";
             String sign = e.incoming ? "+" : "sent".equals(e.direction) ? "−" : "";
             boolean reshuffle = e.isReshuffle();

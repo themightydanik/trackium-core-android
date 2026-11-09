@@ -1,22 +1,18 @@
 package com.eurobuddha.history;
-
-/** Shared dark + orange palette (matches the native Minima wallet/vestr/expert apps). */
+/** DS1 resource roles; callers resolve against their own Context, never a global night palette. */
 public final class HistoryDesign {
     private HistoryDesign() {}
-
-    public static final int BG        = 0xFF0A0A0F;   // app background
-    public static final int SURFACE   = 0xFF15151F;   // header / composer / cards
-    public static final int SURFACE_2 = 0xFF1F1F2B;   // raised (rows / detail)
-    public static final int BORDER    = 0xFF2A2A38;
-    public static final int ACCENT    = 0xFFF7931A;   // orange
-    public static final int ON_ACCENT = 0xFF0A0A0F;
-    public static final int TEXT      = 0xFFFFFFFF;
-    public static final int DIM       = 0xFF9A9AA8;
-    public static final int DIM_2     = 0xFF6A6A78;
-
-    public static final int RECEIVED  = 0xFF2ECC71;   // green ↓
-    public static final int SENT      = 0xFFFF7A66;   // soft red ↑
-    public static final int SELF      = 0xFF9A9AA8;   // grey ⟲
-
-    public static final int ACCENT_SOFT = 0x33F7931A; // faint orange (pairing banner)
+    public static final int BG = tech.trackium.designsystem.R.color.tc_ds1_canvas;
+    public static final int SURFACE = tech.trackium.designsystem.R.color.tc_ds1_surface;
+    public static final int SURFACE_2 = tech.trackium.designsystem.R.color.tc_ds1_surface_raised;
+    public static final int BORDER = tech.trackium.designsystem.R.color.tc_ds1_outline_subtle;
+    public static final int ACCENT = tech.trackium.designsystem.R.color.tc_ds1_accent;
+    public static final int ON_ACCENT = tech.trackium.designsystem.R.color.tc_ds1_on_accent;
+    public static final int TEXT = tech.trackium.designsystem.R.color.tc_ds1_text;
+    public static final int DIM = tech.trackium.designsystem.R.color.tc_ds1_text_secondary;
+    public static final int DIM_2 = tech.trackium.designsystem.R.color.tc_ds1_text_secondary;
+    public static final int RECEIVED = tech.trackium.designsystem.R.color.tc_ds1_accent;
+    public static final int SENT = tech.trackium.designsystem.R.color.tc_ds1_danger;
+    public static final int SELF = tech.trackium.designsystem.R.color.tc_ds1_text_secondary;
+    public static final int ACCENT_SOFT = tech.trackium.designsystem.R.color.tc_ds1_surface_raised;
 }

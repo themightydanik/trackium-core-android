@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp" android:layout_margin="16dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
 
             <EditText
                 android:id="@+id/wallet_send_amount"
-                android:layout_width="0dp"
+                android:minHeight="48dp" android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:inputType="numberDecimal"
@@ -71,7 +71,7 @@
                 style="@style/Widget.MinimaCore.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minHeight="44dp"
+                android:minHeight="48dp"
                 android:layout_marginStart="8dp"
                 android:minWidth="0dp"
                 android:paddingHorizontal="16dp"
@@ -99,7 +99,7 @@
                  visible end to end so it can be checked before sending -->
             <EditText
                 android:id="@+id/wallet_send_address"
-                android:layout_width="0dp"
+                android:minHeight="48dp" android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:inputType="textNoSuggestions|textMultiLine"
@@ -115,7 +115,7 @@
                 style="@style/Widget.MinimaCore.Button.Outlined"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minHeight="44dp"
+                android:minHeight="48dp"
                 android:layout_marginStart="8dp"
                 android:minWidth="0dp"
                 android:paddingHorizontal="16dp"

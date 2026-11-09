@@ -36,13 +36,13 @@
         android:orientation="horizontal">
         <RadioButton
             android:id="@+id/pay_minima"
-            android:layout_width="wrap_content"
+            android:minHeight="48dp" android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="Minima" />
         <RadioButton
             android:id="@+id/pay_mxusd"
-            android:layout_width="wrap_content"
+            android:minHeight="48dp" android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
             android:text="MxUSD" />
@@ -50,7 +50,7 @@
     <EditText
         android:id="@+id/pay_amount"
         android:tag="l10n:hint=l10n_chat_amount"
-        android:layout_width="match_parent"
+        android:minHeight="48dp" android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:hint="Amount"

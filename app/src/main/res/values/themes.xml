@@ -92,18 +92,18 @@
 
     <!-- ===================== buttons ===================== -->
     <style name="Widget.MinimaCore.Button" parent="Widget.Material3.Button">
-        <item name="cornerRadius">13dp</item>
+        <item name="cornerRadius">@dimen/tc_ds1_radius_control</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:paddingLeft">22dp</item>
         <item name="android:paddingRight">22dp</item>
         <item name="android:textAppearance">@style/TextAppearance.MinimaCore.Label</item>
         <item name="android:letterSpacing">0.01</item>
-        <item name="backgroundTint">@color/minima_orange</item>
-        <item name="android:textColor">@color/on_primary</item>
+        <item name="backgroundTint">@color/tc_ds1_primary_container</item>
+        <item name="android:textColor">@color/tc_ds1_primary_content</item>
     </style>
 
     <style name="Widget.MinimaCore.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
-        <item name="cornerRadius">13dp</item>
+        <item name="cornerRadius">@dimen/tc_ds1_radius_control</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:textAppearance">@style/TextAppearance.MinimaCore.Label</item>
         <item name="strokeColor">@color/core_outline</item>
@@ -119,7 +119,7 @@
     <!-- ===================== card ===================== -->
     <style name="Widget.MinimaCore.Card" parent="Widget.Material3.CardView.Elevated">
         <item name="cardBackgroundColor">@color/core_surface</item>
-        <item name="cardCornerRadius">16dp</item>
+        <item name="cardCornerRadius">@dimen/tc_ds1_radius_card</item>
         <item name="cardElevation">0dp</item>
         <item name="strokeColor">@color/core_outline</item>
         <item name="strokeWidth">1dp</item>

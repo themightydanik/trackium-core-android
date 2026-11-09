@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/core_surface"
         app:titleTextColor="@color/core_text"
         app:titleTextAppearance="@style/TextAppearance.MinimaCore.Title"
@@ -30,13 +30,13 @@
             android:orientation="vertical"
             android:paddingHorizontal="24dp"
             android:paddingTop="24dp"
-            android:paddingBottom="40dp">
+            android:paddingBottom="40dp" android:background="@drawable/tc_content_panel" android:layout_margin="16dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Private keys"
-                android:textAppearance="@style/TextAppearance.MinimaCore.Display"  android:tag="l10n:text=l10n_backup_private_keys" />
+                android:textAppearance="@style/TextAppearance.MinimaCore.Display"  android:tag="l10n:text=l10n_backup_private_keys"  android:accessibilityHeading="true"/>
 
             <TextView
                 android:id="@+id/vault_state"
@@ -83,7 +83,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/vault_reveal"
                 style="@style/Widget.MinimaCore.Button.Outlined"
-                android:layout_width="match_parent"
+                android:minHeight="48dp" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Show seed phrase" />
@@ -114,7 +114,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/vault_copy_phrase"
                 style="@style/Widget.MinimaCore.Button.Outlined"
-                android:layout_width="match_parent"
+                android:minHeight="48dp" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:visibility="gone"

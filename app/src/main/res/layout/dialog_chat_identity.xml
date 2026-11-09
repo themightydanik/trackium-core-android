@@ -28,7 +28,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/identity_copy"
         android:tag="l10n:text=l10n_wallet_copy_address"
-        android:layout_width="match_parent"
+        android:minHeight="48dp" android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Copy address" />
@@ -36,7 +36,7 @@
     <EditText
         android:id="@+id/identity_name"
         android:tag="l10n:hint=l10n_chat_display_name"
-        android:layout_width="match_parent"
+        android:minHeight="48dp" android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:hint="Your display name"

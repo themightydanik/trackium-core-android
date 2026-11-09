@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/core_surface"
         app:titleTextColor="@color/core_text"
         app:titleTextAppearance="@style/TextAppearance.MinimaCore.Title"
@@ -28,13 +28,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="24dp" android:background="@drawable/tc_content_panel" android:layout_margin="16dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/seed_sync_heading" android:text="Resync node"
-                android:textAppearance="@style/TextAppearance.MinimaCore.Display" />
+                android:textAppearance="@style/TextAppearance.MinimaCore.Display"  android:accessibilityHeading="true"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -56,7 +56,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/seed_sync_proceed"
-                android:layout_width="match_parent"
+                android:minHeight="48dp" android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginTop="28dp"
                 android:text="Resync Node" />
@@ -106,7 +106,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/seed_sync_copy"
                 style="@style/Widget.MinimaCore.Button.Outlined"
-                android:layout_width="match_parent"
+                android:minHeight="48dp" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:tag="l10n:text=l10n_resync_copy_log" android:text="Copy log" />
 

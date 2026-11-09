@@ -23,7 +23,7 @@
 
     <CheckBox
         android:id="@+id/app_info_enabled"
-        android:layout_width="wrap_content"
+        android:minHeight="48dp" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Enabled" android:tag="l10n:text=l10n_wallet_bio_enabled"
@@ -32,7 +32,7 @@
 
     <CheckBox
         android:id="@+id/app_info_admin"
-        android:layout_width="wrap_content"
+        android:minHeight="48dp" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Admin" android:tag="l10n:text=l10n_apps_admin"
         android:textColor="@color/core_text"

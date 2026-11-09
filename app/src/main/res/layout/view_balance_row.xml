@@ -7,10 +7,10 @@
     android:orientation="horizontal"
     android:gravity="center_vertical"
     android:baselineAligned="false"
-    android:background="@color/core_surface"
+    android:background="@drawable/tc_content_panel"
     android:foreground="?attr/selectableItemBackground"
     android:paddingHorizontal="16dp"
-    android:paddingVertical="11dp">
+    android:paddingVertical="16dp">
 
     <!-- token icon (identicon fallback, real icon loaded over) + web-validation badge -->
     <FrameLayout
