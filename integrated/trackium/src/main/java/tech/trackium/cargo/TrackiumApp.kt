@@ -120,6 +120,9 @@ class AppController(private val app: Application) {
         "Core wallet observation loaded. Default address may differ from the approved publisher; inspect sync in Core."
     }
 
+    /** UI cache only; changing/revoking a profile must not display another tenant snapshot. */
+    fun clearGatewayObservation() { data = null; updated = 0 }
+
     fun refresh() = task {
         val session = gateway.read("/v1/native/session")
         val shipments = gateway.read("/v1/shipments?limit=25").getJSONArray("shipments")

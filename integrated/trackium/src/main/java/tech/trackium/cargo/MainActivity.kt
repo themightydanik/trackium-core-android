@@ -71,7 +71,7 @@ class MainActivity : Activity() {
         out.putInt("proof.page",proofPage)
         if(detailValue==null)currentScroll?.let { scrollPositions[tab]=it.scrollY }
         for(key in listOf("Shipments","Devices")) {out.putString("query.$key",searches[key]);out.putString("filter.$key",filters[key])}
-        for((key,y) in scrollPositions)out.putInt("scroll.$key",y)
+        for(key in listOf("Dashboard","Shipments","Devices","Proofs","Settings"))out.putInt("scroll.$key",scrollPositions[key] ?: 0)
         val origin=draftGateway?.takeIf { v -> try { val u=java.net.URI(v);u.rawUserInfo==null && u.rawQuery==null && u.rawFragment==null }catch(_:Exception){false} }
         out.putString("draft.origin",origin);out.putString("draft.tenant",draftTenant?.takeIf { Regex("[0-9a-fA-F-]{0,36}").matches(it) })
         super.onSaveInstanceState(out)
@@ -623,6 +623,7 @@ class MainActivity : Activity() {
                 require(Regex("[0-9a-f-]{36}").matches(t))
                 c.secure.updateConfig {
                     if (it.optString("gateway") != base || it.optString("tenant") != t) {
+                        c.clearGatewayObservation()
                         it.remove("session")
                         it.remove("challenge")
                         it.remove("gateway_pin")
@@ -660,6 +661,7 @@ class MainActivity : Activity() {
         button(connected, "Refresh authenticated data", secureReady()) { c.refresh() }
         button(connected, "Disconnect / revoke session", secureReady()) {
             c.task {
+                c.clearGatewayObservation()
                 c.gateway.disconnect()
                 "Native session revoked and removed from device."
             }
