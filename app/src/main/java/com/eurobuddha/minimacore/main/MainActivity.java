@@ -61,6 +61,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity implements ServiceConnection, MinimaServiceListener {
 
     public static MainActivity MAIN_ACTIVITY;
+    private com.eurobuddha.minimacore.shell.ShellController shell;
 
     MinimaService mMinimaService = null;
 
@@ -127,11 +128,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         tb.setTitle("Trackium Core");
 
         setSupportActionBar(tb);
-        // SKU brand line (e.g. "BlackBear") persists under the title, like Pandamonium's brand.
-        if (!BuildConfig.PANDAMONIUM && !BuildConfig.SHELL_BRAND.isEmpty() && getSupportActionBar() != null)
-            getSupportActionBar().setSubtitle(BuildConfig.SHELL_BRAND);
-        KeyboardInsets.install(this, findViewById(R.id.main), tb,
-                findViewById(R.id.tabs), findViewById(R.id.main_footer));
+        KeyboardInsets.install(this, findViewById(R.id.main), tb, findViewById(R.id.shell_nav_container));
 
         mFooterLeft  = findViewById(R.id.main_footer_left);
         Language.setText(mFooterLeft, Language.msg(l10n_core_awaiting_blocks));
@@ -214,6 +211,9 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
             }
         });
 
+        shell = new com.eurobuddha.minimacore.shell.ShellController(this, savedInstanceState);
+        shell.accept(getIntent());
+
         //Get Files Permission
         String[] perms = new String[]{
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -232,18 +232,25 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     }
 
     public void setToolbarTitle(int zPosition){
-        String title;
-        if (zPosition == MainAdapter.WALLET_POSITION)        title = Language.text(this, l10n_tab_wallet);
-        else if (zPosition == MainAdapter.UTILITY_POSITION)  title = Language.text(this, BuildConfig.PANDA_SHELL ? l10n_tab_history : l10n_tab_terminal);
-        else if (zPosition == MainAdapter.APPS_POSITION)     title = Language.text(this, l10n_tab_apps);
-        else if (zPosition == MainAdapter.CHAT_POSITION)     title = Language.text(this, l10n_tab_chat);
-        else title = BuildConfig.PANDAMONIUM ? "" : "Minima Core";
-        if(getSupportActionBar() != null){
-            getSupportActionBar().setTitle(BuildConfig.PANDAMONIUM ? "" : title);
-            // Keep the SKU brand (e.g. "BlackBear") under the title as the user switches tabs.
-            if (!BuildConfig.PANDAMONIUM && !BuildConfig.SHELL_BRAND.isEmpty())
-                getSupportActionBar().setSubtitle(BuildConfig.SHELL_BRAND);
-        }
+        if (shell != null) return;
+        if(getSupportActionBar()!=null) getSupportActionBar().setTitle("Trackium Core");
+    }
+
+    public void showShellTool(int position) {
+        if(position<0 || position>=mMainAdapter.getCount()) position=MainAdapter.HOME_POSITION;
+        mMainPager.setCurrentItem(position, false);
+        mMainAdapter.selectPage(position);
+        mMainAdapter.refreshPagerView(position);
+    }
+    public void shellVisibilityChanged() {
+        if(mMainAdapter!=null) mMainAdapter.setHostVisible(hostVisible && (shell==null || shell.legacyVisible()),mMainPager.getCurrentItem());
+    }
+    @Override protected void onSaveInstanceState(Bundle out) {
+        if(shell!=null) shell.save(out);
+        super.onSaveInstanceState(out);
+    }
+    @Override protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);setIntent(intent);if(shell!=null)shell.accept(intent);
     }
 
     @Override public void onConfigurationChanged(android.content.res.Configuration config) {
@@ -307,21 +314,29 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
     @Override protected void onStart() {
         super.onStart();
         hostVisible = true;
-        if (mMainAdapter != null) mMainAdapter.setHostVisible(true, mMainPager.getCurrentItem());
+        shellVisibilityChanged();
+        if(shell!=null)shell.visible(true);
         if (BuildConfig.PANDAMONIUM && mFooterLeft != null) setFooterText();
     }
 
     @Override protected void onResume() {
         super.onResume();
+        if(shell!=null)shell.visible(true);
         // ViewPager restores its selected page after onStart during recreation.
         if (BuildConfig.PANDAMONIUM && mMainAdapter != null) {
-            mMainAdapter.setHostVisible(hostVisible, mMainPager.getCurrentItem());
+            shellVisibilityChanged();
             // Returning from an overlay can resume an already-active page without onShown.
             mMainAdapter.refreshPagerView(mMainPager.getCurrentItem());
         }
     }
 
+    @Override protected void onPause() {
+        if(shell!=null)shell.visible(false);
+        super.onPause();
+    }
+
     @Override protected void onStop() {
+        if(shell!=null)shell.visible(false);
         hostVisible = false;
         if (mMainAdapter != null) mMainAdapter.setHostVisible(false, mMainPager.getCurrentItem());
         if (BuildConfig.PANDAMONIUM) footerRefresh.invalidate();
@@ -333,6 +348,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
         for (AlertDialog dialog : new java.util.ArrayList<>(languageDialogs)) dialog.dismiss();
         languageDialogs.clear();
         if (mShutdownDialog != null) { mShutdownDialog.dismiss(); mShutdownDialog = null; }
+        if(shell!=null)shell.destroy();
         footerRefresh.close();
         displayHandler.removeCallbacksAndMessages(null);
         super.onDestroy();

@@ -37,6 +37,16 @@ public class StartServiceActivity extends AppCompatActivity implements ServiceCo
         super.onCreate(savedInstanceState);
         if (SeedSyncActivity.redirectIfPending(this)) return;
         initialized = true;
+        android.widget.LinearLayout startup = com.eurobuddha.minimacore.shell.ShellViews.column(this);
+        startup.setGravity(android.view.Gravity.CENTER);
+        startup.setPadding(32,32,32,32);
+        android.widget.ImageView brand = new android.widget.ImageView(this);
+        brand.setImageResource(R.drawable.tc_ds1_brand_mark); brand.setContentDescription("Trackium Core");
+        int size = com.eurobuddha.minimacore.shell.ShellViews.dp(this,80);
+        startup.addView(brand,new android.widget.LinearLayout.LayoutParams(size,size));
+        startup.addView(com.eurobuddha.minimacore.shell.ShellViews.text(this,"Trackium Core",true));
+        startup.addView(com.eurobuddha.minimacore.shell.ShellViews.text(this,getText(R.string.shell_starting),false));
+        setContentView(startup);
         ProgressBar indicator = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
         indicator.setIndeterminate(true);
         int padding = Math.round(24 * getResources().getDisplayMetrics().density);

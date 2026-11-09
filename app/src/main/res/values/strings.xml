@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Minima Core</string>
+    <string name="app_name">Trackium Core</string>
     <string name="hide_keyboard">Hide keyboard</string>
     <string name="home_keyuses_label">Key uses</string>
     <string name="restore_keyuses_label">Key uses</string>

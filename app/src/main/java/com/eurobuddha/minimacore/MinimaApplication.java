@@ -58,6 +58,11 @@ public class MinimaApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        String theme = tech.trackium.designsystem.ThemePreference.get(this);
+        androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode("light".equals(theme)
+            ? androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO : "dark".equals(theme)
+            ? androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES : androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+
         //Catch ALL Uncaught Exceptions..
         Thread.setDefaultUncaughtExceptionHandler(new MinimaUncaughtException());
 

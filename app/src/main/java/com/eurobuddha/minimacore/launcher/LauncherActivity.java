@@ -42,12 +42,6 @@ public class LauncherActivity extends AppCompatActivity {
         setContentView(R.layout.launcher_activity);
 
 
-        //Are we night mode..
-        if(isNightMode()){
-            ImageView logo = findViewById(R.id.launcher_mainicon);
-            logo.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
-        }
-
         Toolbar tb = findViewById(R.id.toolbar);
         //Clean launcher — no title, the M logo speaks for itself (matches design)
         tb.setTitle("");

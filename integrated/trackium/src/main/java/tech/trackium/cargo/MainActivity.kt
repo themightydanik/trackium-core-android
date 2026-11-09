@@ -19,12 +19,17 @@ import org.json.JSONObject
 
 /** Native views only. No WebView or JavaScript-to-wallet bridge. Gateway owns business rules. */
 class MainActivity : Activity() {
-    private val bg = Color.rgb(10, 20, 35)
-    private val panel = Color.rgb(17, 31, 49)
-    private val mint = Color.rgb(67, 215, 189)
-    private val text = Color.rgb(220, 232, 245)
-    private val muted = Color.rgb(145, 164, 184)
-    private val amber = Color.rgb(244, 194, 112)
+    private fun role(id: Int) = getColor(id)
+    private val bg get() = role(tech.trackium.designsystem.R.color.tc_ds1_canvas)
+    private val panel get() = role(tech.trackium.designsystem.R.color.tc_ds1_surface)
+    private val mint get() = role(tech.trackium.designsystem.R.color.tc_ds1_accent)
+    private val text get() = role(tech.trackium.designsystem.R.color.tc_ds1_text)
+    private val muted get() = role(tech.trackium.designsystem.R.color.tc_ds1_text_secondary)
+    private val amber get() = role(tech.trackium.designsystem.R.color.tc_ds1_warning)
+    override fun attachBaseContext(base: android.content.Context) {
+        super.attachBaseContext(tech.trackium.designsystem.ThemePreference.wrap(base))
+    }
+
     private val c: AppController
         get() = TrackiumRuntime.get(application)
 
@@ -38,7 +43,7 @@ class MainActivity : Activity() {
     override fun onCreate(state: Bundle?) {
         super.onCreate(state)
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
-        tab = state?.getString("tab") ?: "Dashboard"
+        tab = state?.getString("tab")?.takeIf { it in listOf("Dashboard", "Shipments", "Devices", "Proofs", "Settings") } ?: "Dashboard"
         render()
     }
 
@@ -112,7 +117,8 @@ class MainActivity : Activity() {
         Button(this).apply {
             text = title
             isAllCaps = false
-            setTextColor(bg)
+            setTextColor(role(tech.trackium.designsystem.R.color.tc_ds1_on_accent))
+            minHeight = dp(48)
             backgroundTintList = android.content.res.ColorStateList.valueOf(mint)
             isEnabled = enabled && !c.busy.get()
             parent.addView(this, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(8) })
@@ -225,8 +231,21 @@ class MainActivity : Activity() {
             insets
         }
         shell.requestApplyInsets()
-        shell.addView(label("TRACKIUM  /  CARGO", 12f, mint, true))
-        shell.addView(label(tab, 29f, text, true))
+        shell.addView(label("Trackium Core · Trackium", 20f, text, true))
+        val sections = listOf("Dashboard", "Shipments", "Devices", "Proofs", "Settings")
+        val section = Spinner(this).apply {
+            contentDescription = "Trackium section"
+            minimumHeight = dp(48)
+            adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_spinner_dropdown_item, sections)
+            setSelection(sections.indexOf(tab))
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) = Unit
+                override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
+                    if (sections[position] != tab) { tab = sections[position]; render() }
+                }
+            }
+        }
+        shell.addView(section)
         shell.addView(label(c.coreState, 12f, muted))
         shell.addView(label(c.message, 12f, if (c.data == null) amber else muted))
         if (c.busy.get())
@@ -247,22 +266,12 @@ class MainActivity : Activity() {
             "Proofs" -> proofs()
             "Settings" -> settings()
         }
-        val nav = LinearLayout(this)
-        for (name in listOf("Dashboard", "Shipments", "Devices", "Proofs", "Settings")) nav.addView(
-            TextView(this).apply {
-                this.text = name
-                textSize = 10f
-                gravity = Gravity.CENTER
-                setTextColor(if (name == tab) mint else muted)
-                setPadding(0, dp(18), 0, dp(14))
-                setOnClickListener {
-                    tab = name
-                    render()
-                }
-            },
-            LinearLayout.LayoutParams(0, -2, 1f),
-        )
-        shell.addView(nav)
+        CoreShellNavigation.create(this)?.let { shell.addView(it) }
+    }
+
+    @Deprecated("Uses the existing Activity back stack")
+    override fun onBackPressed() {
+        if (tab != "Dashboard") { tab = "Dashboard"; render() } else super.onBackPressed()
     }
 
     private fun freshness(parent: LinearLayout) {

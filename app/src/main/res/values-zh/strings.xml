@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Minima Core</string>
+    <string name="app_name">Trackium Core</string>
     <string name="hide_keyboard">隐藏键盘</string>
     <string name="home_keyuses_label">密钥使用次数</string>
     <string name="restore_keyuses_label">密钥使用次数</string>
