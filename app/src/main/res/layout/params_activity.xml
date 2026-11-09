@@ -203,14 +203,14 @@
                 android:id="@+id/params_button_save"
                 style="@style/Widget.MinimaCore.Button.Outlined"
                 android:minHeight="48dp" android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Save" android:tag="l10n:text=l10n_common_save" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/params_button_save_restart"
                 android:minHeight="48dp" android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="Save &amp; Restart Node" android:tag="l10n:text=l10n_params_save_restart" />
         </LinearLayout>

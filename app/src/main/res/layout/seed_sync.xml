@@ -57,7 +57,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/seed_sync_proceed"
                 android:minHeight="48dp" android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
                 android:text="Resync Node" />
 

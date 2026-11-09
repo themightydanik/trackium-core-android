@@ -75,14 +75,14 @@
                 android:id="@+id/restorewallet_button_check"
                 style="@style/Widget.MinimaCore.Button.Outlined"
                 android:minHeight="48dp" android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:tag="l10n:text=l10n_onboarding_check_words" android:text="Check Word List" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/restorewallet_button_proceed"
                 android:minHeight="48dp" android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:tag="l10n:text=l10n_common_proceed" android:text="Proceed" />
         </LinearLayout>

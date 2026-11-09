@@ -159,7 +159,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/backup_restore_go"
                 android:minHeight="48dp" android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Restore this node"  android:tag="l10n:text=l10n_backup_restore_node" />
 

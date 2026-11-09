@@ -117,7 +117,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/chat_backup_save"
                 android:minHeight="48dp" android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Save chat backup"  android:tag="l10n:text=l10n_chatbak_export" />
 
@@ -178,7 +178,7 @@
                 android:id="@+id/chat_backup_restore"
                 style="@style/Widget.MinimaCore.Button.Outlined"
                 android:minHeight="48dp" android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Choose backup file"  android:tag="l10n:text=l10n_chatbak_choose" />
 
