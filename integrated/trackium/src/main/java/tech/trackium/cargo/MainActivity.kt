@@ -34,9 +34,19 @@ class MainActivity : Activity() {
         get() = TrackiumRuntime.get(application)
 
     private lateinit var shell: LinearLayout
+    private var loading: ProgressBar? = null
     private lateinit var content: LinearLayout
     private var tab = "Dashboard"
     private var sessionStarted = false
+    private var detailTitle: String? = null
+    private var detailValue: JSONObject? = null
+    private var currentScroll: ScrollView? = null
+    private var renderedKey: String? = null
+    private val scrollPositions = mutableMapOf<String, Int>()
+    private val searches = mutableMapOf<String, String>()
+    private val filters = mutableMapOf<String, String>()
+    private var focusId = 0
+    private var cursor = 0
     private var draftGateway: String? = null
     private var draftTenant: String? = null
 
@@ -44,11 +54,23 @@ class MainActivity : Activity() {
         super.onCreate(state)
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         tab = state?.getString("tab")?.takeIf { it in listOf("Dashboard", "Shipments", "Devices", "Proofs", "Settings") } ?: "Dashboard"
+        for (key in listOf("Shipments", "Devices")) {
+            searches[key] = state?.getString("query.$key") ?: ""
+            filters[key] = state?.getString("filter.$key") ?: "All"
+        }
+        draftGateway = state?.getString("draft.origin")
+        draftTenant = state?.getString("draft.tenant")
+        for (key in listOf("Dashboard", "Shipments", "Devices", "Proofs", "Settings")) scrollPositions[key] = state?.getInt("scroll.$key") ?: 0
         render()
     }
 
     override fun onSaveInstanceState(out: Bundle) {
         out.putString("tab", tab)
+        if(detailValue==null)currentScroll?.let { scrollPositions[tab]=it.scrollY }
+        for(key in listOf("Shipments","Devices")) {out.putString("query.$key",searches[key]);out.putString("filter.$key",filters[key])}
+        for((key,y) in scrollPositions)out.putInt("scroll.$key",y)
+        val origin=draftGateway?.takeIf { v -> try { val u=java.net.URI(v);u.rawUserInfo==null && u.rawQuery==null && u.rawFragment==null }catch(_:Exception){false} }
+        out.putString("draft.origin",origin);out.putString("draft.tenant",draftTenant?.takeIf { Regex("[0-9a-fA-F-]{0,36}").matches(it) })
         super.onSaveInstanceState(out)
     }
 
@@ -61,7 +83,13 @@ class MainActivity : Activity() {
         }
         sessionStarted = true
         c.lifecycle(true)
-        c.listener = { render() }
+        c.listener = {
+            if(c.busy.get()) {
+                loading?.visibility=android.view.View.VISIBLE
+                fun disable(view:android.view.View){if(view is Button)view.isEnabled=false;if(view is android.view.ViewGroup)for(i in 0 until view.childCount)disable(view.getChildAt(i))}
+                if(::shell.isInitialized)disable(shell)
+            } else render()
+        }
         render()
         if (c.core == null && !c.busy.get()) c.connectCore()
     }
@@ -79,7 +107,7 @@ class MainActivity : Activity() {
 
     private fun label(
         value: String,
-        size: Float = 14f,
+        size: Float = 16f,
         color: Int = text,
         bold: Boolean = false,
     ): TextView =
@@ -90,6 +118,7 @@ class MainActivity : Activity() {
             setPadding(0, dp(5), 0, dp(5))
             if (bold) setTypeface(null, Typeface.BOLD)
             setTextIsSelectable(true)
+            if(bold) isAccessibilityHeading = true
         }
 
     private fun box(parent: LinearLayout, title: String): LinearLayout =
@@ -99,13 +128,14 @@ class MainActivity : Activity() {
             background =
                 GradientDrawable().apply {
                     setColor(panel)
-                    cornerRadius = dp(16).toFloat()
+                    cornerRadius = resources.getDimension(tech.trackium.designsystem.R.dimen.tc_ds1_radius_card)
+                    setStroke(dp(1),role(tech.trackium.designsystem.R.color.tc_ds1_outline_subtle))
                 }
             parent.addView(
                 this,
                 LinearLayout.LayoutParams(-1, -2).apply { setMargins(0, dp(8), 0, dp(8)) },
             )
-            addView(label(title, 18f, text, true))
+            addView(label(title, 20f, text, true))
         }
 
     private fun button(
@@ -117,9 +147,10 @@ class MainActivity : Activity() {
         Button(this).apply {
             text = title
             isAllCaps = false
-            setTextColor(role(tech.trackium.designsystem.R.color.tc_ds1_on_accent))
+            setTextColor(getColorStateList(tech.trackium.designsystem.R.color.tc_ds1_primary_content))
             minHeight = dp(48)
-            backgroundTintList = android.content.res.ColorStateList.valueOf(mint)
+            setPadding(dp(16),dp(10),dp(16),dp(10))
+            backgroundTintList = getColorStateList(tech.trackium.designsystem.R.color.tc_ds1_primary_container)
             isEnabled = enabled && !c.busy.get()
             parent.addView(this, LinearLayout.LayoutParams(-1, -2).apply { topMargin = dp(8) })
             setOnClickListener { action() }
@@ -129,6 +160,9 @@ class MainActivity : Activity() {
         parent.addView(label(title, 13f, muted))
         return EditText(this).apply {
             setSingleLine()
+            minHeight = dp(48)
+            isSaveEnabled = false
+            imeOptions = android.view.inputmethod.EditorInfo.IME_FLAG_NO_EXTRACT_UI
             setTextColor(this@MainActivity.text)
             setHintTextColor(muted)
             setText(value)
@@ -145,36 +179,25 @@ class MainActivity : Activity() {
     }
 
     private fun detail(title: String, value: JSONObject) {
-        val body =
-            LinearLayout(this).apply {
-                orientation = LinearLayout.VERTICAL
-                setPadding(dp(20), dp(12), dp(20), dp(12))
-                setBackgroundColor(panel)
-            }
-        fun fields(v: Any?, depth: Int = 0) {
-            if (depth > 5) return
-            when (v) {
-                is JSONObject ->
-                    v.keys().forEach { k ->
-                        body.addView(label(k.replace('_', ' '), 12f, mint, true))
-                        fields(v.get(k), depth + 1)
-                    }
-                is JSONArray -> {
-                    if (v.length() == 0) body.addView(label("No records", 13f, muted))
-                    for (i in 0 until minOf(v.length(), 50)) fields(v.get(i), depth + 1)
-                }
-                else ->
-                    body.addView(
-                        label(if (v == JSONObject.NULL) "Not available" else v.toString(), 14f)
-                    )
-            }
+        currentScroll?.let { v -> renderedKey?.let { scrollPositions[it]=v.scrollY } }
+        currentScroll=null
+        detailTitle = title
+        detailValue = value
+        render()
+    }
+
+    private fun renderDetail(value: JSONObject) {
+        button(content,"Back to $tab") { detailTitle=null;detailValue=null;currentScroll=null;render() }
+        for(section in CargoPresentation.sections(detailTitle ?: "Details",value)) {
+            if(section.rows.isEmpty())continue
+            val card=box(content,section.title)
+            for((name,v) in section.rows) {card.addView(label(name,12f,muted));card.addView(label(v,16f))}
         }
-        fields(value)
-        AlertDialog.Builder(this)
-            .setTitle(title)
-            .setView(ScrollView(this).apply { addView(body) })
-            .setPositiveButton("Close", null)
-            .show()
+        content.addView(label("Reported evidence only. Read measurement/check timestamps and source trust; a recent fetch does not make an old sensor sample fresh.",14f,muted))
+        val advanced=box(content,"Advanced / export")
+        advanced.addView(label("This evidence may contain sensitive cargo data. Share only with authorized recipients.",14f,muted))
+        button(advanced,"Advanced Raw Data") { dialog("Advanced Raw Data",value.toString(2)) }
+        button(advanced,"Export reported data") { share(value) }
     }
 
     private fun async(title: String, call: () -> JSONObject) {
@@ -188,6 +211,9 @@ class MainActivity : Activity() {
     }
 
     private fun render() {
+        currentScroll?.let { v -> renderedKey?.let { scrollPositions[it]=v.scrollY } }
+        val focused=currentFocus as? EditText
+        if(focused!=null && focused.id in 20101..20104) {focusId=focused.id;cursor=focused.selectionStart}
         if (!TrackiumCoreAccess.authorized()) {
             setContentView(TextView(this).apply { text = "Unlock Trackium Core to continue" })
             return
@@ -241,26 +267,23 @@ class MainActivity : Activity() {
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) = Unit
                 override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
-                    if (sections[position] != tab) { tab = sections[position]; render() }
+                    if (sections[position] != tab) { currentScroll?.let { scrollPositions[tab]=it.scrollY };focusId=0;detailTitle=null;detailValue=null;currentScroll=null;tab = sections[position]; render() }
                 }
             }
         }
         shell.addView(section)
-        if (c.busy.get())
-            shell.addView(
-                ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal).apply {
-                    isIndeterminate = true
-                },
-                LinearLayout.LayoutParams(-1, dp(4)),
-            )
+        loading=ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal).apply {isIndeterminate=true;visibility=if(c.busy.get())android.view.View.VISIBLE else android.view.View.GONE;contentDescription="Loading authorized observation"}
+        shell.addView(loading,LinearLayout.LayoutParams(-1,dp(4)))
         val scroll = ScrollView(this)
+        currentScroll = scroll
+        scroll.isSaveEnabled = false
         content = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         // Status text scales and scrolls with content instead of squeezing navigation at 200%.
         content.addView(label(c.coreState, 12f, muted))
-        content.addView(label(c.message, 12f, if (c.data == null) amber else muted))
+        content.addView(label(c.message, 14f, if (c.data == null) amber else muted).apply {accessibilityLiveRegion=android.view.View.ACCESSIBILITY_LIVE_REGION_POLITE})
         scroll.addView(content)
         shell.addView(scroll, LinearLayout.LayoutParams(-1, 0, 1f))
-        when (tab) {
+        if(detailValue!=null)renderDetail(detailValue!!) else when (tab) {
             "Dashboard" -> dashboard()
             "Shipments" -> shipments()
             "Devices" -> devices()
@@ -268,11 +291,17 @@ class MainActivity : Activity() {
             "Settings" -> settings()
         }
         CoreShellNavigation.create(this)?.let { shell.addView(it) }
+        renderedKey=if(detailValue==null)tab else "$tab/detail/$detailTitle"
+        val y=scrollPositions[renderedKey ?: tab] ?: 0
+        scroll.post { scroll.scrollTo(0,y)
+            if(focusId!=0) (findViewById<android.view.View>(focusId) as? EditText)?.let { it.requestFocus();it.setSelection(cursor.coerceIn(0,it.text.length)) }
+        }
     }
 
     @Deprecated("Uses the existing Activity back stack")
     override fun onBackPressed() {
-        if (tab != "Dashboard") { tab = "Dashboard"; render() } else super.onBackPressed()
+        if(detailValue!=null){detailValue=null;detailTitle=null;currentScroll=null;render()}
+        else if (tab != "Dashboard") { currentScroll=null;tab = "Dashboard";focusId=0;render() } else super.onBackPressed()
     }
 
     private fun freshness(parent: LinearLayout) {
@@ -294,116 +323,95 @@ class MainActivity : Activity() {
     private fun secureReady() = c.secure.config().has("session")
 
     private fun dashboard() {
-        val card = box(content, "Your cargo workspace")
-        freshness(card)
-        val data = c.data
-        if (data != null) {
-            card.addView(
-                label(
-                    "${data.getJSONArray("shipments").length()} shipments  ·  ${data.getJSONArray("devices").length()} devices",
-                    21f,
-                    mint,
-                    true,
-                )
-            )
-            card.addView(
-                label(
-                    "${data.getJSONArray("proofs").length()} proof records · status from Gateway observations",
-                    14f,
-                )
-            )
-            val p = data.getJSONObject("publisher")
-            card.addView(
-                label(
-                    "Network: Mainnet\nPublication enabled: ${p.optBoolean("enabled")}\nAutomatic backlog: false\nNative wallet keys remain in embedded Core.",
-                    14f,
-                )
-            )
+        val profile=c.secure.config()
+        val connection=box(content,"Gateway workspace")
+        connection.addView(label(CargoPresentation.session(profile,c.data!=null,c.updated),18f,if(c.data!=null)mint else amber,true))
+        connection.addView(label("Origin · ${CargoPresentation.value(profile,"gateway")}\nTenant · ${CargoPresentation.value(profile,"tenant")}",13f,muted))
+        freshness(connection)
+        val data=c.data
+        if(data==null){box(content,"Your workspace is waiting").addView(label("No authenticated cargo observation is available. Open Settings to pair or restore the session. Missing data is not zero activity.",16f,muted))}
+        else {
+            val summary=box(content,"Loaded workspace · limited snapshot")
+            summary.addView(label("${data.optJSONArray("shipments")?.length() ?: 0} shipments  ·  ${data.optJSONArray("devices")?.length() ?: 0} devices",22f,mint,true))
+            summary.addView(label("${data.optJSONArray("proofs")?.length() ?: 0} proof records\nFirst 25 shipments/devices; this is not a tenant-wide total.",14f,muted))
+            val recent=box(content,"Recent available proof events")
+            val records=CargoPresentation.records(data.optJSONArray("proofs")).take(5)
+            if(records.isEmpty())recent.addView(label("No proof events in the loaded snapshot.",14f,muted))
+            for(proof in records){val event=proof.optJSONObject("commitment");recent.addView(label("${CargoPresentation.value(event,"event_type")} · ${CargoPresentation.proofState(proof)}",14f));recent.addView(label("Trust · ${CargoPresentation.value(event,"source_trust")}\n${CargoPresentation.value(proof,"last_checked_at")}",12f,muted))}
         }
-        val safety = box(content, "Built for accountable delivery")
-        safety.addView(
-            label(
-                "Synthetic / unverified readings keep their provenance. A blockchain commitment validates recorded bytes, not the physical sensor. Pending and submitted records are never called verified.",
-                14f,
-                muted,
-            )
-        )
-        button(safety, "Observe Core wallet & synchronization", c.core != null) {
-            c.walletOverview()
+        val safety=box(content,"Core & evidence")
+        safety.addView(label("Chain inclusion verifies recorded bytes, not physical sensor authenticity. Connected peers do not establish full synchronization.",14f,muted))
+        button(safety,"Observe embedded node") { c.connectCore() }
+        button(safety,"Observe Core wallet & synchronization",c.core!=null){c.walletOverview()}
+        c.wallet?.let { wallet ->
+            safety.addView(label("Core ${CargoPresentation.value(wallet,"version")} · ${CargoPresentation.value(wallet,"peers")} peers · height ${CargoPresentation.value(wallet,"block")}",14f))
+            button(safety,"Inspect Core-reported wallet balance"){detail("Core wallet observation",wallet)}
         }
-        c.wallet?.let { w ->
-            safety.addView(
-                label(
-                    "Core ${w.getString("version")} · ${w.getInt("peers")} peers · block ${w.getLong("block")}\nDefault wallet address: ${w.getString("address")}\nObservation: ${DateFormat.getDateTimeInstance().format(Date(w.getLong("observed_at")))}",
-                    12f,
-                    muted,
-                )
-            )
-            button(safety, "Inspect reported wallet balance") {
-                dialog("Core-reported balance (not reserved funds)", w.get("balance").toString())
-            }
-        }
-        button(safety, "Observe embedded node") { c.connectCore() }
-        button(safety, "Return to node") { finish() }
-
+        button(safety,"Return to Core"){finish()}
     }
 
-    private fun shipments() {
+    private fun browser(kind: String, array: JSONArray?, populate: (LinearLayout,JSONObject)->Unit) {
         freshness(content)
-        val list = c.data?.optJSONArray("shipments") ?: JSONArray()
-        if (list.length() == 0)
-            box(content, "No shipments loaded")
-                .addView(
-                    label(
-                        "Pair with your tenant and refresh. Shipment creation and transitions remain on Gateway."
-                    )
-                )
-        for (i in 0 until list.length()) {
-            val s = list.getJSONObject(i)
-            val card = box(content, s.optString("name", "Shipment"))
-            card.addView(
-                label(s.optString("status") + "  ·  " + s.optString("source_trust"), 14f, mint)
-            )
-            card.addView(label(s.getString("id"), 11f, muted))
-            button(card, "Route & checkpoints") {
-                async("Shipment route") { c.gateway.read("/v1/shipments/" + s.getString("id")) }
-            }
+        val controls=box(content,"Find $kind · loaded snapshot")
+        val search=input(controls,"Search name / ID",searches[kind] ?: "")
+        search.id=if(kind=="Shipments")20101 else 20102
+        val choices=listOf("All")+CargoPresentation.records(array).flatMap { row -> listOf("status","source_trust","mode","identity_kind").mapNotNull { key -> row.optString(key).takeIf { it.isNotBlank() && it!="null" } } }.distinct().sorted()
+        val filter=Spinner(this).apply {minimumHeight=dp(48);contentDescription="$kind filter";adapter=ArrayAdapter(this@MainActivity,android.R.layout.simple_spinner_dropdown_item,choices);setSelection(choices.indexOf(filters[kind]).coerceAtLeast(0))}
+        controls.addView(filter)
+        val list=LinearLayout(this).apply {orientation=LinearLayout.VERTICAL};content.addView(list)
+        fun update(){list.removeAllViews();val rows=CargoPresentation.matching(array,searches[kind] ?: "",filters[kind] ?: "All")
+            if(rows.isEmpty())box(list,"No matching $kind").addView(label(if(array==null)"Pair and refresh to load authorized data." else "No records match the loaded snapshot and these filters.",14f,muted))
+            for(row in rows)populate(list,row)
         }
+        search.addTextChangedListener(watch{searches[kind]=it;update()})
+        filter.onItemSelectedListener=object:AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent:AdapterView<*>?)=Unit
+            override fun onItemSelected(parent:AdapterView<*>?,view:android.view.View?,position:Int,id:Long){filters[kind]=choices[position];update()}
+        };update()
     }
 
-    private fun devices() {
-        freshness(content)
-        val list = c.data?.optJSONArray("devices") ?: JSONArray()
-        if (list.length() == 0)
-            box(content, "No devices loaded")
-                .addView(label("Only devices belonging to the authenticated tenant are shown."))
-        for (i in 0 until list.length()) {
-            val d = list.getJSONObject(i)
-            val card = box(content, d.optString("label", "Device"))
-            card.addView(
-                label(d.optString("identity_kind") + "  ·  " + d.optString("mode"), 14f, mint)
-            )
-            card.addView(label(d.getString("id"), 11f, muted))
-            button(card, "Coordinates, sensors & status") {
-                async("Latest reported telemetry") {
-                    JSONObject()
-                        .put("status", c.gateway.read("/v1/devices/${d.getString("id")}/status"))
-                        .put(
-                            "location",
-                            c.gateway.read("/v1/devices/${d.getString("id")}/location"),
-                        )
-                        .put(
-                            "history",
-                            c.gateway.read("/v1/devices/${d.getString("id")}/events?limit=10"),
-                        )
+    private fun shipments() = browser("Shipments",c.data?.optJSONArray("shipments")) { parent,s ->
+        val card=box(parent,s.optString("name").ifBlank{"Shipment"})
+        card.addView(label("${CargoPresentation.value(s,"status")} · ${CargoPresentation.value(s,"source_trust")}",16f,mint,true))
+        card.addView(label("${CargoPresentation.value(s,"id")}\nDevice · ${CargoPresentation.value(s,"device_id")}",12f,muted))
+        button(card,"Open shipment details"){
+            val id=android.net.Uri.encode(s.getString("id"))
+            async("Shipment · ${s.optString("name")}"){
+                val shipment=c.gateway.read("/v1/shipments/$id")
+                shipment.put("events",c.gateway.read("/v1/shipments/$id/events?limit=25").optJSONArray("events") ?: JSONArray())
+                shipment.put("proofs",JSONArray(CargoPresentation.records(c.data?.optJSONArray("proofs")).filter{it.optString("shipment_id")==s.getString("id")}))
+                val device=shipment.optString("device_id")
+                if(device.isNotBlank()){
+                    val d=android.net.Uri.encode(device)
+                    try {shipment.put("device_observation",c.gateway.read("/v1/devices/$d/status"))
+                        shipment.put("telemetry",c.gateway.read("/v1/devices/$d/events?limit=10"))
+                    }catch(_:Exception){shipment.put("partial_observation","Linked device observation unavailable; shipment evidence remains visible")}
                 }
+                shipment
+            }
+        }
+    }
+
+    private fun devices() = browser("Devices",c.data?.optJSONArray("devices")) { parent,d ->
+        val card=box(parent,d.optString("label").ifBlank{"Device"})
+        card.addView(label("${CargoPresentation.value(d,"identity_kind")} · ${CargoPresentation.value(d,"mode")}",16f,mint,true))
+        card.addView(label(CargoPresentation.value(d,"id"),12f,muted))
+        button(card,"Open device observation"){
+            val id=android.net.Uri.encode(d.getString("id"))
+            async("Device · ${d.optString("label")}"){
+                val observation=JSONObject(d.toString()).put("status",c.gateway.read("/v1/devices/$id/status"))
+                val missing=mutableListOf<String>()
+                try{observation.put("location",c.gateway.read("/v1/devices/$id/location"))}catch(_:Exception){missing.add("Location")}
+                try{observation.put("history",c.gateway.read("/v1/devices/$id/events?limit=10"))}catch(_:Exception){missing.add("Telemetry history")}
+                if(missing.isNotEmpty())observation.put("partial_observation",missing.joinToString(", ")+" unavailable; missing readings are not zeros")
+                observation
             }
         }
     }
 
     private fun proofs() {
         freshness(content)
-        val controls = box(content, "Native Mainnet Publisher")
+        val controls = box(content, "Proof evidence · publication unavailable")
         controls.addView(
             label(
                 "Embedded Core · read-only prototype. Publication is unavailable; private keys and key-use counters belong only to the node.",
@@ -442,6 +450,7 @@ class MainActivity : Activity() {
             )
         }
         val list = c.data?.optJSONArray("proofs") ?: JSONArray()
+        if(list.length()==0)box(content,"No proof records").addView(label("Refresh an authorized session. Pending and submitted records are not independently verified.",14f,muted))
         for (i in 0 until list.length()) {
             val proof = list.getJSONObject(i)
             val card = box(content, proof.getJSONObject("commitment").getString("event_type"))
@@ -457,7 +466,7 @@ class MainActivity : Activity() {
             )
             card.addView(
                 label(
-                    "${proof.getString("state")} · depth ${proof.optInt("confirmations")}/${proof.optInt("required_depth")}\nChecked: ${proof.optString("last_checked_at","never")}",
+                    "${CargoPresentation.proofState(proof)}\nReported depth ${CargoPresentation.value(proof,"confirmations")}/${CargoPresentation.value(proof,"required_depth")}\nChecked: ${proof.optString("last_checked_at","never")}",
                     13f,
                 )
             )
@@ -469,6 +478,7 @@ class MainActivity : Activity() {
                     muted,
                 )
             )
+            button(card,"Open evidence details"){detail("Proof evidence",proof)}
             val id = proof.getString("id")
             button(card, "Verify with independent Gateway reader") {
                 async("Fresh verification") { c.gateway.verify(id) }
@@ -584,11 +594,16 @@ class MainActivity : Activity() {
         button(core, "Observe embedded node") { c.connectCore() }
         button(core, "Return to node settings") { finish() }
         val config = c.secure.config()
-        val gateway = box(content, "Gateway · limited native session")
+        val state=box(content,"Gateway session")
+        state.addView(label(CargoPresentation.session(config,c.data!=null,c.updated),16f,amber,true))
+        val session=config.optJSONObject("session")
+        state.addView(label("Expires · ${CargoPresentation.value(session,"expires_at")}\nScopes · ${(session?.optJSONArray("scopes")?.let { (0 until it.length()).map { i -> it.optString(i) }.joinToString(", ") }) ?: "Not reported"}",14f,muted))
+        val gateway = box(content, "1 · Connection profile")
         val url =
             input(gateway, "HTTPS Gateway origin", draftGateway ?: config.optString("gateway"))
         val tenant =
             input(gateway, "Tenant UUID (public)", draftTenant ?: config.optString("tenant"))
+        url.id=20103;tenant.id=20104
         url.addTextChangedListener(watch { draftGateway = it })
         tenant.addTextChangedListener(watch { draftTenant = it })
         button(gateway, "Save connection") {
@@ -608,7 +623,9 @@ class MainActivity : Activity() {
                 "Gateway profile saved. No owner key or browser cookie imported."
             }
         }
-        button(gateway, "Create owner approval challenge") {
+        val pairing=box(content,"2 · Request owner approval")
+        pairing.addView(label("The trusted owner approves this device on the Gateway host. This app cannot approve itself or import an owner credential.",14f,muted))
+        button(pairing, "Create owner approval challenge") {
             c.task {
                 val r = c.gateway.challenge()
                 "Owner approval required: ${r.getString("id")} · expires ${r.getString("expires_at")}. Use the native-approve CLI on the trusted Gateway host."
@@ -616,21 +633,23 @@ class MainActivity : Activity() {
         }
         val challenge = config.optJSONObject("challenge")
         if (challenge != null)
-            gateway.addView(
+            pairing.addView(
                 label(
                     "Challenge UUID:\n${challenge.getString("id")}\nApprove on Gateway with read/publish scope. Device proof stays in Android Keystore-protected storage.",
                     12f,
                     amber,
                 )
             )
-        button(gateway, "Complete owner pairing") {
+        pairing.addView(label("Challenge expiry · ${CargoPresentation.value(challenge,"expires_at")}",12f,muted))
+        val connected=box(content,"3 · Claim, refresh or revoke")
+        button(connected, "Complete owner pairing") {
             c.task {
                 val s = c.gateway.claim()
                 "Native read/publish session active until ${s.getString("expires_at")}. Refresh data."
             }
         }
-        button(gateway, "Refresh authenticated data", secureReady()) { c.refresh() }
-        button(gateway, "Disconnect / revoke session", secureReady()) {
+        button(connected, "Refresh authenticated data", secureReady()) { c.refresh() }
+        button(connected, "Disconnect / revoke session", secureReady()) {
             c.task {
                 c.gateway.disconnect()
                 "Native session revoked and removed from device."
