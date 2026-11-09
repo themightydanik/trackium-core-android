@@ -18,7 +18,7 @@ public final class RootNavigation {
         LinearLayout nav = new LinearLayout(activity); nav.setId(R.id.shell_navigation);
         nav.setBackgroundColor(activity.getColor(tech.trackium.designsystem.R.color.tc_ds1_surface));
         int[] labels={R.string.shell_overview,R.string.shell_trackium,R.string.shell_wallet,R.string.shell_more};
-        int[] icons={R.drawable.ic_node,R.drawable.tc_ds1_brand_mark,R.drawable.ic_minima,R.drawable.ic_dapps};
+        int[] icons={R.drawable.ic_shell_dashboard,selected==TRACKIUM?R.drawable.shell_logo_green:R.drawable.shell_logo_gray,R.drawable.ic_minima,R.drawable.ic_dapps};
         for(int i=0;i<4;i++) {
             final int target=i;
             LinearLayout item=ShellViews.column(activity); item.setGravity(Gravity.CENTER);
@@ -36,7 +36,7 @@ public final class RootNavigation {
                     super.onInitializeAccessibilityNodeInfo(host,info);info.setClassName("android.widget.Button");
                 }
             });
-            ImageView icon=new ImageView(activity);icon.setImageResource(icons[i]);icon.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
+            ImageView icon=new ImageView(activity);icon.setImageResource(icons[i]);icon.setScaleType(ImageView.ScaleType.FIT_CENTER);icon.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
             if(i!=TRACKIUM)icon.setColorFilter(activity.getColor(i==selected?tech.trackium.designsystem.R.color.tc_ds1_accent:tech.trackium.designsystem.R.color.tc_ds1_text_secondary));
             item.addView(icon,new LinearLayout.LayoutParams(ShellViews.dp(activity,24),ShellViews.dp(activity,24)));
             TextView label=new TextView(activity);label.setText(labels[i]);label.setTextSize(12);label.setGravity(Gravity.CENTER);

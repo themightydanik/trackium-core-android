@@ -1,1 +1,8 @@
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android"><item android:width="36dp" android:height="30dp"><bitmap android:src="@drawable/tc_ds1_brand_mark" android:gravity="fill" android:filter="true" /></item></layer-list>
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Owner PNG kept byte-identical; 37:31 preserves its 370:310 aspect ratio. -->
+    <item android:width="37dp" android:height="31dp">
+        <bitmap android:src="@drawable/shell_logo_gold"
+            android:gravity="fill" android:filter="true" />
+    </item>
+</layer-list>
