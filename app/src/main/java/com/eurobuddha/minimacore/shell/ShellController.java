@@ -92,6 +92,8 @@ public final class ShellController {
         pager.setVisibility(legacyVisible()?View.VISIBLE:View.GONE);
         if(legacyVisible()){
             int[] positions={MainAdapter.HOME_POSITION,MainAdapter.APPS_POSITION,MainAdapter.UTILITY_POSITION,MainAdapter.CHAT_POSITION};
+            int[] labels={R.string.shell_node_details,R.string.shell_apps,R.string.shell_history,R.string.shell_chat};
+            if(state.tool>=0)toolbar.setTitle(labels[state.tool]);
             if(state.tool==3 && MainAdapter.CHAT_POSITION<0){state.tool=-1;show();return;}
             activity.showShellTool(state.root==2?MainAdapter.WALLET_POSITION:positions[state.tool]);
             if(state.tool>=0) toolbar.setNavigationIcon(androidx.appcompat.R.drawable.abc_ic_ab_back_material);

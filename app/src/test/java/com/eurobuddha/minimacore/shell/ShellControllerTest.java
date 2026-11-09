@@ -42,4 +42,18 @@ public class ShellControllerTest {
   restored.get().getOnBackPressedDispatcher().onBackPressed();
   assertTrue(((LinearLayout)restored.get().findViewById(R.id.shell_navigation)).getChildAt(0).isSelected());restored.pause().stop().destroy();
  }
+ private View text(android.view.View v,String label){
+  if(v instanceof android.widget.TextView && label.contentEquals(((android.widget.TextView)v).getText()))return v;
+  if(v instanceof android.view.ViewGroup){android.view.ViewGroup group=(android.view.ViewGroup)v;for(int i=0;i<group.getChildCount();i++){View found=text(group.getChildAt(i),label);if(found!=null)return found;}}
+  return null;
+ }
+ @Test public void nodeDetailsHasContextAndBackReturnsToMore(){
+  var c=create(null);Host a=c.get();View details=text(a.findViewById(R.id.shell_stage),a.getString(R.string.shell_node_details));
+  assertNotNull(details);details.performClick();
+  assertEquals(View.VISIBLE,a.findViewById(R.id.main_pager).getVisibility());
+  assertEquals(a.getString(R.string.shell_node_details),((androidx.appcompat.widget.Toolbar)a.findViewById(R.id.toolbar)).getTitle());
+  a.getOnBackPressedDispatcher().onBackPressed();assertEquals(View.GONE,a.findViewById(R.id.main_pager).getVisibility());
+  assertTrue(((LinearLayout)a.findViewById(R.id.shell_navigation)).getChildAt(3).isSelected());c.pause().stop().destroy();
+ }
+
 }
