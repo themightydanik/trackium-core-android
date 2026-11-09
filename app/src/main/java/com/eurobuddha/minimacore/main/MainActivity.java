@@ -271,6 +271,7 @@ public class MainActivity extends AppCompatActivity implements ServiceConnection
                 tabs.getTabAt(MainAdapter.CHAT_POSITION).setText(Language.text(this, l10n_tab_chat));
         }
         if (mMainPager != null) setToolbarTitle(mMainPager.getCurrentItem());
+        if(shell!=null)shell.configurationChanged();
         invalidateOptionsMenu();
     }
 

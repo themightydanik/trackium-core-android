@@ -58,6 +58,7 @@ public final class ShellController {
         });
         show();
     }
+    public void configurationChanged(){if(scroll!=null)state.scroll=scroll.getScrollY();if(dialog!=null)dialog.dismiss();show();}
     public void accept(Intent intent){
         if(intent.hasExtra(RootNavigation.DESTINATION)){
             int target=intent.getIntExtra(RootNavigation.DESTINATION,0);

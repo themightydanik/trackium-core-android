@@ -59,7 +59,7 @@
             android:gravity="center"
             android:maxWidth="260dp"
             android:text="@string/shell_onboarding"
-            android:tag=""
+            android:tag="l10n:text=shell_onboarding"
             android:textAppearance="@style/TextAppearance.MinimaCore.Body"
             android:textColor="@color/core_text_mid"
             android:lineSpacingMultiplier="1.25" />
