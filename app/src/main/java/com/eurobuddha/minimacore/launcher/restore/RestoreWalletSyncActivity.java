@@ -31,6 +31,8 @@ public class RestoreWalletSyncActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.restorewallet_activity);
+        getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_SECURE);
+        findViewById(R.id.restorewallet_seed).setSaveEnabled(false);
 
 
         Toolbar tb = findViewById(R.id.toolbar);

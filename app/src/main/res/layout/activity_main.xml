@@ -12,7 +12,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/core_surface"
         android:elevation="0dp"
         app:titleTextColor="@color/core_text"
@@ -56,18 +56,10 @@
             android:text="Logs" />
     </com.google.android.material.tabs.TabLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/core_outline" />
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/main_pager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/core_bg" />
-
+    <FrameLayout android:id="@+id/shell_stage" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+    <com.eurobuddha.minimacore.shell.ShellPager android:id="@+id/main_pager" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/core_bg" />
+    </FrameLayout>
+    <LinearLayout android:id="@+id/shell_nav_container" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" />
     <!-- status footer -->
     <View
         android:layout_width="match_parent"

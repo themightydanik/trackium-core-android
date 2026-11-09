@@ -20,6 +20,15 @@ public final class KeyboardInsets {
     private KeyboardInsets() {}
 
     public static void install(AppCompatActivity activity, View root, Toolbar toolbar, View... compactChrome) {
+        toolbar.post(() -> {
+            for (int i=0;i<toolbar.getChildCount();i++) {
+                View child=toolbar.getChildAt(i);
+                if(child instanceof android.widget.TextView) {
+                    android.widget.TextView title=(android.widget.TextView)child;
+                    title.setSingleLine(false);title.setMaxLines(3);
+                }
+            }
+        });
         View hide = LayoutInflater.from(activity).inflate(R.layout.keyboard_dismiss, toolbar, false);
         toolbar.addView(hide);
         Runnable dismiss = () -> {

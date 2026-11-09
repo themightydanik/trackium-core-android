@@ -1,0 +1,22 @@
+<resources>
+ <item name="shell_navigation" type="id"/><item name="shell_scroll" type="id"/>
+ <string name="shell_overview">Overview</string><string name="shell_trackium">Trackium</string>
+ <string name="shell_wallet">Wallet</string><string name="shell_more">More</string><string name="shell_selected">Selected</string>
+ <string name="shell_app_status">Your node. Your cargo. One workspace.</string>
+ <string name="shell_node">Minima Node</string><string name="shell_node_starting">Starting / no observation yet</string>
+ <string name="shell_node_running">Node running</string><string name="shell_node_unknown">Node unavailable / status unknown</string>
+ <string name="shell_network_unknown">Peer connection not observed</string>
+ <string name="shell_network">Connected peers: %1$s</string><string name="shell_block">Block height: %1$s</string>
+ <string name="shell_observed">Last observed: %1$s</string><string name="shell_sync_unknown">Synchronization not confirmed. Connected peers alone do not establish full synchronization.</string>
+ <string name="shell_workspace">Trackium Workspace</string><string name="shell_unpaired">No native session configured. Pair with a test owner in Trackium Settings.</string>
+ <string name="shell_session">Native session stored. Connection and expiry must be checked in Trackium.</string><string name="shell_storage_unknown">Secure state unavailable. Open Trackium for recovery guidance.</string>
+ <string name="shell_no_data">No authenticated logistics observation on this screen.</string><string name="shell_open_trackium">Open Trackium</string>
+ <string name="shell_node_details">Node details</string><string name="shell_diagnostics">Diagnostics / Logs</string><string name="shell_refresh">Refresh observation</string>
+ <string name="shell_tools">Core tools</string><string name="shell_apps">Apps</string><string name="shell_history">History</string><string name="shell_chat">Chat</string>
+ <string name="shell_startup_settings">Node settings</string><string name="shell_backup">Backup / Restore</string><string name="shell_security">Security / App Lock</string><string name="shell_terminal">Terminal</string>
+ <string name="shell_settings">Settings</string><string name="shell_theme">Appearance</string><string name="shell_system">System</string><string name="shell_light">Light</string><string name="shell_dark">Dark</string>
+ <string name="shell_advanced_note">Advanced operations retain their existing confirmations. Minima validates the blockchain; Trackium does not enable financial or Proof publication permissions.</string>
+ <string name="shell_about">About / attribution</string><string name="shell_attribution">Independent Trackium Core build. Minima Core host and engine derived from Eurobuddha/BlackBear, with Pandamonium integration architecture. No official endorsement is claimed. Original licences and NOTICE remain in the project; distribution blockers remain open.</string>
+ <string name="shell_onboarding">A private Minima node with your native logistics workspace. Create or restore a wallet to begin. Keep your recovery phrase private.</string>
+ <string name="shell_starting">Starting your Minima node…</string>
+</resources>

@@ -67,7 +67,7 @@
 
         <!-- Launcher Activity-->
         <activity android:configChanges="locale|layoutDirection|screenLayout"
-            android:name=".StartActivity"
+            android:name=".StartActivity" android:theme="@style/Theme.Trackium.Start"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

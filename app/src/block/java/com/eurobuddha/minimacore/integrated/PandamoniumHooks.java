@@ -9,6 +9,7 @@ public final class PandamoniumHooks {
         return new HistoryTabView(activity);
     }
     public static void initialize(android.content.Context context) {
+        tech.trackium.cargo.CoreShellNavigation.install(com.eurobuddha.minimacore.shell.RootNavigation::forTrackium);
         // History talks to the embedded node via DirectNodeApi and listens on DirectNodeEvents.
         // History and Trackium share the existing in-process transport; no DeFi apps.
         com.eurobuddha.minimaapi.direct.DirectNodeApi.install(new EmbeddedNodeTransport(context));

@@ -61,6 +61,7 @@
     </style>
 
     <style name="Theme.MinimaCore" parent="Base.Theme.MinimaCore" />
+    <style name="Theme.Trackium.Start" parent="Theme.MinimaCore"><item name="android:windowBackground">@drawable/shell_splash</item></style>
 
     <!-- kept: referenced by old layouts -->
     <style name="MyToolbarStyle" parent="ThemeOverlay.AppCompat.ActionBar" />
