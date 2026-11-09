@@ -1,0 +1,4 @@
+<resources>
+ <item type="id" name="tc_search_shipments"/><item type="id" name="tc_search_devices"/>
+ <item type="id" name="tc_gateway_origin"/><item type="id" name="tc_gateway_tenant"/>
+</resources>

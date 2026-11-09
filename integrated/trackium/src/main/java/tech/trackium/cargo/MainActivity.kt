@@ -217,7 +217,7 @@ class MainActivity : Activity() {
     private fun render() {
         currentScroll?.let { v -> renderedKey?.let { scrollPositions[it]=v.scrollY } }
         val focused=currentFocus as? EditText
-        if(focused!=null && focused.id in 20101..20104) {focusId=focused.id;cursor=focused.selectionStart}
+        if(focused!=null && focused.id in listOf(R.id.tc_search_shipments,R.id.tc_search_devices,R.id.tc_gateway_origin,R.id.tc_gateway_tenant)) {focusId=focused.id;cursor=focused.selectionStart}
         if (!TrackiumCoreAccess.authorized()) {
             setContentView(TextView(this).apply { text = "Unlock Trackium Core to continue" })
             return
@@ -358,7 +358,7 @@ class MainActivity : Activity() {
         freshness(content)
         val controls=box(content,"Find $kind · loaded snapshot")
         val search=input(controls,"Search name / ID",searches[kind] ?: "")
-        search.id=if(kind=="Shipments")20101 else 20102
+        search.id=if(kind=="Shipments")R.id.tc_search_shipments else R.id.tc_search_devices
         val choices=listOf("All")+CargoPresentation.records(array).flatMap { row -> listOf("status","source_trust","mode","identity_kind").mapNotNull { key -> row.optString(key).takeIf { it.isNotBlank() && it!="null" } } }.distinct().sorted()
         val filter=Spinner(this).apply {minimumHeight=dp(48);contentDescription="$kind filter";adapter=ArrayAdapter(this@MainActivity,android.R.layout.simple_spinner_dropdown_item,choices);setSelection(choices.indexOf(filters[kind]).coerceAtLeast(0))}
         controls.addView(filter)
@@ -612,7 +612,7 @@ class MainActivity : Activity() {
             input(gateway, "HTTPS Gateway origin", draftGateway ?: config.optString("gateway"))
         val tenant =
             input(gateway, "Tenant UUID (public)", draftTenant ?: config.optString("tenant"))
-        url.id=20103;tenant.id=20104
+        url.id=R.id.tc_gateway_origin;tenant.id=R.id.tc_gateway_tenant
         url.addTextChangedListener(watch { draftGateway = it })
         tenant.addTextChangedListener(watch { draftTenant = it })
         button(gateway, "Save connection") {
