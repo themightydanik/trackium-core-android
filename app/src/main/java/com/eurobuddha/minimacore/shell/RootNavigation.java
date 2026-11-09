@@ -24,6 +24,11 @@ public final class RootNavigation {
             LinearLayout item=ShellViews.column(activity); item.setGravity(Gravity.CENTER);
             item.setPadding(ShellViews.dp(activity,4),ShellViews.dp(activity,8),ShellViews.dp(activity,4),ShellViews.dp(activity,8));
             item.setMinimumHeight(ShellViews.dp(activity,64)); item.setFocusable(true); item.setClickable(true);
+            android.graphics.drawable.StateListDrawable feedback=new android.graphics.drawable.StateListDrawable();
+            feedback.addState(new int[]{android.R.attr.state_pressed},surface(activity,true,tech.trackium.designsystem.R.color.tc_ds1_accent));
+            feedback.addState(new int[]{android.R.attr.state_focused},surface(activity,true,tech.trackium.designsystem.R.color.tc_ds1_focus));
+            feedback.addState(new int[]{android.R.attr.state_selected},surface(activity,true,0));
+            feedback.addState(new int[]{},surface(activity,false,0));item.setBackground(feedback);
             item.setSelected(i==selected); item.setContentDescription(activity.getText(labels[i]));
             androidx.core.view.ViewCompat.setStateDescription(item,i==selected?activity.getString(R.string.shell_selected):null);
             item.setAccessibilityDelegate(new View.AccessibilityDelegate(){
@@ -40,6 +45,12 @@ public final class RootNavigation {
             nav.addView(item,new LinearLayout.LayoutParams(0,-1,1)); item.setOnClickListener(v->select.accept(target));
         }
         return nav;
+    }
+    private static android.graphics.drawable.GradientDrawable surface(Activity a,boolean raised,int outline) {
+        android.graphics.drawable.GradientDrawable shape=new android.graphics.drawable.GradientDrawable();
+        shape.setColor(a.getColor(raised?tech.trackium.designsystem.R.color.tc_ds1_surface_raised:tech.trackium.designsystem.R.color.tc_ds1_surface));
+        shape.setCornerRadius(ShellViews.dp(a,12));
+        if(outline!=0)shape.setStroke(ShellViews.dp(a,2),a.getColor(outline));return shape;
     }
     public static View forTrackium(Activity activity) {
         return create(activity,TRACKIUM,target->{

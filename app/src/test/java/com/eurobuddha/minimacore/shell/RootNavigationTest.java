@@ -16,7 +16,7 @@ public class RootNavigationTest {
   assertEquals(4,nav.getChildCount());
   for(int i=0;i<4;i++){
    android.view.View item=nav.getChildAt(i);assertTrue(item.isFocusable());assertTrue(item.isClickable());
-   assertTrue(item.getMinimumHeight()>=ShellViews.dp(a,48));assertNotNull(item.getContentDescription());
+   assertTrue(item.getMinimumHeight()>=ShellViews.dp(a,48));assertNotNull(item.getContentDescription());assertNotNull(item.getBackground());
    item.performClick();assertEquals(i,selected[0]);
   }
   assertTrue(nav.getChildAt(0).isSelected());a.finish();
