@@ -1,6 +1,6 @@
 {
   "engine_sha256": "f8dc2d7b60c327c8016ba072cb68cc6e5981a41eb4514808693ffbbc8d56e6e0",
-  "unchanged_imports": 481,
+  "unchanged_imports": 482,
   "modified_imports": [
     "app/build.gradle",
     "app/src/block/java/com/eurobuddha/minimacore/integrated/PandamoniumHooks.java",
@@ -14,7 +14,6 @@
     "app/src/main/java/com/eurobuddha/minimacore/launcher/newwallet/NewWalletRestoreActivity.java",
     "app/src/main/java/com/eurobuddha/minimacore/launcher/restore/RestoreWalletSyncActivity.java",
     "app/src/main/java/com/eurobuddha/minimacore/main/MainActivity.java",
-    "app/src/main/java/com/eurobuddha/minimacore/main/views/balance/BalanceAdapter.java",
     "app/src/main/java/com/eurobuddha/minimacore/main/views/home/HomeView.java",
     "app/src/main/java/com/eurobuddha/minimacore/utils/KeyboardInsets.java",
     "app/src/main/res/drawable/bg_token_tile.xml",
