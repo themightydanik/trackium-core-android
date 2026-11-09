@@ -87,7 +87,7 @@ public final class ShellController {
         if(page!=null){stage.removeView(page);page=null;}scroll=null;
         navContainer.removeAllViews();navContainer.addView(RootNavigation.create(activity,state.root,this::select),new LinearLayout.LayoutParams(-1,-2));
         toolbar.setTitle(state.root==0?"Trackium Core":activity.getString(state.root==2?R.string.shell_wallet:R.string.shell_more));
-        toolbar.setSubtitle(null);toolbar.setLogo(R.drawable.shell_brand);
+        toolbar.setSubtitle(null);toolbar.setLogo(R.drawable.shell_brand);toolbar.setTitleMarginStart(ShellViews.dp(activity,12));
         toolbar.post(()->{ for(int i=0;i<toolbar.getChildCount();i++) if(toolbar.getChildAt(i) instanceof TextView){ TextView title=(TextView)toolbar.getChildAt(i);title.setSingleLine(false);title.setMaxLines(3); } });
         pager.setVisibility(legacyVisible()?View.VISIBLE:View.GONE);
         if(legacyVisible()){
