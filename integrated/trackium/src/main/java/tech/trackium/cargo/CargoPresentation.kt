@@ -51,6 +51,11 @@ object CargoPresentation {
         val loc=j.optJSONObject("location")?.optJSONObject("location")
         if(loc!=null){result+=section("Location observation",loc,"Measured" to "occurred_at","Trust" to "trust");result+=section("Coordinates",loc.optJSONObject("gps"),"Latitude" to "latitude","Longitude" to "longitude","Accuracy (m)" to "accuracy_m")}
         val history=j.optJSONObject("history")?.optJSONArray("events") ?: j.optJSONArray("events")
+        if(j.has("history") || j.has("telemetry") || j.has("device_observation") || status!=null) {
+            val latest=records(history ?: j.optJSONObject("telemetry")?.optJSONArray("events")).firstOrNull()
+            val payload=latest?.optJSONObject("payload")
+            result+=Section("Latest returned measurement",listOf("Measured" to value(latest,"occurred_at"),"Temperature" to value(payload,"temperature_c"," °C"),"Humidity" to value(payload,"humidity_pct"," %"),"Battery" to value(payload,"battery_pct"," %"),"Trust" to value(payload,"trust")))
+        }
         for(event in records(history)) {
             result+=section("Event · ${value(event,"occurred_at").takeIf { it!="Not reported" } ?: value(event,"event_time")}",event,"Type" to "event_type","Identifier" to "id","Source trust" to "source_trust","Received" to "received_at")
             val payload=event.optJSONObject("payload")
