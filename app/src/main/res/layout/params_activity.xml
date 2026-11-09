@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/core_surface"
         app:titleTextColor="@color/core_text"
         app:titleTextAppearance="@style/TextAppearance.MinimaCore.Title"
@@ -28,13 +28,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="24dp" android:background="@drawable/tc_content_panel" android:layout_margin="16dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Startup parameters" android:tag="l10n:text=l10n_params_heading"
-                android:textAppearance="@style/TextAppearance.MinimaCore.Display" />
+                android:textAppearance="@style/TextAppearance.MinimaCore.Display"  android:accessibilityHeading="true"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -54,7 +54,7 @@
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/params_switch_classic"
-                    android:layout_width="match_parent"
+                    android:minHeight="48dp" android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:text="@string/classic_mode_title" android:tag="l10n:text=l10n_drawer_classic_mode"
@@ -72,7 +72,7 @@
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/params_switch_server"
-                android:layout_width="match_parent"
+                android:minHeight="48dp" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Server mode (-server)" android:tag="l10n:text=l10n_params_server"
@@ -89,7 +89,7 @@
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/params_switch_megammr"
-                android:layout_width="match_parent"
+                android:minHeight="48dp" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="MegaMMR (-megammr)" android:tag="l10n:text=l10n_params_mega"
@@ -106,7 +106,7 @@
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/params_switch_rpc"
-                android:layout_width="match_parent"
+                android:minHeight="48dp" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Enable RPC (-rpcenable)" android:tag="l10n:text=l10n_params_rpc"
@@ -140,7 +140,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/params_rpc_password_copy"
                     style="@style/Widget.MinimaCore.Button.Outlined"
-                    android:layout_width="match_parent"
+                    android:minHeight="48dp" android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:text="Copy RPC password" android:tag="l10n:text=l10n_params_copy_rpc" />
@@ -148,7 +148,7 @@
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/params_switch_autoresync"
-                android:layout_width="match_parent"
+                android:minHeight="48dp" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Resync automatically when unhealthy" android:tag="l10n:text=l10n_params_auto_resync"
@@ -165,7 +165,7 @@
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/params_switch_keets"
-                android:layout_width="match_parent"
+                android:minHeight="48dp" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Keets transport (-keets)" android:tag="l10n:text=l10n_params_keets"
@@ -202,15 +202,15 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/params_button_save"
                 style="@style/Widget.MinimaCore.Button.Outlined"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:minHeight="48dp" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Save" android:tag="l10n:text=l10n_common_save" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/params_button_save_restart"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:minHeight="48dp" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="Save &amp; Restart Node" android:tag="l10n:text=l10n_params_save_restart" />
         </LinearLayout>

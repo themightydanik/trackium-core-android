@@ -28,13 +28,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="24dp" android:background="@drawable/tc_content_panel" android:layout_margin="16dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:tag="l10n:text=l10n_restore_heading" android:text="Restore &amp; resync"
-                android:textAppearance="@style/TextAppearance.MinimaCore.Display" />
+                android:textAppearance="@style/TextAppearance.MinimaCore.Display"  android:accessibilityHeading="true"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -74,15 +74,15 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/restorewallet_button_check"
                 style="@style/Widget.MinimaCore.Button.Outlined"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:minHeight="48dp" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:tag="l10n:text=l10n_onboarding_check_words" android:text="Check Word List" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/restorewallet_button_proceed"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:minHeight="48dp" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:tag="l10n:text=l10n_common_proceed" android:text="Proceed" />
         </LinearLayout>

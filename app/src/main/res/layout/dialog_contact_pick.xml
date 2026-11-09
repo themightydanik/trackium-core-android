@@ -7,7 +7,7 @@
     <EditText
         android:id="@+id/pick_search"
         android:tag="l10n:hint=l10n_chat_search_contacts"
-        android:layout_width="match_parent"
+        android:minHeight="48dp" android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"

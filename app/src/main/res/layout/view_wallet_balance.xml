@@ -14,9 +14,11 @@
     android:orientation="vertical"
     android:background="@color/core_bg">
 
+    <com.eurobuddha.minimacore.shell.BalanceSummaryScroll android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="16dp" android:fillViewport="false">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingBottom="16dp" android:background="@drawable/tc_content_panel">
     <!-- ===== Total balance (tap the row to reveal the breakdown) ===== -->
     <LinearLayout
-        android:id="@id/wallet_balance_header"
+        android:id="@id/wallet_balance_header" android:minHeight="48dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -58,7 +60,7 @@
             android:hyphenationFrequency="none"
             android:textIsSelectable="true"
             android:fontFeatureSettings="tnum"
-            android:text="0"
+            android:text="—"
             android:textAppearance="@style/TextAppearance.MinimaCore.Numeral"
             android:textSize="26sp" />
 
@@ -110,8 +112,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/wallet_btn_send"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:minHeight="48dp" android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginEnd="6dp"
             android:text="Send" android:tag="l10n:text=l10n_wallet_send" />
@@ -119,13 +121,15 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/wallet_btn_receive"
             style="@style/Widget.MinimaCore.Button.Outlined"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:minHeight="48dp" android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="6dp"
             android:text="Receive" android:tag="l10n:text=l10n_wallet_receive" />
     </LinearLayout>
 
+    </LinearLayout>
+    </com.eurobuddha.minimacore.shell.BalanceSummaryScroll>
     <!-- ===== Tokens ===== -->
     <TextView
         android:layout_width="wrap_content"

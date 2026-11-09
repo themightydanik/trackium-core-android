@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/core_surface"
         app:titleTextColor="@color/core_text"
         app:titleTextAppearance="@style/TextAppearance.MinimaCore.Title"
@@ -30,13 +30,13 @@
             android:orientation="vertical"
             android:paddingHorizontal="24dp"
             android:paddingTop="24dp"
-            android:paddingBottom="40dp">
+            android:paddingBottom="40dp" android:background="@drawable/tc_content_panel" android:layout_margin="16dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Create backup"
-                android:textAppearance="@style/TextAppearance.MinimaCore.Display"  android:tag="l10n:text=l10n_backup_create" />
+                android:textAppearance="@style/TextAppearance.MinimaCore.Display"  android:tag="l10n:text=l10n_backup_create"  android:accessibilityHeading="true"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -68,7 +68,7 @@
                     android:id="@+id/backup_create_password"
                     style="@style/FormField"
                     android:saveEnabled="false"
-                    android:layout_width="0dp"
+                    android:minHeight="48dp" android:layout_width="0dp"
                     android:layout_weight="1"
                     android:inputType="textPassword"
                     android:importantForAutofill="no"
@@ -96,7 +96,7 @@
                     android:id="@+id/backup_create_confirm"
                     style="@style/FormField"
                     android:saveEnabled="false"
-                    android:layout_width="0dp"
+                    android:minHeight="48dp" android:layout_width="0dp"
                     android:layout_weight="1"
                     android:inputType="textPassword"
                     android:importantForAutofill="no"
@@ -128,8 +128,8 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/backup_create_go"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:minHeight="48dp" android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Create backup" />
 
@@ -172,7 +172,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/backup_create_copy"
                 style="@style/Widget.MinimaCore.Button.Outlined"
-                android:layout_width="match_parent"
+                android:minHeight="48dp" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:visibility="gone"

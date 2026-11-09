@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:paddingHorizontal="20dp"
         android:paddingTop="4dp"
-        android:paddingBottom="16dp">
+        android:paddingBottom="16dp" android:layout_margin="16dp">
 
         <!-- one view_coin_detail_row per non-empty field, built in CoinDetailDialog -->
         <LinearLayout

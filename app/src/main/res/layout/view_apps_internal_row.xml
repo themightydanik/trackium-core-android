@@ -4,9 +4,9 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:background="@color/core_surface"
+    android:background="@drawable/tc_content_panel"
     android:paddingHorizontal="16dp"
-    android:paddingVertical="13dp">
+    android:paddingVertical="16dp">
 
     <ImageView
         android:id="@+id/int_app_icon"

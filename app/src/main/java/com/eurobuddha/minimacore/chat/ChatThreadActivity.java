@@ -655,7 +655,7 @@ public class ChatThreadActivity extends AppCompatActivity {
 
             rowBox.setGravity(m.incoming ? Gravity.START : Gravity.END);
             bubble.setBackgroundResource(m.incoming ? R.drawable.chat_bubble_in : R.drawable.chat_bubble_out);
-            int fg = m.incoming ? getColor(R.color.core_text) : Color.WHITE;
+            int fg = getColor(R.color.core_text);
             body.setTextColor(fg);
             meta.setTextColor(fg);
             attach.setTextColor(fg);
@@ -761,7 +761,7 @@ public class ChatThreadActivity extends AppCompatActivity {
                 Language.setText(meta, when);
             } else if (m.peerread) {
                 Language.setText(meta, Language.join(when, "  ✓✓"));
-                meta.setTextColor(Color.parseColor("#7DD3FC"));
+                meta.setTextColor(getColor(tech.trackium.designsystem.R.color.tc_ds1_info));
             } else {
                 Language.setText(meta, Language.join(when, "  ", ChatUi.statusGlyph(m.via)));
             }

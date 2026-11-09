@@ -1,4 +1,4 @@
-# UI implementation progress — Trackium Core Update 2
+# UI implementation progress — Trackium Core Update 3
 
 ## Approved direction and sequencing
 
@@ -67,3 +67,38 @@ Manual theme selection through More → Appearance was exercised for Dark and Li
 - [After: onboarding Light](update2/after-onboarding-light-compact.png).
 
 Actual TalkBack gestures, landscape/IME on physical OEM devices, biometric lock/relock, reboot/foreground node recovery and all privileged wallet flows still require controlled phone acceptance. Existing automated lock/permission/wallet/node regression guards remain mandatory and passing; these emulator images are not financial, Mainnet or release acceptance. See `docs/PHONE_ACCEPTANCE.md` for the controlled-device protocol.
+
+
+## Update 3 — native workspace and module presentation
+
+Base: owner-merged PR #5 / `3530bca`. One Android branch/PR; Web/Gateway remain unchanged. Update 4 must wait for owner review/merge.
+
+Implemented native screens:
+
+- Dashboard: stored/expired/unpaired versus authenticated observation, observed snapshot age, loaded shipment/device/proof counts (explicit first-25 limitation), available recent proof events and real controller messages/loading/errors. No live connectivity is inferred from a credential on disk.
+- Shipments/Devices: local search and filters over the loaded authorized snapshot; structured record cards and detail navigation; route/checkpoints, linked device status, measurements with units, event history and linked proofs through existing read APIs. Missing sensor data says “Not reported”; zero remains a valid reported value. Optional reads expose partial-observation warnings. Trust/mode/measurement timestamps are reported, never inferred as physical authenticity.
+- Proofs: distinct pending/submitted/included/Gateway-confirmed/failed/unknown evidence; fresh reader results remain separate, including independent verification result/check time. Up to 20 loaded records render per UI page; next/previous keeps all loaded actions reachable. Verification, bundle export and existing review/recovery controls remain, with publication gates unchanged.
+- Gateway Settings: profile → owner challenge/expiry → claim/refresh/revoke; session expiry/scopes and issuer pinning remain explicit. Credentials/challenge secrets are never rendered or saved in UI state. Changing/revoking a profile clears only the in-memory cargo observation, not recovery checkpoints or authentication policy.
+- Normal details no longer recursively expand arbitrary JSON. Bounded, schema-specific sections/timelines/measurement rows lead to explicit Advanced Raw Data/export. Unsupported fields remain available there. Core wallet evidence also uses the structured view.
+- Refresh start updates a persistent loading indicator instead of destroying editors. Completion retains public draft fields, cursor/focus, search/filter and per-section scroll. Saved state allowlists navigation/search/public profile fields; URI drafts with user-info/query/fragment are not serialized. Detail payloads, consent phrases and credentials are not saved.
+
+Host modules use shared DS1 type, rounded surface/input containers, focused input outline, wrapping buttons/toolbars and minimum targets in their actual existing layouts. Wallet summary is now a bounded scrollable card so Send/Receive and token navigation remain reachable at large fonts. Token rows, Apps, Chat/media rows, Send/Receive forms, Node/Advanced, Settings, Security/PIN, Backup/Restore, Terminal/Logs forms and About inherit the common presentation. Existing view IDs, reorder/search, confirmations, financial/key-use/backup behavior and conditional Chat/Keets features remain. Chat uses theme-safe incoming/outgoing surfaces and read-receipt colours; original token artwork and Minima glyph treatment remain. History removes its fixed dark/orange renderer and XML colours in favor of context-resolved DS1 roles in both themes.
+
+Verification deliberately stays small: three new targeted presentation tests (missing versus zero measurements; proof evidence/snapshot age; units/trust/local filtering) passed, plus incremental assembly for the affected UI. The **single full regression pipeline is the PR's GitHub Actions workflow**, retaining all existing tests/lint/source/license/dependency/signature checks and producing the debug APK. CI result/artifact links are attached to the PR. Debug version 0.3.0 (code 5); no public Release.
+
+### Update 3 visual evidence
+
+Controlled API 28 AVD, no real wallet credentials or Gateway pairing, Android Wi-Fi/mobile data disabled. Host entry uses this debug app's own UID without wallet provisioning; screenshots show unknown/disconnected/empty observations, not financial acceptance. Local smoke APKs use the prior local debug signer to preserve test AVD data; CI signs independently with a temporary debug key. Native entry/Back and the native window's FLAG_SECURE were checked; no protected screenshots or screenshot-policy changes were made.
+
+- [Before Wallet Light](update3/before-wallet-light.png) / [after](update3/after-wallet-light.png).
+- [Wallet Dark](update3/after-wallet-dark.png).
+- [Wallet at 200%](update3/after-wallet-font200.png) / [summary scrolled to reachable actions](update3/after-wallet-font200-actions.png).
+- [History Light](update3/after-history-light.png).
+
+Captures are real safe host UI from the local build; later changes to native proof pagination/cache invalidation and long-label button wrapping do not alter these English host scenes. Dark review detected a low-contrast Minima glyph on its preserved white identity tile; original black glyph rendering was restored before final CI. The Dark capture shows the corrected glyph rendering.
+
+### Limits / Update 4
+
+Native screens stay FLAG_SECURE: this is not a claim of screenshot-based acceptance of those screens. Structured presenter checks and runtime entry do not replace owner visual review on a controlled phone. Native domain copy still includes English; complete native localization/long-translation acceptance, actual TalkBack exploration, physical-device IME/landscape/biometrics/process-death/foreground-node acceptance and live test-owner pairing remain manual or follow-up acceptance. Tests do not exercise real financial transactions, trackers or Mainnet publications. Search covers loaded pages; the UI does not claim server-wide search or complete telemetry history. The five-minute snapshot-age label describes the client observation, not authoritative physical-sensor staleness.
+
+Keep licensing/NOTICE/provenance and 16-KiB/native compatibility blockers open. Update 4 candidates: current Web MiniDapp alignment, cross-client feature parity and controlled device/accessibility acceptance. Do not begin Update 4 here or auto-merge this PR.
