@@ -246,8 +246,6 @@ class MainActivity : Activity() {
             }
         }
         shell.addView(section)
-        shell.addView(label(c.coreState, 12f, muted))
-        shell.addView(label(c.message, 12f, if (c.data == null) amber else muted))
         if (c.busy.get())
             shell.addView(
                 ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal).apply {
@@ -257,6 +255,9 @@ class MainActivity : Activity() {
             )
         val scroll = ScrollView(this)
         content = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        // Status text scales and scrolls with content instead of squeezing navigation at 200%.
+        content.addView(label(c.coreState, 12f, muted))
+        content.addView(label(c.message, 12f, if (c.data == null) amber else muted))
         scroll.addView(content)
         shell.addView(scroll, LinearLayout.LayoutParams(-1, 0, 1f))
         when (tab) {
