@@ -192,16 +192,23 @@ class MainActivity : Activity() {
     private fun renderDetail(value: JSONObject) {
         if(value.has("partial_observation"))content.addView(label("Partial observation · ${CargoPresentation.value(value,"partial_observation")}",16f,amber,true))
         button(content,"Back to $tab") { detailTitle=null;detailValue=null;currentScroll=null;render() }
-        for(section in CargoPresentation.sections(detailTitle ?: "Details",value)) {
-            if(section.rows.isEmpty())continue
-            val card=box(content,section.title)
-            for((name,v) in section.rows) {card.addView(label(name,12f,muted));card.addView(label(v,16f))}
-        }
-        content.addView(label("Reported evidence only. Read measurement/check timestamps and source trust; a recent fetch does not make an old sensor sample fresh.",14f,muted))
+        renderEvidenceSections(content, detailTitle ?: "Details", value)
+        content.addView(label("Check the time basis and provenance of each observation. Gateway receipt and device measurement are separate.",14f,muted))
         val advanced=box(content,"Advanced / export")
         advanced.addView(label("This evidence may contain sensitive cargo data. Share only with authorized recipients.",14f,muted))
         button(advanced,"Advanced Raw Data") { dialog("Advanced Raw Data",value.toString(2)) }
         button(advanced,"Export reported data") { share(value) }
+    }
+
+    internal fun renderEvidenceSections(parent: LinearLayout, title: String, value: JSONObject) {
+        for (section in CargoPresentation.sections(title, value)) {
+            if (section.rows.isEmpty()) continue
+            val card = box(parent, section.title)
+            for ((name, reported) in section.rows) {
+                card.addView(label(name, 12f, muted))
+                card.addView(label(reported, 16f))
+            }
+        }
     }
 
     private fun async(title: String, call: () -> JSONObject) {

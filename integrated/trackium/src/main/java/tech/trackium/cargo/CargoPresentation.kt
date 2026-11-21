@@ -40,31 +40,81 @@ object CargoPresentation {
     }
     private fun section(title: String, j: JSONObject?, vararg fields: Pair<String,String>): Section =
         Section(title, fields.filter { (_,key) -> j?.has(key)==true && j.opt(key) !is JSONObject && j.opt(key) !is JSONArray }.map { (label,key) -> label to value(j,key) })
+    private fun measurement(j: JSONObject?, key: String, unit: String = ""): String {
+        val number = j?.opt(key) as? Number ?: return "Not reported"
+        return if (number.toDouble().isFinite()) value(j, key, unit) else "Not reported"
+    }
+
+    private fun observation(event: JSONObject?): List<Pair<String, String>> {
+        val payload = event?.optJSONObject("payload")
+        val basis = payload?.optString("event_time_basis")
+        val trust = payload?.optString("trust")
+        val provenance = when (trust) {
+            "unverified" -> "Physical observation · unverified"
+            "synthetic" -> "Synthetic telemetry"
+            else -> "Not reported"
+        }
+        val times = when {
+            basis == "gateway_received_at" -> listOf(
+                "Gateway received" to (value(event, "received_at").takeUnless { it == "Not reported" }
+                    ?: value(event, "occurred_at")),
+                "Device measurement time" to "Unavailable"
+            )
+            trust == "synthetic" -> listOf("Synthetic sample time" to value(event, "occurred_at"))
+            else -> listOf(
+                "Gateway received" to value(event, "received_at"),
+                "Device measurement time" to "Unavailable"
+            )
+        }
+        return listOf("Provenance" to provenance) + times + listOf(
+            "Temperature" to measurement(payload, "temperature_c", " °C"),
+            "Humidity" to measurement(payload, "humidity_pct", " %"),
+            "Battery" to measurement(payload, "battery_pct", " %")
+        )
+    }
+
+    private fun location(device: JSONObject, status: JSONObject?): Section {
+        val location = device.optJSONObject("location")?.optJSONObject("location")
+        val gps = location?.optJSONObject("gps")
+        val lat = (gps?.opt("latitude") as? Number)?.toDouble()
+        val lon = (gps?.opt("longitude") as? Number)?.toDouble()
+        val physical = device.optString("identity_kind") == "physical" ||
+            device.optString("mode") == "real" || status?.optString("mode") == "real"
+        val valid = !physical && location?.optString("trust") == "synthetic" &&
+            lat != null && lat in -90.0..90.0 && lon != null && lon in -180.0..180.0
+        return Section("Current position", if (valid) listOf(
+            "Provenance" to "Synthetic telemetry",
+            "Synthetic position time" to value(location, "occurred_at"),
+            "Latitude" to measurement(gps, "latitude"),
+            "Longitude" to measurement(gps, "longitude"),
+            "Accuracy (m)" to measurement(gps, "accuracy_m")
+        ) else listOf("Position" to "Unavailable"))
+    }
+
     fun sections(title: String, j: JSONObject): List<Section> {
         val result = mutableListOf<Section>()
         result += section(title,j,"Name" to "name","Label" to "label","Identifier" to "id","State" to "status","Source trust" to "source_trust","Device" to "device_id","Observed / updated" to "updated_at")
         for (key in listOf("route","checkpoints")) for ((i,point) in records(j.optJSONArray(key)).withIndex()) {
             result += section("${if(key=="route") "Route stop" else "Checkpoint"} ${i+1}",point,"Name" to "name","Latitude" to "latitude","Longitude" to "longitude","Radius (m)" to "radius_m","Visited" to "visited_at","Trust" to "source_trust")
         }
-        val status=j.optJSONObject("status")
-        if(status!=null)result += section("Device status",status,"Status" to "status","Enabled" to "enabled","Last activity" to "last_event_at","Trust" to "trust","Mode" to "mode")
-        val loc=j.optJSONObject("location")?.optJSONObject("location")
-        if(loc!=null){result+=section("Location observation",loc,"Measured" to "occurred_at","Trust" to "trust");result+=section("Coordinates",loc.optJSONObject("gps"),"Latitude" to "latitude","Longitude" to "longitude","Accuracy (m)" to "accuracy_m")}
-        val history=j.optJSONObject("history")?.optJSONArray("events") ?: j.optJSONArray("events")
-        if(j.has("history") || j.has("telemetry") || j.has("device_observation") || status!=null) {
-            val latest=records(history ?: j.optJSONObject("telemetry")?.optJSONArray("events")).firstOrNull()
-            val payload=latest?.optJSONObject("payload")
-            result+=Section("Latest returned measurement",listOf("Measured" to value(latest,"occurred_at"),"Temperature" to value(payload,"temperature_c"," °C"),"Humidity" to value(payload,"humidity_pct"," %"),"Battery" to value(payload,"battery_pct"," %"),"Trust" to value(payload,"trust")))
-        }
-        for(event in records(history)) {
-            result+=section("Event · ${value(event,"occurred_at").takeIf { it!="Not reported" } ?: value(event,"event_time")}",event,"Type" to "event_type","Identifier" to "id","Source trust" to "source_trust","Received" to "received_at")
-            val payload=event.optJSONObject("payload")
-            if(payload!=null)result+=Section("Reported measurements",listOf("Temperature" to value(payload,"temperature_c"," °C"),"Humidity" to value(payload,"humidity_pct"," %"),"Battery" to value(payload,"battery_pct"," %"),"Trust" to value(payload,"trust")))
-        }
-        val device=j.optJSONObject("device_observation")
-        if(device!=null)result+=section("Linked device observation",device,"Status" to "status","Measured" to "last_event_at","Trust" to "trust","Mode" to "mode")
-        val samples=j.optJSONObject("telemetry")?.optJSONArray("events")
-        for(sample in records(samples))result+=Section("Linked device measurement · ${value(sample,"occurred_at")}",listOf("Temperature" to value(sample.optJSONObject("payload"),"temperature_c"," °C"),"Humidity" to value(sample.optJSONObject("payload"),"humidity_pct"," %"),"Battery" to value(sample.optJSONObject("payload"),"battery_pct"," %"),"Trust" to value(sample.optJSONObject("payload"),"trust")))
+        val status = j.optJSONObject("status")
+        if (status != null)
+            result += section("Device status", status, "Status" to "status", "Enabled" to "enabled",
+                "Last observation timestamp" to "last_event_at", "Trust" to "trust", "Mode" to "mode")
+        if (status != null || j.has("location") || j.has("history"))
+            result += location(j, status)
+        val history = records(j.optJSONObject("history")?.optJSONArray("events"))
+        if (j.has("history") || status != null)
+            result += Section("Latest device observation", observation(history.firstOrNull()))
+        for (event in history)
+            result += Section("Telemetry history", listOf("Identifier" to value(event, "id")) + observation(event))
+        for (event in records(j.optJSONArray("events")))
+            result += section("Shipment event", event, "Type" to "event_type", "Event time" to "event_time", "Identifier" to "id", "Source trust" to "source_trust")
+        val device = j.optJSONObject("device_observation")
+        if (device != null)
+            result += section("Linked device status", device, "Status" to "status", "Trust" to "trust", "Mode" to "mode")
+        for (sample in records(j.optJSONObject("telemetry")?.optJSONArray("events")))
+            result += Section("Linked device observation", observation(sample))
         for(proof in records(j.optJSONArray("proofs")))result+=Section("Linked proof",listOf("Identifier" to value(proof,"id"),"State" to proofState(proof),"Checked" to value(proof,"last_checked_at")))
         for(token in records(j.optJSONArray("balance")))result+=section("Core-reported token",token,"Token" to "token","Token ID" to "tokenid","Confirmed" to "confirmed","Unconfirmed" to "unconfirmed","Sendable" to "sendable")
         if(j.has("verified"))result+=section("Independent reader evidence",j,"Independently verified at check time" to "verified","Chain observation" to "status","Checked" to "checked_at","Reason" to "reason","Source trust" to "source_trust")
