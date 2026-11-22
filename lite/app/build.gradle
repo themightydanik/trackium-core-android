@@ -1,0 +1,21 @@
+plugins { id 'com.android.application' version '8.10.1' }
+android {
+    namespace 'tech.trackium.lite'
+    compileSdk 36
+    defaultConfig {
+        applicationId 'tech.trackium.lite'
+        minSdk 28
+        targetSdk 35
+        versionCode 1
+        versionName '0.1.0'
+    }
+    testOptions { unitTests.includeAndroidResources = true }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.14.1'
+}
