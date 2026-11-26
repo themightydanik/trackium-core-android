@@ -192,12 +192,67 @@ class MainActivity : Activity() {
     private fun renderDetail(value: JSONObject) {
         if(value.has("partial_observation"))content.addView(label("Partial observation · ${CargoPresentation.value(value,"partial_observation")}",16f,amber,true))
         button(content,"Back to $tab") { detailTitle=null;detailValue=null;currentScroll=null;render() }
+        if (tab == "Devices" && PhysicalPositions.isPhysical(value)) {
+            val card = box(content,"Physical GPS observations")
+            val latest = PhysicalPositions.current(value)
+            val history = PhysicalPositions.history(value)
+            card.addView(label("Last known fix and discrete reports · unverified",14f,muted))
+            val planKey = value.optString("id").takeIf { it.isNotBlank() && value.has("status") }
+                ?.let { LocalFieldPlan.key(c.gateway.origin,c.gateway.tenant,it) }
+            val plan = planKey?.let { runCatching { LocalFieldPlan.read(c.secure,it) }.getOrNull() }
+            if (latest != null || history.isNotEmpty() || !plan.isNullOrEmpty()) {
+                card.addView(ObservationPlot(this,latest,history,plan.orEmpty(),amber,mint,muted),
+                    LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,dp(220)))
+                card.addView(label("Mint: last known fix · rings: buffered history · dashed: planned stops",12f,muted))
+            }
+            if (latest == null) card.addView(label("Waiting for an eligible physical fix",14f,muted))
+            if (planKey != null) {
+                card.addView(label("Local waypoint plan · road calculation unavailable",14f,muted))
+                if (plan != null) button(card,"Edit local waypoint plan") { editLocalFieldPlan(planKey,plan) }
+                else card.addView(label("Encrypted waypoint plan is unavailable",14f,amber))
+            }
+            button(card,"Refresh tracker observation") {
+                loadDeviceObservation(value, replace=true)
+            }
+        }
         renderEvidenceSections(content, detailTitle ?: "Details", value)
         content.addView(label("Check the time basis and provenance of each observation. Gateway receipt and device measurement are separate.",14f,muted))
         val advanced=box(content,"Advanced / export")
         advanced.addView(label("This evidence may contain sensitive cargo data. Share only with authorized recipients.",14f,muted))
         button(advanced,"Advanced Raw Data") { dialog("Advanced Raw Data",value.toString(2)) }
         button(advanced,"Export reported data") { share(value) }
+    }
+
+    private fun editLocalFieldPlan(key: String, current: List<LocalFieldPlan.Stop>) {
+        val editor = EditText(this).apply {
+            inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE
+            filters = arrayOf(android.text.InputFilter.LengthFilter(512))
+            minLines = 4
+            setText(LocalFieldPlan.text(current))
+            contentDescription = "Coordinates in travel order"
+        }
+        val dialog = AlertDialog.Builder(this).setTitle("Edit local waypoint plan")
+            .setMessage("Enter latitude, longitude on each line in travel order. This saves planned stops on this device.")
+            .setView(editor).setNegativeButton("Cancel",null).setPositiveButton("Save",null).create()
+        dialog.show()
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            if (!sessionStarted || !TrackiumCoreAccess.authorized()) {
+                dialog.dismiss()
+                return@setOnClickListener
+            }
+            val stops = try { LocalFieldPlan.parse(editor.text.toString()) }
+            catch (error: IllegalArgumentException) {
+                editor.error = error.message
+                return@setOnClickListener
+            }
+            try { LocalFieldPlan.save(c.secure,key,stops) }
+            catch (_: Exception) {
+                editor.error = "Could not write the encrypted waypoint plan."
+                return@setOnClickListener
+            }
+            dialog.dismiss()
+            render()
+        }
     }
 
     internal fun renderEvidenceSections(parent: LinearLayout, title: String, value: JSONObject) {
@@ -407,16 +462,31 @@ class MainActivity : Activity() {
         val card=box(parent,d.optString("label").ifBlank{"Device"})
         card.addView(label("${CargoPresentation.value(d,"identity_kind")} · ${CargoPresentation.value(d,"mode")}",16f,mint,true))
         card.addView(label(CargoPresentation.value(d,"id"),12f,muted))
-        button(card,"Open device observation"){
-            val id=android.net.Uri.encode(d.getString("id"))
-            async("Device · ${d.optString("label")}"){
-                val observation=JSONObject(d.toString()).put("status",c.gateway.read("/v1/devices/$id/status"))
-                val missing=mutableListOf<String>()
-                try{observation.put("location",c.gateway.read("/v1/devices/$id/location"))}catch(_:Exception){missing.add("Location")}
-                try{observation.put("history",c.gateway.read("/v1/devices/$id/events?limit=10"))}catch(_:Exception){missing.add("Telemetry history")}
-                if(missing.isNotEmpty())observation.put("partial_observation",missing.joinToString(", ")+" unavailable; missing readings are not zeros")
-                observation
+        button(card,"Open device observation"){ loadDeviceObservation(d) }
+    }
+
+    private fun loadDeviceObservation(device: JSONObject, replace: Boolean = false) {
+        val id = android.net.Uri.encode(device.getString("id"))
+        if (replace) {
+            // Remove the previous fix while revalidating the optional native session.
+            detailValue = JSONObject().put("id",device.getString("id"))
+                .put("label",device.optString("label")).put("identity_kind",device.optString("identity_kind"))
+            render()
+        }
+        async("Device · ${device.optString("label")}") {
+            val registry = JSONObject()
+            for (key in listOf("id","label","identity_kind","mode","enabled")) {
+                if (device.has(key)) registry.put(key, device.get(key))
             }
+            val observation = registry.put("status",c.gateway.read("/v1/devices/$id/status"))
+            val missing = mutableListOf<String>()
+            try { observation.put("location",c.gateway.read("/v1/devices/$id/location")) }
+            catch (_: Exception) { missing.add("Location") }
+            try { observation.put("history",c.gateway.read("/v1/devices/$id/events?limit=20")) }
+            catch (_: Exception) { missing.add("Telemetry history") }
+            if (missing.isNotEmpty()) observation.put("partial_observation",
+                missing.joinToString(", ")+" unavailable; missing readings are not zeros")
+            observation
         }
     }
 
