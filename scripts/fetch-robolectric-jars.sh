@@ -5,12 +5,19 @@ mkdir -p "$destination"
 while read -r digest version; do
   jar="android-all-instrumented-$version.jar"
   output="$destination/$jar"
-  if ! printf '%s  %s\n' "$digest" "$output" | sha256sum --status -c; then
-    curl --fail --silent --show-error --retry 4 --max-time 160 --output "$output.part" \
-      "https://repo.maven.apache.org/maven2/org/robolectric/android-all-instrumented/$version/$jar"
-    printf '%s  %s\n' "$digest" "$output.part" | sha256sum -c
-    mv "$output.part" "$output"
+  if [[ -f "$output" ]] && printf '%s  %s\n' "$digest" "$output" | sha256sum --status -c; then
+    continue
   fi
+  for repository in https://maven-central.storage-download.googleapis.com/maven2 \
+                    https://repo.maven.apache.org/maven2 https://repo1.maven.org/maven2; do
+    if curl --fail --silent --show-error --retry 1 --connect-timeout 10 --max-time 120 \
+        --output "$output.part" "$repository/org/robolectric/android-all-instrumented/$version/$jar" &&
+        printf '%s  %s\n' "$digest" "$output.part" | sha256sum -c; then
+      mv "$output.part" "$output"
+      break
+    fi
+  done
+  printf '%s  %s\n' "$digest" "$output" | sha256sum --status -c
 done <<'MANIFEST'
 dbb1c88987b54cef3132695a1b4d2f4851ba06286a6fa7d15772f98fd1f0cdf7 9-robolectric-4913185-2-i7
 1c3fd182c03d47626686ca3b39c4ec5bdb0898b1056f4eb8f96f32c6209a5c04 13-robolectric-9030017-i7
