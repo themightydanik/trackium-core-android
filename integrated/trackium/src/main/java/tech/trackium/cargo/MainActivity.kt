@@ -53,6 +53,8 @@ class MainActivity : Activity() {
 
     private val fieldHandler = android.os.Handler(android.os.Looper.getMainLooper())
     private var fieldEpoch = 0
+    private var officialDevices: JSONArray? = null
+    private var pendingDeviceScan: String? = null
     private var fieldDialog: AlertDialog? = null
     private var roadPreview: Pair<String,FieldRoads.Road>? = null
     private var fieldViewportKey = ""
@@ -63,7 +65,10 @@ class MainActivity : Activity() {
             if (!sessionStarted || !TrackiumCoreAccess.authorized()) return
             val device = detailValue
             if (tab == "Devices" && device != null && PhysicalPositions.isPhysical(device) &&
-                fieldDialog?.isShowing != true && !c.busy.get()) loadDeviceObservation(device,replace=true)
+                fieldDialog?.isShowing != true && !c.busy.get()) {
+                if (device.has("official_installation")) loadOfficialObservation(device,replace=true)
+                else loadDeviceObservation(device,replace=true)
+            }
             fieldHandler.postDelayed(this,15000)
         }
     }
@@ -76,6 +81,9 @@ class MainActivity : Activity() {
             searches[key] = state?.getString("query.$key") ?: ""
             filters[key] = state?.getString("filter.$key") ?: "All"
         }
+        pendingDeviceScan = intent.getStringExtra(CoreConnectionActivity.CONNECTION_LINK)
+        intent.removeExtra(CoreConnectionActivity.CONNECTION_LINK)
+        if (pendingDeviceScan != null) tab = "Devices"
         proofPage = (state?.getInt("proof.page") ?: 0).coerceAtLeast(0)
         draftGateway = state?.getString("draft.origin")
         draftTenant = state?.getString("draft.tenant")
@@ -114,7 +122,10 @@ class MainActivity : Activity() {
             } else render()
         }
         render()
-        if (c.core == null && !c.busy.get()) c.connectCore()
+        val scan = pendingDeviceScan
+        pendingDeviceScan = null
+        if (scan != null) confirmOfficialDevice(scan)
+        else if (c.core == null && !c.busy.get()) c.connectCore()
     }
 
     override fun onPause() {
@@ -234,6 +245,7 @@ class MainActivity : Activity() {
 
     private fun fieldKey(value: JSONObject): String? {
         if (value.optBoolean("local_field_map")) return "field-plan-local"
+        if (value.has("official_installation")) return "field-official-" + ProofProtocol.sha(value.getString("id"))
         return value.optString("id").takeIf { it.isNotBlank() && value.has("status") }
             ?.let { LocalFieldPlan.key(c.gateway.origin,c.gateway.tenant,it) }
     }
@@ -273,7 +285,10 @@ class MainActivity : Activity() {
                 "Mint: last known unverified fix · rings: buffered reports",14f,muted))
             if (value.optBoolean("field_offline"))
                 card.addView(label("Observation source unavailable. Rechecking while this screen is open.",14f,amber))
-            button(card,"Refresh tracker observation") { loadDeviceObservation(value,replace=true) }
+            button(card,"Refresh tracker observation") {
+                if (value.has("official_installation")) loadOfficialObservation(value,replace=true)
+                else loadDeviceObservation(value,replace=true)
+            }
         }
         if (road == null && !plan.isNullOrEmpty())
             card.addView(label("Planned stops only. Calculate a road preview.",14f,muted))
@@ -290,7 +305,7 @@ class MainActivity : Activity() {
         }
         if (key != null && plan != null) {
             button(card,"Edit local waypoint plan") { editLocalFieldPlan(key,plan.ifEmpty { active?.stops.orEmpty() }) }
-            if (plan.size >= 2) button(card,"Calculate road preview") { calculateFieldRoad(key,plan) }
+            if (plan.size >= 2 && value.optString("permission") != "view") button(card,"Calculate road preview") { calculateFieldRoad(key,plan) }
             if (!savedRoads.isNullOrEmpty()) button(card,"Select saved local road") {
                 val names = savedRoads.mapIndexed { index, saved ->
                     "${index+1} · ${saved.road.meters} m · ${saved.road.stops.size} stops · ${saved.road.snapshot}"
@@ -332,24 +347,29 @@ class MainActivity : Activity() {
 
     private fun calculateFieldRoad(key: String, stops: List<LocalFieldPlan.Stop>) {
         val provider = runCatching { FieldRoads.Provider.read(c.secure.read("field-router")) }.getOrNull()
-        if (provider == null) {
-            dialog("Road provider unavailable","Configure an owner-approved HTTPS Valhalla provider first.")
+        val current = detailValue
+        val installation = current?.optString("official_installation")?.takeIf { it.isNotEmpty() }
+        val origin = provider?.origin ?: installation?.let { OfficialDeviceAccess.origin }
+        if (origin == null) {
+            dialog("Road provider unavailable","Add an authorized Trackium tracker or configure an advanced road provider.")
             return
         }
         val epoch = fieldEpoch
-        val current = detailValue
         AlertDialog.Builder(this).setTitle("Calculate road preview")
-            .setMessage("Send only these planned stops to ${provider.origin}? Tracker locations and Minima data are kept local.")
+            .setMessage("Send only these planned stops to $origin? Tracker locations and Minima data are kept local.")
             .setNegativeButton("Cancel",null).setPositiveButton("Calculate") { _,_ ->
                 if (!sessionStarted || !TrackiumCoreAccess.authorized() || fieldEpoch != epoch) return@setPositiveButton
                 roadPreview = null
                 c.task {
-                    val road = runCatching { FieldRoads.calculate(provider,stops) }.getOrNull()
+                    val road = runCatching {
+                        if (provider != null) FieldRoads.calculate(provider,stops)
+                        else FieldRoads.calculateOfficial(requireNotNull(installation),stops)
+                    }.getOrNull()
                     runOnUiThread {
                         if (sessionStarted && fieldEpoch == epoch && TrackiumCoreAccess.authorized() &&
                             current != null && detailValue?.let(::fieldKey) == key) {
                             if (road != null) roadPreview = key to road
-                            else dialog("Road provider unavailable","Check the configured HTTPS provider, credentials and graph. No route was saved.")
+                            else dialog("Road provider unavailable","The road service could not produce a route. Check your connection or try different stops.")
                         }
                     }
                     if (road == null) "Road provider unavailable." else "Road preview calculated."
@@ -390,6 +410,14 @@ class MainActivity : Activity() {
     @Deprecated("Uses the existing native Activity callback for the document picker")
     override fun onActivityResult(requestCode:Int,resultCode:Int,data:Intent?) {
         super.onActivityResult(requestCode,resultCode,data)
+        val scan = com.google.zxing.integration.android.IntentIntegrator.parseActivityResult(requestCode,resultCode,data)
+        if (scan != null) {
+            if (TrackiumCoreAccess.authorized()) {
+                if (sessionStarted) scan.contents?.let(::confirmOfficialDevice)
+                else pendingDeviceScan = scan.contents
+            }
+            return
+        }
         val uri=data?.data ?: return
         if (requestCode != 771 || resultCode != RESULT_OK || !TrackiumCoreAccess.authorized()) return
         c.task {
@@ -640,11 +668,106 @@ class MainActivity : Activity() {
         }
     }
 
-    private fun devices() = browser("Devices",c.data?.optJSONArray("devices")) { parent,d ->
-        val card=box(parent,d.optString("label").ifBlank{"Device"})
-        card.addView(label("${CargoPresentation.value(d,"identity_kind")} · ${CargoPresentation.value(d,"mode")}",16f,mint,true))
-        card.addView(label(CargoPresentation.value(d,"id"),12f,muted))
-        button(card,"Open device observation"){ loadDeviceObservation(d) }
+    private fun devices() {
+        val access = box(content,"My devices")
+        button(access,"Add Device") {
+            com.google.zxing.integration.android.IntentIntegrator(this).apply {
+                setDesiredBarcodeFormats(com.google.zxing.integration.android.IntentIntegrator.QR_CODE)
+                setPrompt("Scan your Trackium activation or connection QR")
+                setBeepEnabled(false)
+                setOrientationLocked(false)
+                initiateScan()
+            }
+        }
+        button(access,"Enter activation card or connection link") { enterOfficialDevice() }
+        button(access,"Refresh my devices") {
+            c.task {
+                val result = runCatching { OfficialDeviceAccess.request("devices").getJSONArray("devices") }.getOrNull()
+                runOnUiThread { officialDevices = result }
+                if (result == null) "Trackium devices unavailable." else "Trackium devices updated."
+            }
+        }
+        for (device in CargoPresentation.records(officialDevices)) {
+            val card = box(content,device.getString("label"))
+            card.addView(label(device.getString("serial"),14f,muted))
+            button(card,"Open device observation") { loadOfficialObservation(device) }
+        }
+        browser("Devices",c.data?.optJSONArray("devices")) { parent,d ->
+            val card=box(parent,d.optString("label").ifBlank{"Device"})
+            card.addView(label("${CargoPresentation.value(d,"identity_kind")} · ${CargoPresentation.value(d,"mode")}",16f,mint,true))
+            card.addView(label(CargoPresentation.value(d,"id"),12f,muted))
+            button(card,"Open device observation"){ loadDeviceObservation(d) }
+        }
+    }
+
+    private fun enterOfficialDevice() {
+        val fields = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        val serial = input(fields,"Serial number (activation card)")
+        val secret = input(fields,"One-time code or connection link").apply {
+            inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+        }
+        AlertDialog.Builder(this).setTitle("Add Device").setView(fields).setNegativeButton("Cancel",null)
+            .setPositiveButton("Continue") { _,_ ->
+                val value = secret.text.toString().trim()
+                val id = serial.text.toString().trim().uppercase(java.util.Locale.ROOT)
+                secret.text.clear()
+                confirmOfficialDevice(if (id.isEmpty()) value else "trackium-activation:v1:$id:$value")
+            }.show()
+    }
+
+    private fun confirmOfficialDevice(value: String) {
+        val parsed = OfficialDeviceAccess.card(value)
+        if (parsed == null) {
+            dialog("Invalid device card","Scan a Trackium activation card or use an owner-issued connection link.")
+            return
+        }
+        val (operation,payload) = parsed
+        val confirmation = if (operation == "claim") "Activate this tracker for this installation?"
+                else "Request access for this installation? The owner must confirm your fingerprint."
+        AlertDialog.Builder(this).setTitle("Add Device").setMessage(confirmation)
+            .setNegativeButton("Cancel",null).setPositiveButton("Continue") { _,_ ->
+                if (!sessionStarted || !TrackiumCoreAccess.authorized()) return@setPositiveButton
+                c.task {
+                    val result = runCatching { OfficialDeviceAccess.request(operation,payload) }.getOrNull()
+                    val devices = if (result != null && operation == "claim")
+                        runCatching { OfficialDeviceAccess.request("devices").getJSONArray("devices") }.getOrNull() else null
+                    runOnUiThread {
+                        if (sessionStarted && TrackiumCoreAccess.authorized() && result != null) {
+                            if (devices != null) officialDevices = devices
+                            if (operation == "connect") dialog("Owner confirmation required",result.getString("fingerprint"))
+                        }
+                    }
+                    if (result == null) "Device access unavailable. Check the code or refresh My devices."
+                    else if (operation == "claim") "Device activated. Waiting for GPS." else "Waiting for owner confirmation."
+                }
+            }.show()
+    }
+
+    private fun loadOfficialObservation(device: JSONObject, replace: Boolean = false) {
+        val installation = device.optString("official_installation").ifBlank { device.getString("id") }
+        val id = device.getString("device_id")
+        val epoch = fieldEpoch
+        c.task {
+            val record = JSONObject().put("id",id).put("device_id",id).put("label",device.getString("label"))
+                .put("official_installation",installation).put("permission",device.getString("permission"))
+                .put("identity_kind","physical").put("enabled",device.optBoolean("enabled",true))
+            val result = runCatching {
+                OfficialDeviceAccess.request("observations",JSONObject().put("installation_id",installation))
+            }.getOrNull()
+            if (result != null) {
+                record.put("status",JSONObject().put("enabled",true))
+                record.put("location",JSONObject().put("device_id",id).put("location",result.opt("location")))
+                record.put("history",JSONObject().put("events",result.getJSONArray("history")))
+            } else record.put("field_offline",true)
+            runOnUiThread {
+                if (sessionStarted && TrackiumCoreAccess.authorized() && epoch == fieldEpoch && tab == "Devices" &&
+                    (!replace || detailValue?.optString("official_installation") == installation)) {
+                    if (replace) { detailValue = record; render() }
+                    else detail("Device · ${device.getString("label")}",record)
+                }
+            }
+            if (result == null) "Tracker observations unavailable." else "Tracker observation checked."
+        }
     }
 
     private fun loadDeviceObservation(device: JSONObject, replace: Boolean = false) {

@@ -71,6 +71,11 @@ jobs:
         run: |
           test ! -e .local/debug.keystore
           echo "KEETS_CACHE_DIR=$RUNNER_TEMP/trackium-keets-cache" >> "$GITHUB_ENV"
+      - name: Fetch and verify Robolectric runtime jars
+        working-directory: ${{ steps.project.outputs.directory }}
+        run: |
+          bash scripts/fetch-robolectric-jars.sh "$RUNNER_TEMP/trackium-robolectric"
+          echo "TRACKIUM_ROBOLECTRIC_JARS=$RUNNER_TEMP/trackium-robolectric" >> "$GITHUB_ENV"
       - name: Verify pins, legal evidence, tests, lint, APK and signature
         working-directory: ${{ steps.project.outputs.directory }}
         run: scripts/ci-debug.sh

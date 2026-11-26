@@ -1,6 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
  <application>
   <activity android:name="tech.trackium.cargo.MainActivity" android:exported="false" android:windowSoftInputMode="adjustResize" android:theme="@style/TrackiumTheme" />
+  <activity android:name="tech.trackium.cargo.CoreConnectionActivity" android:exported="true"
+      android:excludeFromRecents="true" android:noHistory="true">
+   <intent-filter android:autoVerify="true">
+    <action android:name="android.intent.action.VIEW" />
+    <category android:name="android.intent.category.DEFAULT" />
+    <category android:name="android.intent.category.BROWSABLE" />
+    <data android:scheme="https" android:host="trackium-gateway-production.up.railway.app"
+        android:path="/app/connect-core" />
+   </intent-filter>
+  </activity>
   <provider android:name="tech.trackium.cargo.ProofExportProvider" android:authorities="${applicationId}.trackium.exports" android:exported="false" android:grantUriPermissions="true" />
  </application>
 </manifest>

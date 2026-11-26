@@ -148,6 +148,30 @@ internal object FieldRoads {
         } finally { conn.disconnect() }
     }
 
+    fun calculateOfficial(installation: String, stops: List<LocalFieldPlan.Stop>): Road {
+        val points = stops.map { JSONObject().put("latitude",it.latitude).put("longitude",it.longitude) }
+        val calculation = JSONObject().put("profile","auto").put("origin",points.first())
+            .put("destination",points.last()).put("waypoints",JSONArray(points.drop(1).dropLast(1)))
+        val response = OfficialDeviceAccess.request("calculate",JSONObject()
+            .put("installation_id",installation).put("calculation",calculation))
+        return fromGateway(response,stops)
+    }
+
+    fun fromGateway(response: JSONObject, stops: List<LocalFieldPlan.Stop>): Road {
+        require(response.getString("profile") == "auto")
+        val graph = response.getJSONObject("graph")
+        val route = response.getJSONObject("route")
+        require(route.getString("geometry_format") == "polyline6")
+        val legs = route.getJSONArray("legs")
+        require(legs.length() == stops.size-1)
+        val snapshot = graph.getString("osm_snapshot").let { if (it.length == 10) it + "T00:00:00Z" else it }
+        return readRoad(JSONObject().put("stops",LocalFieldPlan.text(stops))
+            .put("meters",route.getLong("distance_m")).put("seconds",route.getLong("estimated_duration_s"))
+            .put("graph",graph.getString("id")).put("engine",graph.getString("engine_version"))
+            .put("snapshot",snapshot).put("origin",OfficialDeviceAccess.origin)
+            .put("encoded",JSONArray((0 until legs.length()).map { legs.getJSONObject(it).getString("shape") })))
+    }
+
     fun fromTrip(trip: JSONObject, stops: List<LocalFieldPlan.Stop>, provider: Provider, snapshot: String): Road {
         check(trip.getInt("status") == 0 && trip.getString("units") == "kilometers")
         val summary = trip.getJSONObject("summary")
