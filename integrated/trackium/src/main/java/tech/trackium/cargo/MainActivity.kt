@@ -51,6 +51,29 @@ class MainActivity : Activity() {
     private var draftGateway: String? = null
     private var draftTenant: String? = null
 
+    private val fieldHandler = android.os.Handler(android.os.Looper.getMainLooper())
+    private var fieldEpoch = 0
+    private var officialDevices: JSONArray? = null
+    private var officialDevicesRequested = false
+    private var pendingDeviceScan: String? = null
+    private var fieldDialog: AlertDialog? = null
+    private var roadPreview: Pair<String,FieldRoads.Road>? = null
+    private var fieldViewportKey = ""
+    private var fieldViewport = ObservationPlot.Viewport()
+    private var offlineLinework: List<List<LocalFieldPlan.Stop>>? = null
+    private val fieldPoll = object : Runnable {
+        override fun run() {
+            if (!sessionStarted || !TrackiumCoreAccess.authorized()) return
+            val device = detailValue
+            if (tab == "Devices" && device != null && PhysicalPositions.isPhysical(device) &&
+                fieldDialog?.isShowing != true && !c.busy.get()) {
+                if (device.has("official_installation")) loadOfficialObservation(device,replace=true)
+                else loadDeviceObservation(device,replace=true)
+            }
+            fieldHandler.postDelayed(this,15000)
+        }
+    }
+
     override fun onCreate(state: Bundle?) {
         super.onCreate(state)
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
@@ -59,6 +82,9 @@ class MainActivity : Activity() {
             searches[key] = state?.getString("query.$key") ?: ""
             filters[key] = state?.getString("filter.$key") ?: "All"
         }
+        pendingDeviceScan = intent.getStringExtra(CoreConnectionActivity.CONNECTION_LINK)
+        intent.removeExtra(CoreConnectionActivity.CONNECTION_LINK)
+        if (pendingDeviceScan != null) tab = "Devices"
         proofPage = (state?.getInt("proof.page") ?: 0).coerceAtLeast(0)
         draftGateway = state?.getString("draft.origin")
         draftTenant = state?.getString("draft.tenant")
@@ -85,6 +111,9 @@ class MainActivity : Activity() {
             return
         }
         sessionStarted = true
+        fieldEpoch++
+        fieldHandler.removeCallbacks(fieldPoll)
+        fieldHandler.post(fieldPoll)
         c.lifecycle(true)
         c.listener = {
             if(c.busy.get()) {
@@ -94,10 +123,22 @@ class MainActivity : Activity() {
             } else render()
         }
         render()
-        if (c.core == null && !c.busy.get()) c.connectCore()
+        val scan = pendingDeviceScan
+        pendingDeviceScan = null
+        if (scan != null) confirmOfficialDevice(scan)
+        else if (c.core == null && !c.busy.get()) c.connectCore()
     }
 
     override fun onPause() {
+        fieldHandler.removeCallbacks(fieldPoll)
+        fieldEpoch++
+        officialDevices = null
+        officialDevicesRequested = false
+        fieldDialog?.dismiss()
+        roadPreview = null
+        detailValue?.takeIf { PhysicalPositions.isPhysical(it) }?.apply {
+            remove("location"); remove("history"); remove("status")
+        }
         if (sessionStarted) {
             c.listener = null
             c.lifecycle(false)
@@ -184,6 +225,7 @@ class MainActivity : Activity() {
     private fun detail(title: String, value: JSONObject) {
         currentScroll?.let { v -> renderedKey?.let { scrollPositions[it]=v.scrollY } }
         currentScroll=null
+        roadPreview = null
         detailTitle = title
         detailValue = value
         render()
@@ -192,12 +234,238 @@ class MainActivity : Activity() {
     private fun renderDetail(value: JSONObject) {
         if(value.has("partial_observation"))content.addView(label("Partial observation · ${CargoPresentation.value(value,"partial_observation")}",16f,amber,true))
         button(content,"Back to $tab") { detailTitle=null;detailValue=null;currentScroll=null;render() }
+        if (value.optBoolean("local_field_map") || (tab == "Devices" && PhysicalPositions.isPhysical(value))) {
+            renderFieldMap(value)
+            if (value.optBoolean("local_field_map")) return
+        }
         renderEvidenceSections(content, detailTitle ?: "Details", value)
         content.addView(label("Check the time basis and provenance of each observation. Gateway receipt and device measurement are separate.",14f,muted))
         val advanced=box(content,"Advanced / export")
         advanced.addView(label("This evidence may contain sensitive cargo data. Share only with authorized recipients.",14f,muted))
         button(advanced,"Advanced Raw Data") { dialog("Advanced Raw Data",value.toString(2)) }
         button(advanced,"Export reported data") { share(value) }
+    }
+
+    private fun fieldKey(value: JSONObject): String? {
+        if (value.optBoolean("local_field_map")) return "field-plan-local"
+        if (value.has("official_installation")) return "field-official-" + ProofProtocol.sha(value.getString("id"))
+        return value.optString("id").takeIf { it.isNotBlank() && value.has("status") }
+            ?.let { LocalFieldPlan.key(c.gateway.origin,c.gateway.tenant,it) }
+    }
+
+    private fun renderFieldMap(value: JSONObject) {
+        val standalone = value.optBoolean("local_field_map")
+        val card = box(content,"Field map")
+        val key = fieldKey(value)
+        val latest = PhysicalPositions.current(value)
+        val history = PhysicalPositions.history(value)
+        val plan = key?.let { runCatching { LocalFieldPlan.read(c.secure,it) }.getOrNull() }
+        val catalog = key?.let { runCatching { c.secure.read(it+"-road") }.getOrNull() }
+        val savedRoads = catalog?.let { runCatching { FieldRoads.saved(it) }.getOrNull() }
+        val active = savedRoads?.find { it.id == catalog?.optString("selected") }?.road
+        val preview = roadPreview?.takeIf { it.first == key }?.second
+        val road = preview ?: active
+        val offline = offlineLinework ?: runCatching { FieldRoads.offlineRoads(c.secure.read("field-basemap")) }
+            .getOrDefault(emptyList()).also { offlineLinework = it }
+        if (latest != null || history.isNotEmpty() || !plan.isNullOrEmpty() || road != null || offline.isNotEmpty()) {
+            val viewportKey = listOf(key,value.optString("id"),road?.encodedLegs?.hashCode(),offline.hashCode()).joinToString("/")
+            if (fieldViewportKey != viewportKey) {
+                fieldViewportKey = viewportKey
+                fieldViewport = ObservationPlot.Viewport()
+            }
+            val plot = ObservationPlot(this,latest,history,plan.orEmpty(),road,offline,fieldViewport,amber,mint,muted)
+            card.addView(plot, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,dp(290)))
+            val controls = LinearLayout(this)
+            card.addView(controls)
+            button(controls,"Zoom in") { plot.zoom(1.5f) }
+            button(controls,"Zoom out") { plot.zoom(1/1.5f) }
+            if (road != null) button(controls,"Fit road") { plot.fit(true) }
+            button(controls,"Fit all") { plot.fit(false) }
+        }
+        card.addView(label(if (offline.isEmpty()) "No offline basemap loaded" else "Offline road linework · OpenStreetMap contributors",12f,muted))
+        if (!standalone) {
+            card.addView(label(if (latest == null) "Waiting for an eligible physical fix" else
+                "Mint: last known unverified fix · rings: buffered reports",14f,muted))
+            if (value.optBoolean("field_offline"))
+                card.addView(label("Observation source unavailable. Rechecking while this screen is open.",14f,amber))
+            button(card,"Refresh tracker observation") {
+                if (value.has("official_installation")) loadOfficialObservation(value,replace=true)
+                else loadDeviceObservation(value,replace=true)
+            }
+        }
+        if (road == null && !plan.isNullOrEmpty())
+            card.addView(label("Planned stops only. Calculate a road preview.",14f,muted))
+        if (road != null) {
+            card.addView(label(if (preview != null) "Road preview" else "Active local road",18f,mint,true))
+            card.addView(label("${road.meters} m · ${road.seconds / 60} min estimated driving time · Passenger car",14f))
+            card.addView(label("Valhalla ${road.engine} · ${road.snapshot}\nGraph ${road.graph}",12f,muted))
+            road.stops.forEachIndexed { index, stop ->
+                card.addView(label("Stop ${index+1}: ${stop.latitude}, ${stop.longitude}",12f,muted))
+            }
+            if (preview == null && latest != null && java.time.Instant.now().minusSeconds(900).isBefore(latest.measured)) {
+                FieldRoads.deviation(latest,road)?.let { card.addView(label("Approximate distance to active road: ${it} m · advisory",14f,amber)) }
+            }
+        }
+        if (key != null && plan != null) {
+            button(card,"Edit local waypoint plan") { editLocalFieldPlan(key,plan.ifEmpty { active?.stops.orEmpty() }) }
+            if (plan.size >= 2 && value.optString("permission") != "view") button(card,"Calculate road preview") { calculateFieldRoad(key,plan) }
+            if (!savedRoads.isNullOrEmpty()) button(card,"Select saved local road") {
+                val names = savedRoads.mapIndexed { index, saved ->
+                    "${index+1} · ${saved.road.meters} m · ${saved.road.stops.size} stops · ${saved.road.snapshot}"
+                }.toTypedArray()
+                val epoch=fieldEpoch
+                fieldDialog=AlertDialog.Builder(this).setTitle("Select active local road")
+                    .setItems(names) { _, index ->
+                        if (sessionStarted && fieldEpoch == epoch && TrackiumCoreAccess.authorized()) {
+                            val selected=runCatching {
+                                c.secure.write(key+"-road",FieldRoads.catalog(savedRoads,savedRoads[index].id))
+                            }.isSuccess
+                            if (selected) { roadPreview=null; render() }
+                            else dialog("Local road unavailable","Could not update encrypted road storage.")
+                        }
+                    }.create().also { it.show() }
+            }
+            if (preview != null && savedRoads != null) {
+                button(card,"Save and activate road locally") {
+                    if (sessionStarted && TrackiumCoreAccess.authorized() && fieldKey(value) == key) {
+                        val saved = runCatching {
+                            val id=ProofProtocol.sha(preview.json().toString())
+                            val rows=listOf(FieldRoads.Saved(id,preview))+savedRoads.filterNot{it.id==id}
+                            check(rows.size <= 5)
+                            c.secure.write(key+"-road",FieldRoads.catalog(rows,id))
+                        }.isSuccess
+                        if (saved) { roadPreview=null; render() }
+                        else dialog("Local road unavailable","Could not save. Each local map has up to five saved routes.")
+                    }
+                }
+                button(card,"Discard preview") { roadPreview=null; render() }
+            }
+        }
+        button(card,"Configure independent road provider") { editFieldProvider() }
+        button(card,"Import offline OSM road GeoJSON") {
+            startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
+                .setType("*/*"),771)
+        }
+    }
+
+    private fun calculateFieldRoad(key: String, stops: List<LocalFieldPlan.Stop>) {
+        val provider = runCatching { FieldRoads.Provider.read(c.secure.read("field-router")) }.getOrNull()
+        val current = detailValue
+        val installation = current?.optString("official_installation")?.takeIf { it.isNotEmpty() }
+        val origin = provider?.origin ?: installation?.let { OfficialDeviceAccess.origin }
+        if (origin == null) {
+            dialog("Road provider unavailable","Add an authorized Trackium tracker or configure an advanced road provider.")
+            return
+        }
+        val epoch = fieldEpoch
+        AlertDialog.Builder(this).setTitle("Calculate road preview")
+            .setMessage("Send only these planned stops to $origin? Tracker locations and Minima data are kept local.")
+            .setNegativeButton("Cancel",null).setPositiveButton("Calculate") { _,_ ->
+                if (!sessionStarted || !TrackiumCoreAccess.authorized() || fieldEpoch != epoch) return@setPositiveButton
+                roadPreview = null
+                c.task {
+                    val road = runCatching {
+                        if (provider != null) FieldRoads.calculate(provider,stops)
+                        else FieldRoads.calculateOfficial(requireNotNull(installation),stops)
+                    }.getOrNull()
+                    runOnUiThread {
+                        if (sessionStarted && fieldEpoch == epoch && TrackiumCoreAccess.authorized() &&
+                            current != null && detailValue?.let(::fieldKey) == key) {
+                            if (road != null) roadPreview = key to road
+                            else dialog("Road provider unavailable","The road service could not produce a route. Check your connection or try different stops.")
+                        }
+                    }
+                    if (road == null) "Road provider unavailable." else "Road preview calculated."
+                }
+            }.create().also { fieldDialog=it; it.show() }
+    }
+
+    private fun editFieldProvider() {
+        val existing = runCatching { c.secure.read("field-router") }.getOrElse { JSONObject() }
+        val fields = LinearLayout(this).apply { orientation=LinearLayout.VERTICAL; setPadding(dp(18),0,dp(18),0) }
+        fun field(key:String, name:String, secret:Boolean=false) = EditText(this).apply {
+            hint=name; contentDescription=name
+            inputType = android.text.InputType.TYPE_CLASS_TEXT or if (secret) android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD else 0
+            if (!secret) setText(existing.optString(key))
+            fields.addView(this)
+        }
+        val origin=field("origin","Provider HTTPS origin")
+        val user=field("user","Provider username")
+        val password=field("password","Provider password",true)
+        val graph=field("graph","Pinned graph SHA-256")
+        val dialog=AlertDialog.Builder(this).setTitle("Independent road provider").setView(fields)
+            .setNegativeButton("Cancel",null).setPositiveButton("Save",null).create()
+        fieldDialog=dialog
+        dialog.show()
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            if (!sessionStarted || !TrackiumCoreAccess.authorized()) { dialog.dismiss(); return@setOnClickListener }
+            val saved=runCatching {
+                val provider=FieldRoads.Provider.read(JSONObject().put("origin",origin.text.toString().trim())
+                    .put("user",user.text.toString().trim()).put("password",password.text.toString())
+                    .put("graph",graph.text.toString().trim()))
+                c.secure.write("field-router",provider.json())
+            }.isSuccess
+            if (!saved) origin.error="Invalid configuration or encrypted storage unavailable."
+            else { roadPreview=null; dialog.dismiss(); render() }
+        }
+    }
+
+    @Deprecated("Uses the existing native Activity callback for the document picker")
+    override fun onActivityResult(requestCode:Int,resultCode:Int,data:Intent?) {
+        super.onActivityResult(requestCode,resultCode,data)
+        val scan = com.google.zxing.integration.android.IntentIntegrator.parseActivityResult(requestCode,resultCode,data)
+        if (scan != null) {
+            if (TrackiumCoreAccess.authorized()) {
+                if (sessionStarted) scan.contents?.let(::confirmOfficialDevice)
+                else pendingDeviceScan = scan.contents
+            }
+            return
+        }
+        val uri=data?.data ?: return
+        if (requestCode != 771 || resultCode != RESULT_OK || !TrackiumCoreAccess.authorized()) return
+        c.task {
+            val document=contentResolver.openInputStream(uri)?.use { FieldRoads.bounded(it).toString(Charsets.UTF_8) }
+                ?: error("Offline basemap unavailable.")
+            val parsed=JSONObject(document)
+            val roads=FieldRoads.offlineRoads(parsed)
+            c.secure.write("field-basemap",parsed)
+            runOnUiThread { offlineLinework=roads }
+            "Offline road linework imported."
+        }
+    }
+
+    private fun editLocalFieldPlan(key: String, current: List<LocalFieldPlan.Stop>) {
+        val editor = EditText(this).apply {
+            inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_FLAG_MULTI_LINE
+            filters = arrayOf(android.text.InputFilter.LengthFilter(512))
+            minLines = 4
+            setText(LocalFieldPlan.text(current))
+            contentDescription = "Coordinates in travel order"
+        }
+        val dialog = AlertDialog.Builder(this).setTitle("Edit local waypoint plan")
+            .setMessage("Enter latitude, longitude on each line in travel order. This saves planned stops on this device.")
+            .setView(editor).setNegativeButton("Cancel",null).setPositiveButton("Save",null).create()
+        fieldDialog=dialog
+        dialog.show()
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            if (!sessionStarted || !TrackiumCoreAccess.authorized()) {
+                dialog.dismiss()
+                return@setOnClickListener
+            }
+            val stops = try { LocalFieldPlan.parse(editor.text.toString()) }
+            catch (error: IllegalArgumentException) {
+                editor.error = error.message
+                return@setOnClickListener
+            }
+            try { LocalFieldPlan.save(c.secure,key,stops) }
+            catch (_: Exception) {
+                editor.error = "Could not write the encrypted waypoint plan."
+                return@setOnClickListener
+            }
+            roadPreview=null
+            dialog.dismiss()
+            render()
+        }
     }
 
     internal fun renderEvidenceSections(parent: LinearLayout, title: String, value: JSONObject) {
@@ -403,20 +671,150 @@ class MainActivity : Activity() {
         }
     }
 
-    private fun devices() = browser("Devices",c.data?.optJSONArray("devices")) { parent,d ->
-        val card=box(parent,d.optString("label").ifBlank{"Device"})
-        card.addView(label("${CargoPresentation.value(d,"identity_kind")} · ${CargoPresentation.value(d,"mode")}",16f,mint,true))
-        card.addView(label(CargoPresentation.value(d,"id"),12f,muted))
-        button(card,"Open device observation"){
-            val id=android.net.Uri.encode(d.getString("id"))
-            async("Device · ${d.optString("label")}"){
-                val observation=JSONObject(d.toString()).put("status",c.gateway.read("/v1/devices/$id/status"))
-                val missing=mutableListOf<String>()
-                try{observation.put("location",c.gateway.read("/v1/devices/$id/location"))}catch(_:Exception){missing.add("Location")}
-                try{observation.put("history",c.gateway.read("/v1/devices/$id/events?limit=10"))}catch(_:Exception){missing.add("Telemetry history")}
-                if(missing.isNotEmpty())observation.put("partial_observation",missing.joinToString(", ")+" unavailable; missing readings are not zeros")
-                observation
+    private fun devices() {
+        val access = box(content,"My devices")
+        button(access,"Add Device") {
+            com.google.zxing.integration.android.IntentIntegrator(this).apply {
+                setDesiredBarcodeFormats(com.google.zxing.integration.android.IntentIntegrator.QR_CODE)
+                setPrompt("Scan your Trackium activation or connection QR")
+                setBeepEnabled(false)
+                setOrientationLocked(false)
+                initiateScan()
             }
+        }
+        button(access,"Enter activation card or connection link") { enterOfficialDevice() }
+        button(access,"Refresh my devices") { refreshOfficialDevices() }
+        if (!officialDevicesRequested && sessionStarted && !c.busy.get() && pendingDeviceScan == null) {
+            officialDevicesRequested = true
+            fieldHandler.post {
+                if (sessionStarted && tab == "Devices" && TrackiumCoreAccess.authorized() && !c.busy.get())
+                    refreshOfficialDevices()
+                else officialDevicesRequested = false
+            }
+        }
+        for (device in CargoPresentation.records(officialDevices)) {
+            val card = box(content,device.getString("label"))
+            card.addView(label(device.getString("serial"),14f,muted))
+            button(card,"Open device observation") { loadOfficialObservation(device) }
+        }
+        browser("Devices",c.data?.optJSONArray("devices")) { parent,d ->
+            val card=box(parent,d.optString("label").ifBlank{"Device"})
+            card.addView(label("${CargoPresentation.value(d,"identity_kind")} · ${CargoPresentation.value(d,"mode")}",16f,mint,true))
+            card.addView(label(CargoPresentation.value(d,"id"),12f,muted))
+            button(card,"Open device observation"){ loadDeviceObservation(d) }
+        }
+    }
+
+    private fun refreshOfficialDevices() {
+        val epoch = fieldEpoch
+        officialDevicesRequested = true
+        c.task {
+            val result = runCatching { OfficialDeviceAccess.request("devices").getJSONArray("devices") }.getOrNull()
+            runOnUiThread {
+                if (sessionStarted && epoch == fieldEpoch && TrackiumCoreAccess.authorized()) officialDevices = result
+            }
+            if (result == null) "Trackium devices unavailable." else "Trackium devices updated."
+        }
+    }
+
+    private fun enterOfficialDevice() {
+        val fields = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        val serial = input(fields,"Serial number (activation card)")
+        val secret = input(fields,"One-time code or connection link").apply {
+            inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+        }
+        AlertDialog.Builder(this).setTitle("Add Device").setView(fields).setNegativeButton("Cancel",null)
+            .setPositiveButton("Continue") { _,_ ->
+                val value = secret.text.toString().trim()
+                val id = serial.text.toString().trim().uppercase(java.util.Locale.ROOT)
+                secret.text.clear()
+                confirmOfficialDevice(if (id.isEmpty()) value else "trackium-activation:v1:$id:$value")
+            }.show()
+    }
+
+    private fun confirmOfficialDevice(value: String) {
+        val parsed = OfficialDeviceAccess.card(value)
+        if (parsed == null) {
+            dialog("Invalid device card","Scan a Trackium activation card or use an owner-issued connection link.")
+            return
+        }
+        val (operation,payload) = parsed
+        val confirmation = if (operation == "claim") "Activate this tracker for this installation?"
+                else "Request access for this installation? The owner must confirm your fingerprint."
+        AlertDialog.Builder(this).setTitle("Add Device").setMessage(confirmation)
+            .setNegativeButton("Cancel",null).setPositiveButton("Continue") { _,_ ->
+                if (!sessionStarted || !TrackiumCoreAccess.authorized()) return@setPositiveButton
+                c.task {
+                    val result = runCatching { OfficialDeviceAccess.request(operation,payload) }.getOrNull()
+                    val devices = if (result != null && operation == "claim")
+                        runCatching { OfficialDeviceAccess.request("devices").getJSONArray("devices") }.getOrNull() else null
+                    runOnUiThread {
+                        if (sessionStarted && TrackiumCoreAccess.authorized() && result != null) {
+                            if (devices != null) officialDevices = devices
+                            if (operation == "connect") dialog("Owner confirmation required",result.getString("fingerprint"))
+                        }
+                    }
+                    if (result == null) "Device access unavailable. Check the code or refresh My devices."
+                    else if (operation == "claim") "Device activated. Waiting for GPS." else "Waiting for owner confirmation."
+                }
+            }.show()
+    }
+
+    private fun loadOfficialObservation(device: JSONObject, replace: Boolean = false) {
+        val installation = device.optString("official_installation").ifBlank { device.getString("id") }
+        val id = device.getString("device_id")
+        val epoch = fieldEpoch
+        c.task {
+            val record = JSONObject().put("id",id).put("device_id",id).put("label",device.getString("label"))
+                .put("official_installation",installation).put("permission",device.getString("permission"))
+                .put("identity_kind","physical").put("enabled",device.optBoolean("enabled",true))
+            val result = runCatching {
+                OfficialDeviceAccess.request("observations",JSONObject().put("installation_id",installation))
+            }.getOrNull()
+            if (result != null) {
+                record.put("status",JSONObject().put("enabled",true))
+                record.put("location",JSONObject().put("device_id",id).put("location",result.opt("location")))
+                record.put("history",JSONObject().put("events",result.getJSONArray("history")))
+            } else record.put("field_offline",true)
+            runOnUiThread {
+                if (sessionStarted && TrackiumCoreAccess.authorized() && epoch == fieldEpoch && tab == "Devices" &&
+                    (!replace || detailValue?.optString("official_installation") == installation)) {
+                    if (replace) { detailValue = record; render() }
+                    else detail("Device · ${device.getString("label")}",record)
+                }
+            }
+            if (result == null) "Tracker observations unavailable." else "Tracker observation checked."
+        }
+    }
+
+    private fun loadDeviceObservation(device: JSONObject, replace: Boolean = false) {
+        val deviceId = device.getString("id")
+        val id = android.net.Uri.encode(deviceId)
+        val origin = runCatching { c.gateway.origin }.getOrNull() ?: return
+        val tenant = runCatching { c.gateway.tenant }.getOrNull() ?: return
+        val epoch = fieldEpoch
+        c.task {
+            val registry = JSONObject()
+            for (key in listOf("id","label","identity_kind","mode","enabled")) {
+                if (device.has(key)) registry.put(key,device.get(key))
+            }
+            val result = runCatching {
+                registry.put("status",c.gateway.read("/v1/devices/$id/status"))
+                registry.put("location",c.gateway.read("/v1/devices/$id/location"))
+                registry.put("history",c.gateway.read("/v1/devices/$id/events?limit=20"))
+            }.getOrElse {
+                registry.remove("status"); registry.remove("location"); registry.remove("history")
+                registry.put("field_offline",true)
+            }
+            runOnUiThread {
+                if (sessionStarted && TrackiumCoreAccess.authorized() && epoch == fieldEpoch &&
+                    tab == "Devices" && runCatching { c.gateway.origin == origin && c.gateway.tenant == tenant }.getOrDefault(false) &&
+                    (!replace || detailValue?.optString("id") == deviceId)) {
+                    if (replace) { detailValue=result; render() }
+                    else detail("Device · ${device.optString("label")}",result)
+                }
+            }
+            if (result.optBoolean("field_offline")) "Tracker observation unavailable." else "Tracker observation checked."
         }
     }
 
@@ -599,6 +997,9 @@ class MainActivity : Activity() {
     private fun textColor() = text
 
     private fun settings() {
+        button(content,"Open independent field map") {
+            detail("Field map",JSONObject().put("local_field_map",true))
+        }
         val core = box(content, "embedded Core · your built-in wallet")
         core.addView(label(c.coreState, 14f, muted))
         core.addView(

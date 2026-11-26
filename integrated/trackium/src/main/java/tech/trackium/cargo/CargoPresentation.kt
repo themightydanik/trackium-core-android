@@ -55,6 +55,9 @@ object CargoPresentation {
             else -> "Not reported"
         }
         val times = when {
+            trust == "unverified" && PhysicalPositions.instant(payload?.optString("device_measured_at").orEmpty()) != null ->
+                listOf("Gateway received" to value(event, "received_at"),
+                    "Device measurement time (UTC)" to value(payload, "device_measured_at"))
             basis == "gateway_received_at" -> listOf(
                 "Gateway received" to (value(event, "received_at").takeUnless { it == "Not reported" }
                     ?: value(event, "occurred_at")),
@@ -80,7 +83,20 @@ object CargoPresentation {
         val lon = (gps?.opt("longitude") as? Number)?.toDouble()
         val physical = device.optString("identity_kind") == "physical" ||
             device.optString("mode") == "real" || status?.optString("mode") == "real"
-        val valid = !physical && location?.optString("trust") == "synthetic" &&
+        if (physical) {
+            val fix = PhysicalPositions.current(device)
+            return Section("Current position", if (fix == null) listOf("Position" to "Unavailable")
+            else listOf(
+                "Provenance" to "Physical observation · unverified",
+                "Last known fix (UTC)" to fix.measured.toString(),
+                "Gateway received" to fix.received.toString(),
+                "Freshness" to if (fix.measured.isBefore(java.time.Instant.now().minusSeconds(900))) "Stale" else "Recent",
+                "Latitude" to measurement(gps, "latitude"),
+                "Longitude" to measurement(gps, "longitude"),
+                "Accuracy (m)" to measurement(gps, "accuracy_m")
+            ))
+        }
+        val valid = location?.optString("trust") == "synthetic" &&
             lat != null && lat in -90.0..90.0 && lon != null && lon in -180.0..180.0
         return Section("Current position", if (valid) listOf(
             "Provenance" to "Synthetic telemetry",
