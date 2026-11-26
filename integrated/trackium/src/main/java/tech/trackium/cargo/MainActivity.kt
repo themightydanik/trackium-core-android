@@ -54,6 +54,7 @@ class MainActivity : Activity() {
     private val fieldHandler = android.os.Handler(android.os.Looper.getMainLooper())
     private var fieldEpoch = 0
     private var officialDevices: JSONArray? = null
+    private var officialDevicesRequested = false
     private var pendingDeviceScan: String? = null
     private var fieldDialog: AlertDialog? = null
     private var roadPreview: Pair<String,FieldRoads.Road>? = null
@@ -131,6 +132,8 @@ class MainActivity : Activity() {
     override fun onPause() {
         fieldHandler.removeCallbacks(fieldPoll)
         fieldEpoch++
+        officialDevices = null
+        officialDevicesRequested = false
         fieldDialog?.dismiss()
         roadPreview = null
         detailValue?.takeIf { PhysicalPositions.isPhysical(it) }?.apply {
@@ -680,11 +683,13 @@ class MainActivity : Activity() {
             }
         }
         button(access,"Enter activation card or connection link") { enterOfficialDevice() }
-        button(access,"Refresh my devices") {
-            c.task {
-                val result = runCatching { OfficialDeviceAccess.request("devices").getJSONArray("devices") }.getOrNull()
-                runOnUiThread { officialDevices = result }
-                if (result == null) "Trackium devices unavailable." else "Trackium devices updated."
+        button(access,"Refresh my devices") { refreshOfficialDevices() }
+        if (!officialDevicesRequested && sessionStarted && !c.busy.get() && pendingDeviceScan == null) {
+            officialDevicesRequested = true
+            fieldHandler.post {
+                if (sessionStarted && tab == "Devices" && TrackiumCoreAccess.authorized() && !c.busy.get())
+                    refreshOfficialDevices()
+                else officialDevicesRequested = false
             }
         }
         for (device in CargoPresentation.records(officialDevices)) {
@@ -697,6 +702,18 @@ class MainActivity : Activity() {
             card.addView(label("${CargoPresentation.value(d,"identity_kind")} · ${CargoPresentation.value(d,"mode")}",16f,mint,true))
             card.addView(label(CargoPresentation.value(d,"id"),12f,muted))
             button(card,"Open device observation"){ loadDeviceObservation(d) }
+        }
+    }
+
+    private fun refreshOfficialDevices() {
+        val epoch = fieldEpoch
+        officialDevicesRequested = true
+        c.task {
+            val result = runCatching { OfficialDeviceAccess.request("devices").getJSONArray("devices") }.getOrNull()
+            runOnUiThread {
+                if (sessionStarted && epoch == fieldEpoch && TrackiumCoreAccess.authorized()) officialDevices = result
+            }
+            if (result == null) "Trackium devices unavailable." else "Trackium devices updated."
         }
     }
 
