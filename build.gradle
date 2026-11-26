@@ -4,3 +4,9 @@ plugins {
 alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
 }
+subprojects {
+    tasks.withType(Test).configureEach {
+        // Robolectric resolves its instrumented Android jars outside Gradle repositories.
+        systemProperty 'robolectric.dependency.repo.url', 'https://repo.maven.apache.org/maven2'
+    }
+}
